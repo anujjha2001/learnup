@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+"use client";
 
-export default function Home() {
-  redirect("/auth");
-}
+import HomePage from "@/app/page";
+
+export default HomePage;
