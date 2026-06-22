@@ -3,6 +3,11 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  title: "LearnUp LMS",
+  description: "Enterprise Student Dashboard and Learning Management System",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -10,7 +15,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        {/* Preconnect and host Google Material Symbols globally for faster icon rendering */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={`${inter.className} antialiased bg-[#f8f9ff]`}>
+        {children}
+      </body>
     </html>
   );
 }
