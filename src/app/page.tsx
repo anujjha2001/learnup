@@ -53,6 +53,33 @@ export default function HomePage() {
     }
   };   
 
+  const handleSocialAuth = (provider: "google" | "linkedin" | "github", role: "student" | "instructor") => {
+    console.log(`Initiating social auth for ${provider}`);
+    
+    // Save local mock user session so dashboard renders with authenticated context
+    const sessionUser = {
+      id: `oauth-mock-${provider}-${Date.now()}`,
+      name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
+      email: `${provider}-user@example.com`,
+      phone: "+1234567890",
+      role: role,
+      isVerified: true,
+      avatar: `https://ui-avatars.com/api/?name=${provider}&background=3525cd&color=fff`,
+    };
+
+    localStorage.setItem("learnup_user", JSON.stringify(sessionUser));
+    localStorage.setItem("user_email", sessionUser.email);
+    localStorage.setItem("user_name", sessionUser.name);
+    localStorage.setItem("user_avatar", sessionUser.avatar);
+    localStorage.setItem("user_tier", sessionUser.role === "student" ? "Premium Student" : "Senior Instructor");
+
+    if (role === "student") {
+      setCurrentScreen("student_dashboard");
+    } else {
+      setCurrentScreen("instructor_dashboard");
+    }
+  };
+
   return (
     <>
       {/* Premium UI Component Styles injection */}
@@ -423,6 +450,7 @@ export default function HomePage() {
                   authMode={authMode} 
                   setAuthMode={setAuthMode} 
                   onAuthSubmit={handleAuthSubmit} 
+                  onSocialAuth={handleSocialAuth}
                 />
               </div>
             </div>
