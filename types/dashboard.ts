@@ -6,7 +6,8 @@ export type TabType =
   | "analytics"
   | "resources"
   | "certificates"
-  | "settings";
+  | "settings"
+  | "quiz"; // Quiz tab add ho gaya
 
 export interface StatItem {
   label: string;
@@ -33,4 +34,13 @@ export interface CertificateItem {
   title: string;
   id: string;
   date: string;
+}
+
+export interface Quiz {
+  title: string;
+  desc: string;
+  progress: number;
+  difficulty: "Easy" | "Med" | "Hard";
+  image: string;
+  status: "Continue" | "Start Quiz" | "Finish Up" | "Unlock";
 }
