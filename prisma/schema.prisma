@@ -1,13 +1,90 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
+
+model User {
+  id              String             @id @default(uuid())
+  email           String             @unique
+  name            String?
+  phone           String?
+  role            String             @default("STUDENT") // STUDENT or INSTRUCTOR
+  password        String             @default("")
+  otp             String?
+  isVerified      Boolean            @default(false)
+  otpExpiry       DateTime?
+  resetOtp        String?
+  resetOtpExpiry  DateTime?
+  courses         Course[]           @relation("InstructorCourses")
+  enrolled        CourseEnrollment[]
+  submissions     Submission[]
+  notifications   Notification[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}
+
+model Course {
+  id            String             @id @default(uuid())
+  title         String
+  description   String?
+  image         String?
+  price         Float              @default(0.0)
+  instructorId  String
+  instructor    User               @relation("InstructorCourses", fields: [instructorId], references: [id])
+  quizzes       Quiz[]
+  enrollments   CourseEnrollment[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+}
+
+model CourseEnrollment {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  enrolledAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model Quiz {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  courseId    String
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions   Json         // Array of question objects
+  submissions Submission[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Submission {
+  id          String   @id @default(uuid())
+  studentId   String
+  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score       Int
+  answers     Json     // Array of submitted answers
+  submittedAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
