@@ -102,7 +102,7 @@ export default function OverviewDashboardClient({
   const stats = [
     {
       id: "instructors",
-      label: "Total Instructors",
+      label: "TOTAL INSTRUCTORS",
       value: totalInstructorsCount,
       icon: Users,
       color: "text-purple-400 border-purple-500/20 bg-purple-600/5",
@@ -111,7 +111,7 @@ export default function OverviewDashboardClient({
     },
     {
       id: "pending",
-      label: "Pending Approvals",
+      label: "PENDING APPROVALS",
       value: pendingApprovalsCount,
       icon: Hourglass,
       color: "text-amber-400 border-amber-500/20 bg-amber-600/5",
@@ -121,7 +121,7 @@ export default function OverviewDashboardClient({
     },
     {
       id: "courses",
-      label: "Active Courses",
+      label: "ACTIVE COURSES",
       value: activeCoursesCount,
       icon: BookOpen,
       color: "text-teal-400 border-teal-500/20 bg-teal-600/5",
@@ -130,7 +130,7 @@ export default function OverviewDashboardClient({
     },
     {
       id: "status",
-      label: "Platform Status",
+      label: "PLATFORM STATUS",
       value: "Operational",
       icon: Activity,
       color: "text-emerald-400 border-emerald-500/20 bg-emerald-600/5",
@@ -151,18 +151,18 @@ export default function OverviewDashboardClient({
             <button
               key={stat.id}
               onClick={() => setActiveCard(isActive ? null : stat.id)}
-              className={`relative overflow-hidden p-6 rounded-2xl border text-left transition-all duration-300 backdrop-blur-md outline-none cursor-pointer w-full ${
+              className={`relative overflow-hidden p-6 rounded-3xl border text-left transition-all duration-300 backdrop-blur-md outline-none cursor-pointer w-full ${
                 isActive 
-                  ? `${stat.activeBorder} bg-slate-900` 
-                  : "border-white/8 bg-[rgba(10,10,18,0.7)] hover:border-white/18"
-              } group`}
+                  ? `${stat.activeBorder} bg-[#0b0a1d]` 
+                  : "border-white/5 bg-[#0b0a1d]/60 hover:border-white/15"
+              } group shadow-lg`}
             >
               {/* Background glow */}
               <div className={`absolute -right-8 -bottom-8 w-24 h-24 rounded-full ${stat.glowColor} blur-2xl group-hover:scale-150 transition-transform duration-500`} />
               
               <div className="flex items-center justify-between mb-4">
-                <span className="lu-stat-label">{stat.label}</span>
-                <div className={`p-2.5 rounded-xl border border-white/5 bg-white/5 ${stat.color}`}>
+                <span className="text-[10px] font-black tracking-wider text-slate-400 uppercase">{stat.label}</span>
+                <div className={`p-2.5 rounded-full border border-white/5 bg-[#0b0a1d] ${stat.color}`}>
                   <Icon className="w-5 h-5" />
                 </div>
               </div>
@@ -193,19 +193,19 @@ export default function OverviewDashboardClient({
         {/* VIEW: default (System Telemetry & Security Console) */}
         {activeCard === null && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fadeIn">
-            <div className="lg:col-span-2 lu-card-static p-6 space-y-6">
+            <div className="lg:col-span-2 p-6 space-y-6 bg-[#0b0a1d]/60 border border-white/5 rounded-3xl shadow-lg">
               <h3 className="text-base font-bold text-slate-100">System Telemetry</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {systemMetrics.map((metric, index) => {
                   const IconComponent = iconMap[metric.icon] || Cpu;
                   return (
-                    <div key={index} className="flex items-center space-x-4 p-4 rounded-xl bg-black/50 border border-white/6">
-                      <div className="p-2.5 rounded-xl bg-white/5 text-purple-400">
+                    <div key={index} className="flex items-center space-x-4 p-4 rounded-2xl bg-[#070710]/60 border border-white/5">
+                      <div className="p-2.5 rounded-2xl bg-slate-900 border border-white/5 text-purple-400">
                         <IconComponent className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="lu-caption">{metric.name}</p>
-                        <p className="text-slate-100 font-bold text-sm mt-0.5">{metric.value}</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{metric.name}</p>
+                        <p className="text-slate-100 font-extrabold text-sm mt-0.5">{metric.value}</p>
                       </div>
                     </div>
                   );
@@ -213,19 +213,19 @@ export default function OverviewDashboardClient({
               </div>
             </div>
 
-            <div className="lu-card-static p-6 flex flex-col justify-between space-y-4">
-              <div>
+            <div className="p-6 flex flex-col justify-between space-y-6 bg-[#0b0a1d]/60 border border-white/5 rounded-3xl shadow-lg">
+              <div className="space-y-3">
                 <h3 className="text-base font-bold text-slate-100 mb-2">Security Console</h3>
-                <p className="lu-caption leading-relaxed">
+                <p className="text-xs text-slate-400 leading-relaxed">
                   Sessions are fully cryptographically validated on the server. Dynamic role guards prevent non-administrators from bypassing the gateway routing scope.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-[rgba(139,92,246,0.06)] border border-[rgba(139,92,246,0.15)] text-violet-300 text-xs flex items-center space-x-2">
+              <div className="p-4 rounded-full bg-[rgba(139,92,246,0.06)] border border-[rgba(139,92,246,0.15)] text-violet-300 text-xs flex items-center justify-center space-x-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                 </span>
-                <span className="font-semibold uppercase tracking-wider">RBAC Guards Enabled</span>
+                <span className="font-extrabold uppercase tracking-wider text-[10px]">RBAC GUARDS ENABLED</span>
               </div>
             </div>
           </div>

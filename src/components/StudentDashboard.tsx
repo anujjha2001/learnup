@@ -20,6 +20,7 @@ import NotificationBell from "@/components/NotificationBell";
 
 // NEW IMPORT FOR SETTINGS (Only necessary change)
 import SettingsForm from "@/components/settings/SettingsForm";
+import { authService } from "@/lib/auth";
 
 interface StudentDashboardProps {
   onLogout: () => void;
@@ -30,11 +31,23 @@ export default function StudentDashboard({ onLogout }: StudentDashboardProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState<any[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
+  
+  // Payment states
+  const [processingCourseId, setProcessingCourseId] = useState<string | null>(null);
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [loadingTransactions, setLoadingTransactions] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    setCurrentUser(authService.getCurrentUser());
+  }, []);
 
   const fetchCourses = async () => {
     setLoadingCourses(true);
     try {
-      const res = await fetch("/api/courses");
+      const user = authService.getCurrentUser();
+      const userIdParam = user?.id ? `?userId=${user.id}` : "";
+      const res = await fetch(`/api/courses${userIdParam}`);
       if (res.ok) {
         const data = await res.json();
         setCourses(data);
@@ -46,9 +59,160 @@ export default function StudentDashboard({ onLogout }: StudentDashboardProps) {
     }
   };
 
+  const fetchTransactions = async (userId: string) => {
+    setLoadingTransactions(true);
+    try {
+      const res = await fetch(`/api/payment/history?userId=${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setTransactions(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch transaction history", err);
+    } finally {
+      setLoadingTransactions(false);
+    }
+  };
+
   useEffect(() => {
     fetchCourses();
   }, []);
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      fetchTransactions(currentUser.id);
+    }
+  }, [currentUser]);
+
+  // Load Razorpay Script
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+    }
+  }, []);
+
+  const handlePayment = async (courseId: string, amount: number, courseTitle: string) => {
+    if (!currentUser) {
+      alert("Please login to purchase courses.");
+      return;
+    }
+    setProcessingCourseId(courseId);
+
+    try {
+      const res = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount,
+          userId: currentUser.id,
+          courseId,
+        })
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to create order");
+      }
+
+      const orderData = await res.json();
+
+      // Sandbox / dummy flow if key is missing/dummy
+      if (orderData.id.startsWith("order_mock_")) {
+        setTimeout(async () => {
+          try {
+            const verifyRes = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: orderData.id,
+                razorpay_payment_id: `pay_mock_${Date.now()}`,
+                razorpay_signature: "mock_signature",
+              })
+            });
+            if (verifyRes.ok) {
+              alert("[Sandbox Bypass] Enrollment Successful!");
+              fetchCourses();
+              if (currentUser?.id) {
+                fetchTransactions(currentUser.id);
+              }
+            } else {
+              alert("Sandbox verification failed.");
+            }
+          } catch (e) {
+            console.error(e);
+          } finally {
+            setProcessingCourseId(null);
+          }
+        }, 1500);
+        return;
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_dummy",
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "LearnUp LMS",
+        description: `Enroll in ${courseTitle}`,
+        order_id: orderData.id,
+        handler: async function (response: any) {
+          try {
+            const verifyRes = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              })
+            });
+
+            if (verifyRes.ok) {
+              alert("Payment Successful! You are now enrolled.");
+              fetchCourses();
+              if (currentUser?.id) {
+                fetchTransactions(currentUser.id);
+              }
+            } else {
+              const err = await verifyRes.json();
+              alert(`Payment verification failed: ${err.error || 'Please contact support.'}`);
+            }
+          } catch (verifyErr) {
+            console.error(verifyErr);
+            alert("Verification request failed. Please check your transaction list.");
+          } finally {
+            setProcessingCourseId(null);
+          }
+        },
+        prefill: {
+          name: currentUser.name || "Student",
+          email: currentUser.email || "",
+          contact: currentUser.phone || "",
+        },
+        theme: {
+          color: "#3525cd",
+        },
+        modal: {
+          ondismiss: function () {
+            setProcessingCourseId(null);
+          }
+        }
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (err: any) {
+      alert(err.message || "Failed to process payment");
+      setProcessingCourseId(null);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full bg-[#f8f9ff] text-[#0b1c30] font-sans antialiased overflow-hidden">
@@ -100,6 +264,7 @@ export default function StudentDashboard({ onLogout }: StudentDashboardProps) {
             { id: "certificates", label: "Certificates", icon: "workspace_premium" },
             { id: "quiz", label: "Quiz Lobby", icon: "quiz" },
             { id: "settings", label: "Settings", icon: "settings" },
+            { id: "payments", label: "Payments", icon: "receipt_long" },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (

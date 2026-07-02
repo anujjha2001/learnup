@@ -24,10 +24,16 @@ model User {
   resetOtpExpiry  DateTime?
   courses         Course[]           @relation("InstructorCourses")
   enrolled        CourseEnrollment[]
-  submissions     Submission[]
-  notifications   Notification[]
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  submissions           Submission[]
+  notifications         Notification[]
+  wallet                Wallet?
+  status                String             @default("APPROVED") // PENDING, APPROVED, REJECTED
+  avatar                String?
+  studentTransactions   Transaction[]      @relation("StudentTransactions")
+  instructorTransactions Transaction[]     @relation("InstructorTransactions")
+  supportTickets         SupportTicket[]
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
 }
 
 model Course {
@@ -40,6 +46,7 @@ model Course {
   instructor    User               @relation("InstructorCourses", fields: [instructorId], references: [id])
   quizzes       Quiz[]
   enrollments   CourseEnrollment[]
+  transactions  Transaction[]
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
 }
@@ -88,3 +95,58 @@ model Notification {
   createdAt DateTime @default(now())
 }
 
+model Transaction {
+  id                  String   @id @default(uuid())
+  razorpayOrderId     String   @unique
+  razorpayPaymentId   String?  @unique
+  userId              String
+  student             User     @relation("StudentTransactions", fields: [userId], references: [id], onDelete: Cascade)
+  courseId            String?
+  course              Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructorId        String?
+  instructor          User?    @relation("InstructorTransactions", fields: [instructorId], references: [id], onDelete: Cascade)
+  amount              Float
+  adminShare          Float    @default(0.0)
+  instShare           Float    @default(0.0)
+  status              String   @default("PENDING") // PENDING, SUCCESS, FAILED, REFUNDED
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Payout {
+  id               String   @id @default(uuid())
+  razorpayPayoutId String?  @unique
+  userId           String
+  amount           Float
+  status           String   // e.g. "PENDING", "SUCCESS", "FAILED"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AdminSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  balance   Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SupportTicket {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject   String
+  message   String
+  status    String   @default("OPEN") // OPEN, RESOLVED, CLOSED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

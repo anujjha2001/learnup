@@ -53,6 +53,20 @@ async function main() {
   });
   console.log("Student created:", student);
 
+  const admin = await db.user.upsert({
+    where: { email: "admin@learnup.com" },
+    update: { id: "admin-1", name: "Admin Lead", role: "ADMIN", isVerified: true, password: "password123" },
+    create: {
+      id: "admin-1",
+      email: "admin@learnup.com",
+      name: "Admin Lead",
+      role: "ADMIN",
+      isVerified: true,
+      password: "password123"
+    }
+  });
+  console.log("Admin created:", admin);
+
   // 2. Create Courses
   const c1 = await db.course.upsert({
     where: { id: "c1" },

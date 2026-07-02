@@ -7,7 +7,8 @@ export type TabType =
   | "resources"
   | "certificates"
   | "settings"
-  | "quiz"; // Quiz tab add ho gaya
+  | "quiz"
+  | "payments";
 
 export interface StatItem {
   label: string;

@@ -91,11 +91,13 @@ export async function POST() {
     const transaction = await db.transaction.create({
       data: {
         courseId: randomCourse.id,
-        studentId: randomStudent.id,
+        userId: randomStudent.id,
         instructorId: randomCourse.instructorId,
         amount,
         adminShare,
-        instShare
+        instShare,
+        razorpayOrderId: `ord_sim_${Date.now()}`,
+        status: "SUCCESS"
       },
       include: {
         student: { select: { name: true, email: true } },

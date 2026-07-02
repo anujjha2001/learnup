@@ -37,6 +37,16 @@ interface InstructorDashboardProps {
 
 export default function InstructorDashboard({ onLogout }: InstructorDashboardProps) {
   const [activeTab, setActiveTab] = useState<InstructorTabType>("dashboard");
+  
+  // Wallet / Payout states
+  const [walletBalance, setWalletBalance] = useState<number>(0);
+  const [payoutHistory, setPayoutHistory] = useState<any[]>([]);
+  const [loadingWallet, setLoadingWallet] = useState<boolean>(false);
+  const [withdrawAmount, setWithdrawAmount] = useState<string>("");
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState<boolean>(false);
+  const [withdrawing, setWithdrawing] = useState<boolean>(false);
+  const [withdrawError, setWithdrawError] = useState<string>("");
+
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -139,9 +149,72 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
     }
   };
 
+  const getInstructorId = () => {
+    if (typeof window === "undefined") return "inst-1";
+    const userStr = localStorage.getItem("learnup_user");
+    if (!userStr) return "inst-1";
+    try {
+      const u = JSON.parse(userStr);
+      return u.id || "inst-1";
+    } catch {
+      return "inst-1";
+    }
+  };
+
+  const fetchWallet = async () => {
+    setLoadingWallet(true);
+    try {
+      const uid = getInstructorId();
+      const res = await fetch(`/api/payout/wallet?userId=${uid}`);
+      if (res.ok) {
+        const data = await res.json();
+        setWalletBalance(data.balance);
+      }
+      const historyRes = await fetch(`/api/payout/history?userId=${uid}`);
+      if (historyRes.ok) {
+        const historyData = await historyRes.json();
+        setPayoutHistory(historyData);
+      }
+    } catch (err) {
+      console.error("Failed to fetch wallet info:", err);
+    } finally {
+      setLoadingWallet(false);
+    }
+  };
+
+  const handleWithdraw = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setWithdrawError("");
+    setWithdrawing(true);
+    try {
+      const uid = getInstructorId();
+      const res = await fetch("/api/payout/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: uid, amount: withdrawAmount })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to process withdrawal");
+      }
+      setToastMessage(`Successfully withdrew ₹${parseFloat(withdrawAmount).toFixed(2)}`);
+      setWithdrawAmount("");
+      setWithdrawModalOpen(false);
+      fetchWallet(); // Reload wallet balance and history
+      
+      // Clear toast after 5 seconds
+      setTimeout(() => setToastMessage(""), 5000);
+    } catch (err: any) {
+      setWithdrawError(err.message || "Withdrawal failed");
+    } finally {
+      setWithdrawing(false);
+    }
+  };
+
   useEffect(() => {
     fetchQuizzes();
     fetchCourses();
+    fetchWallet();
   }, []);
 
   // Fetch submissions from API
@@ -599,7 +672,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
               {/* METRIC FACTOR CARDS */}
               <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { title: "Total Earnings", val: "$42,904.00", meta: "+12% this month", up: true, icon: "payments", color: "text-[#3525cd] bg-[#3525cd]/10" },
+                  { title: "Total Earnings", val: `₹${walletBalance.toFixed(2)}`, meta: "Current wallet balance", up: true, icon: "payments", color: "text-[#3525cd] bg-[#3525cd]/10" },
                   { title: "Active Students", val: "1,284", meta: "Across 8 live modules", up: false, icon: "group", color: "text-[#712ae2] bg-[#712ae2]/10" },
                   { title: "Avg Rating Matrix", val: "4.9 / 5.0", meta: "Top 2% satisfaction", up: false, icon: "star", color: "text-amber-600 bg-amber-500/10" },
                   { title: "Monthly Trajectory", val: "18.4%", meta: "Consistent scaling loop", up: true, icon: "trending_up", color: "text-[#ba1a1a] bg-[#ffdad6]" },
@@ -1104,28 +1177,150 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
           {/* SCREEN: PAYMENTS */}
           {activeTab === "payments" && (
             <div className="space-y-6 animate-fadeIn">
-              <div>
-                <h2 className="text-2xl font-bold text-[#0b1c30]">Financial Ledger Pipelines</h2>
-                <p className="text-[#464555] text-sm">Tracking settlement validation tokens and billing nodes.</p>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-[#0b1c30]">Instructor Wallet</h2>
+                  <p className="text-[#464555] text-sm">Manage your course earnings and request bank payouts.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setWithdrawError("");
+                    setWithdrawAmount("");
+                    setWithdrawModalOpen(true);
+                  }}
+                  className="bg-[#3525cd] text-white py-3 px-6 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 text-sm shadow-[#3525cd]/20 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined select-none text-base">account_balance_wallet</span>
+                  Withdraw Funds
+                </button>
               </div>
-              <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-[#eff4ff] text-xs font-bold text-[#464555] uppercase tracking-wider">
-                    <tr>
-                      <th className="p-4">Transaction Identification Token</th>
-                      <th className="p-4">Net Allocation Valuation</th>
-                      <th className="p-4">Status Node</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#c7c4d8]/10">
-                    <tr className="hover:bg-[#f8f9ff]">
-                      <td className="p-4 font-mono text-xs text-[#3525cd]">TXN-98421-X9</td>
-                      <td className="p-4 font-bold">$3,575.00</td>
-                      <td className="p-4"><span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-bold">Cleared to Bank</span></td>
-                    </tr>
-                  </tbody>
-                </table>
+
+              {/* Balance Card */}
+              <div className="bg-gradient-to-br from-[#3525cd] to-[#712ae2] text-white p-8 rounded-3xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold opacity-85 uppercase tracking-wider">Available Balance</p>
+                  <h3 className="text-4xl font-black">₹{walletBalance.toFixed(2)}</h3>
+                </div>
+                <p className="text-xs opacity-75 mt-6">Instant bank transfers via Razorpay mode.</p>
               </div>
+
+              {/* Payout History Ledger */}
+              <div className="space-y-4">
+                <h4 className="text-base font-bold text-[#0b1c30]">Payout Transactions</h4>
+                {payoutHistory.length === 0 ? (
+                  <div className="bg-white border border-[#c7c4d8]/20 rounded-2xl p-16 text-center text-[#464555] text-sm">
+                    No payouts requested yet.
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-[#eff4ff] text-xs font-bold text-[#464555] uppercase tracking-wider">
+                        <tr>
+                          <th className="p-4">Payout ID</th>
+                          <th className="p-4">Amount</th>
+                          <th className="p-4">Date</th>
+                          <th className="p-4">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#c7c4d8]/10">
+                        {payoutHistory.map((payout: any) => (
+                          <tr key={payout.id} className="hover:bg-[#f8f9ff]">
+                            <td className="p-4 font-mono text-xs text-[#3525cd]">
+                              {payout.razorpayPayoutId || payout.id}
+                            </td>
+                            <td className="p-4 font-bold text-[#0b1c30]">₹{payout.amount.toFixed(2)}</td>
+                            <td className="p-4 text-xs text-[#464555]">
+                              {new Date(payout.createdAt).toLocaleDateString()} at{" "}
+                              {new Date(payout.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            </td>
+                            <td className="p-4">
+                              <span
+                                className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase ${
+                                  payout.status === "SUCCESS"
+                                    ? "bg-green-100 text-green-800"
+                                    : payout.status === "FAILED"
+                                    ? "bg-red-100 text-red-800"
+                                    : "bg-amber-100 text-amber-800"
+                                }`}
+                              >
+                                {payout.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+
+              {/* Withdraw Modal */}
+              {withdrawModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+                  <div className="bg-white rounded-3xl max-w-md w-full p-8 border border-[#c7c4d8]/30 shadow-2xl relative space-y-6">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-lg font-bold text-[#0b1c30]">Withdraw Balance</h4>
+                      <button
+                        type="button"
+                        onClick={() => setWithdrawModalOpen(false)}
+                        className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-sm select-none">close</span>
+                      </button>
+                    </div>
+
+                    <form onSubmit={handleWithdraw} className="space-y-4">
+                      {withdrawError && (
+                        <div className="p-3.5 bg-red-50 border border-red-200 text-red-800 rounded-xl text-xs font-semibold">
+                          {withdrawError}
+                        </div>
+                      )}
+
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold text-[#464555] uppercase tracking-wider">
+                          Withdrawal Amount (INR)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">₹</span>
+                          <input
+                            type="number"
+                            required
+                            min={1}
+                            max={walletBalance}
+                            step="0.01"
+                            value={withdrawAmount}
+                            onChange={(e) => setWithdrawAmount(e.target.value)}
+                            placeholder="0.00"
+                            className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3.5 pl-8 pr-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none font-bold text-[#0b1c30]"
+                          />
+                        </div>
+                        <p className="text-[11px] text-slate-400">
+                          Maximum available for withdrawal: ₹{walletBalance.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setWithdrawModalOpen(false)}
+                          className="flex-1 py-3 border border-[#c7c4d8]/40 rounded-xl font-bold text-xs hover:bg-slate-50 transition cursor-pointer text-[#464555]"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={withdrawing || !withdrawAmount || parseFloat(withdrawAmount) > walletBalance}
+                          className="flex-1 py-3 bg-[#3525cd] text-white hover:bg-[#4f46e5] disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed rounded-xl font-bold text-xs transition cursor-pointer"
+                        >
+                          {withdrawing ? "Processing..." : "Confirm Payout"}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -23,12 +23,15 @@
     "@types/nodemailer": "^8.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.42.2",
     "lucide-react": "^1.21.0",
     "next": "16.0.0",
     "nodemailer": "^9.0.1",
+    "razorpay": "^2.9.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.80.0",
+    "swr": "^2.4.2",
     "tailwind-merge": "^3.6.0",
     "twilio": "^6.0.2",
     "zod": "^4.4.3",
