@@ -32,6 +32,13 @@ model User {
   studentTransactions   Transaction[]      @relation("StudentTransactions")
   instructorTransactions Transaction[]     @relation("InstructorTransactions")
   supportTickets         SupportTicket[]
+  mentorMessages         MentorMessage[]
+  lastLogin             DateTime?
+  streak                Int                @default(0)
+  learnupId             String?            @unique
+  provider              String?
+  certificates          Certificate[]
+  liveSessions          LiveSession[]      @relation("InstructorLiveSessions")
   createdAt             DateTime           @default(now())
   updatedAt             DateTime           @updatedAt
 }
@@ -41,14 +48,23 @@ model Course {
   title         String
   description   String?
   image         String?
+  thumbnailUrl  String?
   price         Float              @default(0.0)
   instructorId  String
   instructor    User               @relation("InstructorCourses", fields: [instructorId], references: [id])
   quizzes       Quiz[]
   enrollments   CourseEnrollment[]
   transactions  Transaction[]
+  videoModules  VideoModule[]
+  modules       Json?
+  template      String?
+  isFree        Boolean            @default(false)
+  certificates  Certificate[]
+  liveSessions  LiveSession[]
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
+
+  @@index([instructorId])
 }
 
 model CourseEnrollment {
@@ -60,12 +76,14 @@ model CourseEnrollment {
   enrolledAt DateTime @default(now())
 
   @@unique([userId, courseId])
+  @@index([courseId])
 }
 
 model Quiz {
   id          String       @id @default(uuid())
   title       String
   description String?
+  image       String?
   courseId    String
   course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   questions   Json         // Array of question objects
@@ -82,17 +100,32 @@ model Submission {
   quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
   score       Int
   answers     Json     // Array of submitted answers
+  status      String   @default("PENDING") // PENDING, REVIEWED
+  mentorMessages MentorMessage[]
   submittedAt DateTime @default(now())
+}
+
+model MentorMessage {
+  id           String     @id @default(uuid())
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  senderId     String
+  sender       User       @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  message      String
+  createdAt    DateTime   @default(now())
 }
 
 model Notification {
   id        String   @id @default(uuid())
   title     String
   message   String
+  type      String   @default("INFO")
   isRead    Boolean  @default(false)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Transaction {
@@ -111,6 +144,10 @@ model Transaction {
   status              String   @default("PENDING") // PENDING, SUCCESS, FAILED, REFUNDED
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+
+  @@index([userId])
+  @@index([courseId])
+  @@index([instructorId])
 }
 
 model Payout {
@@ -121,6 +158,8 @@ model Payout {
   status           String   // e.g. "PENDING", "SUCCESS", "FAILED"
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model AdminSetting {
@@ -135,7 +174,7 @@ model Wallet {
   id        String   @id @default(uuid())
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  balance   Float    @default(0.0)
+  balance   Float    @default(20000.0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -149,4 +188,40 @@ model SupportTicket {
   status    String   @default("OPEN") // OPEN, RESOLVED, CLOSED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model VideoModule {
+  id        String   @id @default(uuid())
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String
+  videoUrl  String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certificate {
+  id          String   @id @default(uuid())
+  studentId   String
+  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  issueDate   DateTime @default(now())
+  pdfUrl      String
+  uniqueCode  String   @unique
+}
+
+model LiveSession {
+  id           String    @id @default(uuid())
+  courseId     String
+  course       Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructorId String
+  instructor   User      @relation("InstructorLiveSessions", fields: [instructorId], references: [id], onDelete: Cascade)
+  roomName     String    @unique
+  isLive       Boolean   @default(false)
+  startedAt    DateTime  @default(now())
+  endedAt      DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }

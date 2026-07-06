@@ -45,9 +45,22 @@ export async function POST(req: Request) {
 
       // Run database updates atomically using a Prisma Transaction
       const result = await db.$transaction(async (tx) => {
+        const initialTx = await tx.transaction.findUnique({
+          where: { razorpayOrderId: razorpay_order_id }
+        });
+        if (!initialTx) throw new Error("Transaction not found");
+
+        const adminShare = parseFloat((initialTx.amount * 0.20).toFixed(2));
+        const instShare = parseFloat((initialTx.amount * 0.80).toFixed(2));
+
         const updatedTx = await tx.transaction.update({
           where: { razorpayOrderId: razorpay_order_id },
-          data: { status: "SUCCESS", razorpayPaymentId: finalPaymentId }
+          data: { 
+            status: "SUCCESS", 
+            razorpayPaymentId: finalPaymentId,
+            adminShare,
+            instShare
+          }
         });
 
         if (updatedTx.courseId) {
@@ -69,7 +82,22 @@ export async function POST(req: Request) {
           // 2. Fetch course to identify instructor
           const course = await tx.course.findUnique({
             where: { id: updatedTx.courseId },
-            select: { instructorId: true }
+            select: { instructorId: true, title: true }
+          });
+
+          const student = await tx.user.findUnique({
+            where: { id: updatedTx.userId },
+            select: { name: true }
+          });
+          const studentName = student?.name || "A student";
+
+          await tx.notification.create({
+            data: {
+              title: "New Student Enrollment",
+              message: `${studentName} enrolled in ${course?.title || 'a course'}.`,
+              isRead: false,
+              userId: course?.instructorId || "inst-1",
+            }
           });
 
           if (course?.instructorId) {
@@ -78,27 +106,48 @@ export async function POST(req: Request) {
               where: { userId: course.instructorId },
               create: {
                 userId: course.instructorId,
-                balance: updatedTx.amount
+                balance: instShare
               },
               update: {
                 balance: {
-                  increment: updatedTx.amount
+                  increment: instShare
+                }
+              }
+            });
+
+            // 4. Credit admin's wallet balance
+            await tx.wallet.upsert({
+              where: { userId: "admin-1" },
+              create: {
+                userId: "admin-1",
+                balance: adminShare
+              },
+              update: {
+                balance: {
+                  increment: adminShare
                 }
               }
             });
           }
+        } else {
+          // Wallet Top-up flow: Credit student's wallet balance directly
+          await tx.wallet.upsert({
+            where: { userId: updatedTx.userId },
+            create: {
+              userId: updatedTx.userId,
+              balance: updatedTx.amount
+            },
+            update: {
+              balance: {
+                increment: updatedTx.amount
+              }
+            }
+          });
         }
         return updatedTx;
       });
 
-      // Send Email outside of transaction
-      if (result.courseId) {
-        const user = await db.user.findUnique({ where: { id: result.userId } });
-        const course = await db.course.findUnique({ where: { id: result.courseId } });
-        if (user && user.email) {
-          await sendReceiptEmail(user.email, user.name || "Student", course?.title || "Course", result.amount);
-        }
-      }
+      // Email notification skipped as requested (In-app only)
 
       return NextResponse.json({ success: true, message: "Sandbox bypass verification success" });
     }
@@ -119,9 +168,22 @@ export async function POST(req: Request) {
 
     // Run database updates atomically using a Prisma Transaction
     const result = await db.$transaction(async (tx) => {
+      const initialTx = await tx.transaction.findUnique({
+        where: { razorpayOrderId: razorpay_order_id }
+      });
+      if (!initialTx) throw new Error("Transaction not found");
+
+      const adminShare = parseFloat((initialTx.amount * 0.20).toFixed(2));
+      const instShare = parseFloat((initialTx.amount * 0.80).toFixed(2));
+
       const transaction = await tx.transaction.update({
         where: { razorpayOrderId: razorpay_order_id },
-        data: { status: "SUCCESS", razorpayPaymentId: razorpay_payment_id }
+        data: { 
+          status: "SUCCESS", 
+          razorpayPaymentId: razorpay_payment_id,
+          adminShare,
+          instShare
+        }
       });
 
       if (transaction.courseId) {
@@ -143,7 +205,22 @@ export async function POST(req: Request) {
         // 2. Fetch course to identify instructor
         const course = await tx.course.findUnique({
           where: { id: transaction.courseId },
-          select: { instructorId: true }
+          select: { instructorId: true, title: true }
+        });
+
+        const student = await tx.user.findUnique({
+          where: { id: transaction.userId },
+          select: { name: true }
+        });
+        const studentName = student?.name || "A student";
+
+        await tx.notification.create({
+          data: {
+            title: "New Student Enrollment",
+            message: `${studentName} enrolled in ${course?.title || 'a course'}.`,
+            isRead: false,
+            userId: course?.instructorId || "inst-1",
+          }
         });
 
         if (course?.instructorId) {
@@ -152,27 +229,48 @@ export async function POST(req: Request) {
             where: { userId: course.instructorId },
             create: {
               userId: course.instructorId,
-              balance: transaction.amount
+              balance: instShare
             },
             update: {
               balance: {
-                increment: transaction.amount
+                increment: instShare
+              }
+            }
+          });
+
+          // 4. Credit admin's wallet balance
+          await tx.wallet.upsert({
+            where: { userId: "admin-1" },
+            create: {
+              userId: "admin-1",
+              balance: adminShare
+            },
+            update: {
+              balance: {
+                increment: adminShare
               }
             }
           });
         }
+      } else {
+        // Wallet Top-up flow: Credit student's wallet balance directly
+        await tx.wallet.upsert({
+          where: { userId: transaction.userId },
+          create: {
+            userId: transaction.userId,
+            balance: transaction.amount
+          },
+          update: {
+            balance: {
+              increment: transaction.amount
+            }
+          }
+        });
       }
       return transaction;
     });
 
-    // Send Email Receipt
-    if (result.courseId) {
-      const user = await db.user.findUnique({ where: { id: result.userId } });
-      const course = await db.course.findUnique({ where: { id: result.courseId } });
-      if (user && user.email) {
-        await sendReceiptEmail(user.email, user.name || "Student", course?.title || "Course", result.amount);
-      }
-    }
+    // Email notification skipped as requested (In-app only)
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
@@ -220,7 +318,7 @@ async function sendReceiptEmail(email: string, name: string, courseTitle: string
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log(`[Email Success] Receipt sent to ${email}`);
+    // console.log(`[Email Success] Receipt sent to ${email}`);
   } catch (error) {
     console.error(`[Email Failed] Failed sending receipt email to ${email}:`, error);
   }

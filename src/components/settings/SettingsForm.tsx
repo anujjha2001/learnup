@@ -46,7 +46,7 @@ const defaultValues: ProfileForm = {
   avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500",
 };
 
-export default function SettingsForm() {
+export default function SettingsForm({ onClose }: { onClose?: () => void }) {
   const methods = useForm<ProfileForm>({
     resolver: zodResolver(profileSchema),
     defaultValues,
@@ -81,6 +81,26 @@ export default function SettingsForm() {
   }, [values]);
 
   const [submitError, setSubmitError] = useState("");
+
+  const handleDiscard = () => {
+    const profile = localStorage.getItem("profile");
+    const userSessionStr = localStorage.getItem("learnup_user");
+    
+    let loadedValues = { ...defaultValues };
+    if (profile) {
+      loadedValues = { ...loadedValues, ...JSON.parse(profile) };
+    }
+    if (userSessionStr) {
+      const userSession = JSON.parse(userSessionStr);
+      loadedValues.fullName = userSession.name || loadedValues.fullName;
+      loadedValues.email = userSession.email || loadedValues.email;
+      loadedValues.phone = userSession.phone || loadedValues.phone;
+    }
+    reset(loadedValues);
+    if (onClose) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     const profile = localStorage.getItem("profile");
@@ -165,13 +185,51 @@ export default function SettingsForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen bg-[#f8f9ff]">
+      <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen bg-[#070710] text-[#f1f5f9] antialiased">
+        <style dangerouslySetInnerHTML={{__html: `
+          .glass-card {
+            background-color: rgba(11, 10, 29, 0.6) !important;
+            backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: none !important;
+          }
+          .bg-white {
+            background-color: rgba(7, 7, 16, 0.6) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          }
+          input, textarea, select {
+            background-color: rgba(7, 7, 16, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+          }
+          input:focus, textarea:focus, select:focus {
+            border-color: #8b5cf6 !important;
+            outline: none !important;
+          }
+          label {
+            color: #94a3b8 !important;
+            font-weight: 700 !important;
+          }
+          .text-\[\#0b1c30\] {
+            color: #ffffff !important;
+          }
+          .text-\[\#464555\] {
+            color: #94a3b8 !important;
+          }
+          .border {
+            border-color: rgba(255, 255, 255, 0.05) !important;
+          }
+          .text-slate-900 {
+            color: #f1f5f9 !important;
+          }
+        `}} />
         <div className="max-w-[1400px] mx-auto px-6 py-8">
           {/* Header */}
           <div className="mb-10 flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight text-[#0b1c30]">Account Settings</h1>
-              <p className="text-[#464555] mt-1">Manage your profile, preferences, and academic information</p>
+              <h1 className="text-4xl font-bold tracking-tight text-white">Account Settings</h1>
+              <p className="text-slate-400 mt-1">Manage your profile, preferences, and academic information</p>
             </div>
           </div>
 
@@ -283,7 +341,7 @@ export default function SettingsForm() {
           </div>
         </div>
 
-        <SaveBar isDirty={isDirty} loading={saving} />
+        <SaveBar isDirty={isDirty} loading={saving} onDiscard={handleDiscard} />
       </form>
     </FormProvider>
   );

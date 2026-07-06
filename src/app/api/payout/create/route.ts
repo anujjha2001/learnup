@@ -12,6 +12,9 @@ export async function POST(req: Request) {
     if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
       return NextResponse.json({ error: "Invalid withdrawal amount" }, { status: 400 });
     }
+    if (withdrawAmount < 500) {
+      return NextResponse.json({ error: "Minimum withdrawal amount is ₹500" }, { status: 400 });
+    }
 
     // 1. Fetch wallet and validate balance
     const wallet = await db.wallet.findUnique({

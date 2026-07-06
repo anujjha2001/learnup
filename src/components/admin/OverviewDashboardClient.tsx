@@ -41,6 +41,30 @@ export default function OverviewDashboardClient({
   const [instructors, setInstructors] = useState(initialInstructors);
   const [courses, setCourses] = useState(initialCourses);
   const [isPending, startTransition] = useTransition();
+  const [liveMetrics, setLiveMetrics] = useState(systemMetrics);
+
+  useEffect(() => {
+    const fetchTelemetry = async () => {
+      try {
+        const res = await fetch("/api/admin/telemetry");
+        if (res.ok) {
+          const data = await res.json();
+          setLiveMetrics([
+            { name: "CPU Utilization", value: data.cpu, icon: "Cpu", color: "text-purple-400" },
+            { name: "Memory Usage", value: data.memory, icon: "HardDrive", color: "text-teal-400" },
+            { name: "Database Connections", value: data.dbConnections, icon: "Database", color: "text-emerald-400" },
+            { name: "API Response Time", value: data.apiResponseTime, icon: "Server", color: "text-purple-400" },
+          ]);
+        }
+      } catch (e) {
+        console.error("Telemetry fetch failed:", e);
+      }
+    };
+
+    fetchTelemetry();
+    const interval = setInterval(fetchTelemetry, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Logs for Platform Status mock console
   const [logs, setLogs] = useState<string[]>([]);
@@ -196,7 +220,7 @@ export default function OverviewDashboardClient({
             <div className="lg:col-span-2 p-6 space-y-6 bg-[#0b0a1d]/60 border border-white/5 rounded-3xl shadow-lg">
               <h3 className="text-base font-bold text-slate-100">System Telemetry</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {systemMetrics.map((metric, index) => {
+                {liveMetrics.map((metric, index) => {
                   const IconComponent = iconMap[metric.icon] || Cpu;
                   return (
                     <div key={index} className="flex items-center space-x-4 p-4 rounded-2xl bg-[#070710]/60 border border-white/5">

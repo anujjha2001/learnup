@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import twilio from "twilio";
 
 // Debug Initialization Log
-console.log(`[SMTP Mailer Initialization] Loaded SMTP_USER: ${process.env.SMTP_USER || "NOT_LOADED"}`);
+// console.log(`[SMTP Mailer Initialization] Loaded SMTP_USER: ${process.env.SMTP_USER || "NOT_LOADED"}`);
 
 // Validate SMTP env vars
 export function validateCredentials() {
@@ -39,7 +39,7 @@ export async function sendOTP(
   if (!validation.valid) {
     const missingFields = validation.missing || [];
     console.warn(`[SMTP Mailer Warning] SMTP Configuration is invalid or missing: ${missingFields.join(", ")}. Falling back to console logging.`);
-    console.log(`\n==========================================\n[DEVELOPMENT OTP BYPASS] Verification Code for ${email}: ${otp}\n==========================================\n`);
+    // console.log(`\n==========================================\n[DEVELOPMENT OTP BYPASS] Verification Code for ${email}: ${otp}\n==========================================\n`);
 
     // Attempt Twilio SMS fallback if configured
     await attemptTwilioSMS(phone, otp);
@@ -80,7 +80,7 @@ export async function sendOTP(
     };
 
     // Log email structure before sending
-    console.log(`[SMTP Mailer] Attempting to send email. Structure:`, {
+    // console.log(`[SMTP Mailer] Attempting to send email. Structure:`, {
       from: mailOptions.from,
       to: mailOptions.to,
       subject: mailOptions.subject,
@@ -90,7 +90,7 @@ export async function sendOTP(
     // Send email with success/error logging
     await transporter.sendMail(mailOptions)
       .then((info) => {
-        console.log(`[SMTP Mailer Success] Email sent successfully to ${email}. MessageID: ${info.messageId}`);
+        // console.log(`[SMTP Mailer Success] Email sent successfully to ${email}. MessageID: ${info.messageId}`);
       })
       .catch((err) => {
         console.error(`[SMTP Mailer Error] Failed sending email to ${email}:`, err);
@@ -104,7 +104,7 @@ export async function sendOTP(
   } catch (error: any) {
     console.error("OTP Delivery failed:", error);
     console.warn(`[SMTP Mailer Fallback] Falling back to console logging.`);
-    console.log(`\n==========================================\n[DEVELOPMENT OTP BYPASS] Verification Code for ${email}: ${otp}\n==========================================\n`);
+    // console.log(`\n==========================================\n[DEVELOPMENT OTP BYPASS] Verification Code for ${email}: ${otp}\n==========================================\n`);
     return { success: true, error: error.message || "Failed to send OTP email (logged to console)" };
   }
 }
@@ -116,7 +116,7 @@ async function attemptTwilioSMS(phone: string, otp: string) {
 
   if (twilioSid && twilioToken && twilioPhone && !twilioSid.includes("ACXXX") && !twilioToken.includes("your_")) {
     try {
-      console.log(`[Twilio SMS] Attempting to send SMS to ${phone}...`);
+      // console.log(`[Twilio SMS] Attempting to send SMS to ${phone}...`);
       const twilioClient = twilio(twilioSid, twilioToken);
       await twilioClient.messages.create({
         body: `Your LearnUp verification code is: ${otp}`,
@@ -124,7 +124,7 @@ async function attemptTwilioSMS(phone: string, otp: string) {
         to: phone,
       });
 
-      console.log(`[Twilio SMS Success] SMS sent successfully to ${phone}`);
+      // console.log(`[Twilio SMS Success] SMS sent successfully to ${phone}`);
     } catch (smsError: any) {
       console.warn(`[Twilio SMS Warning] Twilio SMS delivery failed but proceeding:`, smsError.message || smsError);
     }

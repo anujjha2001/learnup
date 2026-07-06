@@ -15,7 +15,7 @@ class MockSupabaseClient {
 
   public auth = {
     async signInWithOAuth(params: { provider: string; options?: { redirectTo?: string } }) {
-      console.log(`Mocking Supabase OAuth sign-in for provider: ${params.provider}`);
+      // console.log(`Mocking Supabase OAuth sign-in for provider: ${params.provider}`);
       if (typeof window !== "undefined") {
         const redirectTo = params.options?.redirectTo || `${window.location.origin}/auth/dashboard/student`;
         window.location.href = redirectTo;

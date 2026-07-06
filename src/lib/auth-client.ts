@@ -141,6 +141,6 @@ export const authClient = {
     params: { userId: string; name: string; email: string; phone: string; password?: string },
     onLoading?: (loading: boolean) => void
   ): Promise<AuthResponse<{ message: string; user: any }>> {
-    return request("/api/auth/update", params, onLoading);
+    return request("/api/user/update", params, onLoading);
   },
 };

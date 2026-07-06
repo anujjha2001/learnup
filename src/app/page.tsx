@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { signIn } from "next-auth/react";
 import Navbar from "@/components/Navbar";
 import TrackProgress from "@/components/TrackProgress";
 import AuthCard from "@/components/AuthCard";
 import StudentDashboard from "@/components/StudentDashboard";
 import InstructorDashboard from "@/components/InstructorDashboard";
 import { SakaiLayoutWrapper } from "@/components/layout/SakaiLayoutWrapper";
+import dynamic from "next/dynamic";
+
+const ThreeDOrbit = dynamic(() => import("@/components/ThreeDOrbit"), { ssr: false });
 
 // Platform tour simulation chapter data
 const CHAPTERS_DATA = [
@@ -38,10 +42,10 @@ const TEAM_MEMBERS = [
     {
         name: "Anuj",
         role: "Chief Tech Architect / Founder",
-        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=300&auto=format&fit=crop",
+        image: "/Founder.png",
         bio: "Enterprise Solution Architect & Platform Innovator. Engineering hyper-scalable core systems.",
-        glow: "hover:shadow-indigo-500/10 border-white/5 hover:border-indigo-500/30",
-        badge: "bg-indigo-500/10 text-indigo-300 border border-indigo-500/20"
+        glow: "hover:shadow-purple-500/10 border-white/5 hover:border-purple-500/30",
+        badge: "bg-[#8b5cf6]/10 text-purple-300 border border-[#8b5cf6]/20"
     },
     {
         name: "Sneha",
@@ -49,23 +53,23 @@ const TEAM_MEMBERS = [
         image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop",
         bio: "Former Enterprise Design Lead. Specializing in macro user-journeys and layout systems.",
         glow: "hover:shadow-purple-500/10 border-white/5 hover:border-purple-500/30",
-        badge: "bg-purple-500/10 text-purple-300 border border-purple-500/20"
+        badge: "bg-[#8b5cf6]/10 text-purple-300 border border-[#8b5cf6]/20"
     },
     {
         name: "Vikram",
         role: "Lead Cloud Infrastructure Node",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop",
         bio: "Core DevOps Contributor. Handling global container distributions, CDNs, and orchestration routes.",
-        glow: "hover:shadow-cyan-500/10 border-white/5 hover:border-cyan-500/30",
-        badge: "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20"
+        glow: "hover:shadow-purple-500/10 border-white/5 hover:border-purple-500/30",
+        badge: "bg-[#8b5cf6]/10 text-purple-300 border border-[#8b5cf6]/20"
     },
     {
         name: "Rohan",
         role: "Director of Curriculum Strategy",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop",
         bio: "Pedagogical Advisor. Creating modular roadmap frameworks to match enterprise node hiring protocols.",
-        glow: "hover:shadow-emerald-500/10 border-white/5 hover:border-emerald-500/30",
-        badge: "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+        glow: "hover:shadow-purple-500/10 border-white/5 hover:border-purple-500/30",
+        badge: "bg-[#8b5cf6]/10 text-purple-300 border border-[#8b5cf6]/20"
     }
 ];
 
@@ -73,6 +77,32 @@ export default function HomePage() {
     // NAVIGATION STATE 
     // Options: 'home' | 'courses' | 'mentors' | 'pricing' | 'community' | 'auth' | 'student_dashboard' | 'instructor_dashboard'
     const [currentScreen, setCurrentScreen] = useState("home");
+
+    // Scroll 3D Section Refs & Hook Calculations
+    const visionRef = useRef(null);
+    const tourRef = useRef(null);
+    const teamRef = useRef(null);
+
+    const { scrollYProgress: scrollVision } = useScroll({
+        target: visionRef,
+        offset: ["start end", "end start"]
+    });
+    const rotateXVision = useTransform(scrollVision, [0, 0.5, 1], [10, 0, -10]);
+    const scaleVision = useTransform(scrollVision, [0, 0.5, 1], [0.97, 1, 0.97]);
+
+    const { scrollYProgress: scrollTour } = useScroll({
+        target: tourRef,
+        offset: ["start end", "end start"]
+    });
+    const rotateXTour = useTransform(scrollTour, [0, 0.5, 1], [10, 0, -10]);
+    const scaleTour = useTransform(scrollTour, [0, 0.5, 1], [0.97, 1, 0.97]);
+
+    const { scrollYProgress: scrollTeam } = useScroll({
+        target: teamRef,
+        offset: ["start end", "end start"]
+    });
+    const rotateXTeam = useTransform(scrollTeam, [0, 0.5, 1], [10, 0, -10]);
+    const scaleTeam = useTransform(scrollTeam, [0, 0.5, 1], [0.97, 1, 0.97]);
 
     // AUTH MODE STATE
     const [authMode, setAuthMode] = useState<"login" | "register">("login");
@@ -144,87 +174,7 @@ export default function HomePage() {
         }
     };
 
-    const handleSocialAuth = async (provider: "google" | "linkedin" | "github", role: "student" | "instructor") => {
-        const width = 600;
-        const height = 750;
-        const left = (window.innerWidth - width) / 2 + window.screenX;
-        const top = (window.innerHeight - height) / 2 + window.screenY;
 
-        window.open(
-            `/auth/oauth-mock?provider=${provider}&role=${role}`,
-            `${provider}_oauth`,
-            `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes`
-        );
-    };
-
-    useEffect(() => {
-        const handleOAuthMessage = async (event: MessageEvent) => {
-            if (event.origin !== window.location.origin) return;
-            if (event.data?.type === "oauth_success") {
-                const { provider, role, user } = event.data;
-
-                try {
-                    const res = await fetch("/api/auth/oauth", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            provider,
-                            role,
-                            email: user.email,
-                            name: user.name,
-                        }),
-                    });
-
-                    if (!res.ok) {
-                        throw new Error("Failed to process OAuth on server");
-                    }
-
-                    const result = await res.json();
-
-                    // Save local session
-                    localStorage.setItem("learnup_user", JSON.stringify(result.user));
-                    localStorage.setItem("user_email", result.user.email);
-                    localStorage.setItem("user_name", result.user.name);
-                    localStorage.setItem("user_avatar", result.user.avatar);
-                    localStorage.setItem("user_tier", result.user.role === "STUDENT" ? "Premium Student" : "Senior Instructor");
-                    localStorage.setItem("learnup_token", result.token);
-                    if (typeof document !== "undefined") {
-                        document.cookie = `learnup_token=${result.token}; path=/; max-age=86400; SameSite=Lax`;
-                    }
-
-                    // Sync Zustand store
-                    const { useUserStore } = await import("@/store/useUserStore");
-                    useUserStore.getState().setUser(result.user);
-
-                    // Sync legacy profileStore just in case
-                    const { useProfileStore } = await import("@/store/profileStore");
-                    useProfileStore.getState().updateProfile({
-                        fullName: result.user.name,
-                        email: result.user.email,
-                        avatar: result.user.avatar,
-                        tier: result.user.role === "STUDENT" ? "Premium Student" : "Senior Instructor",
-                    });
-
-                    if (typeof window !== "undefined") {
-                        window.dispatchEvent(new Event("profile_update_event"));
-                        window.dispatchEvent(new Event("profileUpdated"));
-                    }
-
-                    // Redirect or set state
-                    if (role === "student") {
-                        setCurrentScreen("student_dashboard");
-                    } else {
-                        setCurrentScreen("instructor_dashboard");
-                    }
-                } catch (error) {
-                    console.error("OAuth connectivity error:", error);
-                }
-            }
-        };
-
-        window.addEventListener("message", handleOAuthMessage);
-        return () => window.removeEventListener("message", handleOAuthMessage);
-    }, []);
 
     return (
         <>
@@ -269,13 +219,13 @@ export default function HomePage() {
             showBlobs={ true }
             lowOpacityBlobs = { ["student_dashboard", "instructor_dashboard"].includes(currentScreen) }
         >
-        <div className="text-slate-100 font-sans selection:bg-[#6d28d9]/20 min-h-screen antialiased flex flex-col justify-between w-full relative bg-[#090816]">
+        <div className="text-slate-100 font-sans selection:bg-[#8b5cf6]/20 min-h-screen antialiased flex flex-col justify-between w-full relative bg-[#070710]">
             {/* Floating background particles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
                 {clientParticles.map((p) => (
                     <motion.div
                         key={p.id}
-                        className="absolute rounded-full bg-gradient-to-r from-[#6d28d9] to-[#2dd4bf]"
+                        className="absolute rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#f97316]"
                         style={{
                             width: p.size,
                             height: p.size,
@@ -291,6 +241,7 @@ export default function HomePage() {
                         transition={{
                             duration: p.duration,
                             repeat: Infinity,
+                            repeatType: "reverse",
                             ease: "easeInOut",
                         }}
                     />
@@ -314,166 +265,136 @@ export default function HomePage() {
             <main className="flex-grow">
 
                 {/* SCREEN 1: HOME LANDING PAGE */}
-                {currentScreen === "home" && (
-                    <div className="animate-fadeIn">
+                <div className={currentScreen === "home" ? "animate-fadeIn" : "hidden"}>
                         
                         {/* ================= HERO SECTION (screenshot-matched) ================= */}
-                        <section className="relative overflow-hidden py-16 lg:py-24 max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full px-6 md:px-12">
-                            {/* Decorative subtle glow */}
-                            <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
-
-                            {/* Hero Left Content */}
-                            <div className="lg:col-span-7 space-y-6 text-center md:text-left z-10">
-                                <div className="inline-flex items-center gap-2 bg-[#6d28d9]/10 border border-[#6d28d9]/30 text-purple-300 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
-                                    <span className="material-symbols-outlined text-sm select-none">auto_awesome</span>
-                                    THE NEXT-GEN KNOWLEDGE PIPELINE
-                                </div>
-                                <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[1.08] text-white">
-                                    Master the Future of{" "}
-                                    <span className="bg-gradient-to-r from-[#bc3ef4] via-[#7c3aed] to-[#06b6d4] bg-clip-text text-transparent">
-                                        Learning
-                                    </span>{" "}
-                                    Today
-                                </h1>
-                                <p className="text-base md:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                                    Unlock elite engineer tracks with adaptive real-time dashboard tracking, dedicated industry mentors, and enterprise-grade deployment practicals.
-                                </p>
-
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full pt-4">
-                                    <button
-                                        onClick={() => setCurrentScreen("courses")}
-                                        className="bg-[#120f35] text-white border border-[#6d28d9]/40 hover:border-purple-400 hover:bg-[#6d28d9]/20 px-8 py-4 rounded-xl font-extrabold text-sm transition-all duration-300 shadow-xl shadow-purple-950/20 flex items-center justify-center gap-2 cursor-pointer group hover:-translate-y-0.5"
-                                    >
-                                        Explore All Courses
-                                        <span className="material-symbols-outlined text-lg select-none group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setAuthMode("register");
-                                            setCurrentScreen("auth");
-                                        }}
-                                        className="bg-[#0b0a1d]/80 backdrop-blur-md text-white border border-white/10 px-8 py-4 rounded-xl font-extrabold text-sm hover:bg-[#12112d] hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5"
-                                    >
-                                        <span className="material-symbols-outlined text-purple-400 text-xl select-none">rocket_launch</span>
-                                        Join Platform Now
-                                    </button>
-                                </div>
-
-                                {/* Stats Info Block */}
-                                <div className="pt-10 border-t border-white/10 flex flex-wrap gap-8 justify-center lg:justify-start items-center">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex -space-x-3">
-                                            <img
-                                                className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
-                                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-                                                alt="User Tech Lead"
-                                            />
-                                            <img
-                                                className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
-                                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
-                                                alt="User Senior Dev"
-                                            />
-                                            <img
-                                                className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
-                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
-                                                alt="User Product Manager"
-                                            />
-                                        </div>
-                                        <div className="text-left">
-                                            <p className="text-sm font-black text-white">12,000+ Engineers</p>
-                                            <p className="text-xs text-slate-400 font-medium">Syncing architectural pipelines</p>
-                                        </div>
-                                    </div>
-                                    <div className="h-8 w-px bg-white/10 self-center hidden sm:block"></div>
-                                    <div className="text-left">
-                                        <p className="text-2xl font-black bg-gradient-to-r from-[#bc3ef4] to-[#06b6d4] bg-clip-text text-transparent">4.9 / 5.0</p>
-                                        <p className="text-xs text-slate-400 font-medium">From 2,500+ production critiques</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Hero Right Visual Box (screenshot matching) */}
-                            <div className="w-full max-w-[440px] aspect-square mx-auto lg:col-span-5 duration-700">
-                                <div className="relative w-full h-full bg-gradient-to-br from-[#0c0a3e]/80 to-[#05041a]/95 rounded-3xl overflow-hidden shadow-2xl shadow-indigo-950/40 border border-[#6d28d9]/30 group flex items-center justify-center animate-bounce [animation-duration:10s]">
-                                    {/* Glowing backdrops */}
-                                    <div className="absolute top-4 left-4 w-52 h-52 bg-purple-600/20 rounded-full blur-[70px] mix-blend-screen"></div>
-                                    <div className="absolute bottom-4 right-4 w-52 h-52 bg-cyan-500/15 rounded-full blur-[60px] mix-blend-screen"></div>
-
-                                    {/* Tech Grid Overlay */}
-                                    <div className="absolute inset-0 opacity-[0.18] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]"></div>
-
-                                    {/* Cyber SVG graphic */}
-                                    <div className="absolute inset-0 flex items-center justify-center scale-105 group-hover:scale-110 transition-transform duration-700">
-                                        <svg className="w-5/6 h-5/6 text-indigo-400/30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="100" cy="100" r="85" stroke="url(#hero-io-grad-v3)" strokeWidth="1.25" strokeDasharray="6 8" className="animate-spin [animation-duration:60s]" />
-                                            <circle cx="100" cy="100" r="66" stroke="#06b6d4" strokeWidth="1" strokeDasharray="2 10" strokeOpacity="0.5" className="animate-spin [animation-duration:30s] [animation-direction:reverse]" />
-
-                                            <path d="M 30,100 Q 65,15 100,100 T 170,100" stroke="url(#hero-mesh-grad-v3)" strokeWidth="3" strokeLinecap="round" className="animate-pulse" />
-                                            <path d="M 30,100 Q 65,185 100,100 T 170,100" stroke="#06b6d4" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.4" />
-
-                                            {/* Glow core */}
-                                            <circle cx="100" cy="100" r="30" fill="url(#hero-io-grad-v3)" opacity="0.15" className="animate-ping [animation-duration:4s]" />
-
-                                            {/* Center Badge logo */}
-                                            <g transform="translate(68, 68) scale(0.32)">
-                                                <rect width="200" height="200" rx="45" fill="rgba(6, 4, 34, 0.9)" stroke="url(#hero-io-grad-v3)" strokeWidth="6" />
-                                                <path d="M60 40 V140 H140" stroke="url(#hero-io-grad-v3)" strokeWidth="26" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                                <path d="M110 90 L140 60 L170 90" stroke="#06B6D4" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                                <path d="M140 60 V120" stroke="#06B6D4" strokeWidth="22" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                            </g>
-
-                                            <defs>
-                                                <linearGradient id="hero-io-grad-v3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                    <stop offset="0%" stopColor="#bc3ef4" />
-                                                    <stop offset="100%" stopColor="#06b6d4" />
-                                                </linearGradient>
-                                                <linearGradient id="hero-mesh-grad-v3" x1="0%" y1="50%" x2="100%" y2="50%">
-                                                    <stop offset="0%" stopColor="#7c3aed" />
-                                                    <stop offset="50%" stopColor="#4f46e5" />
-                                                    <stop offset="100%" stopColor="#06b6d4" />
-                                                </linearGradient>
-                                            </defs>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
+                        <section className="relative overflow-hidden w-full h-[70vh] flex items-center justify-center px-6 md:px-12 rounded-3xl border border-white/5 bg-[#070710]/40">
+                             {/* Ambient Video Background */}
+                             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-3xl">
+                                 <video
+                                     key="/Create_a_high_fidelity_cinem.mp4"
+                                     autoPlay
+                                     loop
+                                     muted
+                                     playsInline
+                                     poster="/video_poster.png"
+                                     className="w-full h-full object-cover"
+                                 >
+                                     <source src="/Create_a_high_fidelity_cinem.mp4" type="video/mp4" />
+                                 </video>
+                                 <div className="absolute inset-0 bg-[#070710]/80"></div>
+                             </div>
+ 
+                             {/* Decorative subtle glow */}
+                             <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8b5cf6]/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+ 
+                             {/* Hero Centered Content */}
+                             <div className="relative z-10 space-y-6 text-center flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
+                                 <div className="inline-flex items-center gap-2 bg-[#8b5cf6]/10 border border-[#8b5cf6]/30 text-purple-300 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+                                     <span className="material-symbols-outlined text-sm select-none">auto_awesome</span>
+                                     THE NEXT-GEN KNOWLEDGE PIPELINE
+                                 </div>
+                                 <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[1.08] text-white">
+                                     Master the Future of{" "}
+                                     <span className="bg-gradient-to-r from-[#8b5cf6] via-[#f97316] to-[#8b5cf6] bg-clip-text text-transparent">
+                                         Learning
+                                     </span>{" "}
+                                     Today
+                                 </h1>
+ 
+                                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2 w-full">
+                                     <button
+                                         onClick={() => {
+                                             setAuthMode("register");
+                                             setCurrentScreen("auth");
+                                         }}
+                                         className="w-full sm:w-auto bg-[#f97316] hover:bg-[#ea580c] text-white px-8 py-4 rounded-xl font-extrabold text-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-orange-500/10 hover:shadow-orange-500/20 hover:-translate-y-0.5"
+                                     >
+                                         Start Learning Free
+                                         <span className="material-symbols-outlined select-none text-lg">arrow_forward</span>
+                                     </button>
+                                     <button
+                                         onClick={() => setCurrentScreen("courses")}
+                                         className="bg-transparent text-white border border-[#8b5cf6] hover:border-[#f97316] hover:bg-[#8b5cf6]/10 px-8 py-4 rounded-xl font-extrabold text-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                                     >
+                                         <span className="material-symbols-outlined text-[#f97316] text-xl select-none">rocket_launch</span>
+                                         Explore All Courses
+                                     </button>
+                                 </div>
+ 
+                                 {/* Stats Info Block */}
+                                 <div className="pt-10 border-t border-white/10 flex flex-wrap gap-8 justify-center items-center">
+                                     <div className="flex items-center gap-3">
+                                         <div className="flex -space-x-3">
+                                             <img
+                                                 className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
+                                                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+                                                 alt="User Tech Lead"
+                                             />
+                                             <img
+                                                 className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
+                                                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
+                                                 alt="User Senior Dev"
+                                             />
+                                             <img
+                                                 className="w-10 h-10 rounded-full border-2 border-slate-950 object-cover shadow-sm"
+                                                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
+                                                 alt="User Product Manager"
+                                             />
+                                         </div>
+                                         <div className="text-left">
+                                             <p className="text-sm font-black text-white">12,000+ Engineers</p>
+                                             <p className="text-xs text-slate-400 font-medium">Syncing architectural pipelines</p>
+                                         </div>
+                                     </div>
+                                     <div className="h-8 w-px bg-white/10 self-center hidden sm:block"></div>
+                                     <div className="text-left">
+                                         <p className="text-2xl font-black bg-gradient-to-r from-[#8b5cf6] to-[#f97316] bg-clip-text text-transparent">4.9 / 5.0</p>
+                                         <p className="text-xs text-slate-400 font-medium">From 2,500+ production critiques</p>
+                                     </div>
+                                 </div>
+                             </div>
                         </section>
 
                         {/* Feature Highlights Grid */}
-                        <section className="py-12 px-6 md:px-16 max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-sm space-y-4 hover:shadow-md transition text-white">
-                                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-300 flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-2xl select-none">psychology</span>
+                        <section className="py-16 px-6 md:px-16 max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch justify-center">
+                            <div className="h-full bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-sm flex flex-col space-y-5 hover:shadow-md hover:border-white/20 transition text-white">
+                                <div className="w-14 h-14 rounded-xl bg-indigo-500/10 text-indigo-300 flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-3xl select-none">psychology</span>
                                 </div>
                                 <h3 className="text-xl font-bold text-white">AI-Adaptive Curriculum</h3>
-                                <p className="text-sm text-slate-300">
+                                <p className="text-sm text-slate-300 leading-relaxed flex-grow">
                                     Smart algorithms configured to auto-serve layout variables aligned with individual pace scales.
                                 </p>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-sm space-y-4 hover:shadow-md transition text-white">
-                                <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-300 flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-2xl select-none">groups</span>
+                            <div className="h-full bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-sm flex flex-col space-y-5 hover:shadow-md hover:border-white/20 transition text-white">
+                                <div className="w-14 h-14 rounded-xl bg-amber-500/10 text-amber-300 flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-3xl select-none">groups</span>
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Elite 1:1 Mentorship</h3>
-                                <p className="text-sm text-slate-300">
+                                <p className="text-sm text-slate-300 leading-relaxed flex-grow">
                                     Live syncing workspace blocks built with veteran software leaders to debug production codebases.
                                 </p>
                             </div>
 
-                            <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-sm space-y-4 hover:shadow-md transition text-white">
-                                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-300 flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-2xl select-none">terminal</span>
+                            <div className="h-full bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-sm flex flex-col space-y-5 hover:shadow-md hover:border-white/20 transition text-white">
+                                <div className="w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-3xl select-none">terminal</span>
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Interactive Sandboxes</h3>
-                                <p className="text-sm text-slate-300">
+                                <p className="text-sm text-slate-300 leading-relaxed flex-grow">
                                     Spin up Kubernetes instances and test container setups natively straight inside your dashboard tab.
                                 </p>
                             </div>
                         </section>
 
                         {/* Vision Stats Block (merged from Hero.tsx, Styled Dark) */}
-                        <section className="py-24 border-t border-white/10 relative">
+                        <motion.section
+                            ref={visionRef}
+                            style={{ rotateX: rotateXVision, scale: scaleVision, perspective: 1000 }}
+                            className="py-24 border-t border-white/10 relative"
+                        >
                             <div className="max-w-[1280px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
                                 {/* Vision Left Narrative */}
                                 <div className="lg:col-span-5 space-y-6">
@@ -551,13 +472,18 @@ export default function HomePage() {
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </motion.section>
 
                         {/* Progress Tracking Cards Module */}
                         <TrackProgress />
 
                         {/* Product Experience Tour */}
-                        <section id="product-tour" className="py-16 px-6 md:px-16 max-w-[1280px] mx-auto border-t border-white/10">
+                        <motion.section
+                            ref={tourRef}
+                            style={{ rotateX: rotateXTour, scale: scaleTour, perspective: 1000 }}
+                            id="product-tour"
+                            className="py-16 px-6 md:px-16 max-w-[1280px] mx-auto border-t border-white/10"
+                        >
                             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
                                 <h2 className="text-3xl font-extrabold tracking-tight text-white">Experience LearnUp In Action</h2>
                                 <p className="text-sm text-slate-300">Interactive platform simulations built to map technical architecture metrics cleanly.</p>
@@ -602,10 +528,14 @@ export default function HomePage() {
                                     ))}
                                 </div>
                             </div>
-                        </section>
+                        </motion.section>
 
                         {/* Tech Architects Team Grid (styled dark) */}
-                        <section className="py-24 border-t border-white/10 relative">
+                        <motion.section
+                            ref={teamRef}
+                            style={{ rotateX: rotateXTeam, scale: scaleTeam, perspective: 1000 }}
+                            className="py-24 border-t border-white/10 relative"
+                        >
                             <div className="max-w-[1280px] mx-auto px-6 md:px-12 space-y-16">
                                 {/* Header Block */}
                                 <div className="max-w-2xl mx-auto text-center space-y-4">
@@ -652,10 +582,9 @@ export default function HomePage() {
                                     ))}
                                 </div>
                             </div>
-                        </section>
+                        </motion.section>
 
                     </div>
-                )}
 
                 {/* SCREEN 2: COURSES EXPLORER SCREEN */}
                 {currentScreen === "courses" && (
@@ -875,7 +804,6 @@ export default function HomePage() {
                                 authMode={authMode}
                                 setAuthMode={setAuthMode}
                                 onAuthSubmit={handleAuthSubmit}
-                                onSocialAuth={handleSocialAuth}
                             />
                         </div>
                     </div>
@@ -905,9 +833,38 @@ export default function HomePage() {
                             {/* Brand Identity */}
                             <div className="space-y-2 max-w-sm">
                                 <div className="flex items-center gap-2.5 text-white font-black text-xl tracking-tight">
-                                    <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20V16H8V4H4Z" fill="#bc3ef4" />
-                                        <path d="M12 13V7H10L13 3L16 7H14V13H12Z" fill="#06b6d4" />
+                                    <svg className="h-6 w-6 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                                        <defs>
+                                            <linearGradient id="footer-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style={{ stopColor: "#f97316", stopOpacity: 1 }} />
+                                                <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="200" height="200" rx="40" fill="transparent" />
+                                        <path
+                                            d="M60 40 V140 H140"
+                                            stroke="url(#footer-logo-grad)"
+                                            strokeWidth="24"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            fill="none"
+                                        />
+                                        <path
+                                            d="M110 90 L140 60 L170 90"
+                                            stroke="#8b5cf6"
+                                            strokeWidth="20"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            fill="none"
+                                        />
+                                        <path
+                                            d="M140 60 V120"
+                                            stroke="#8b5cf6"
+                                            strokeWidth="20"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            fill="none"
+                                        />
                                     </svg>
                                     LearnUp
                                 </div>

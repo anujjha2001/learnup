@@ -28,7 +28,8 @@ export async function GET(req: Request) {
     const userId = searchParams.get('userId');
 
     const dbCourses = await db.course.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      include: { instructor: true }
     });
 
     if (userId) {

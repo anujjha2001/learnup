@@ -187,61 +187,25 @@ export const authService = {
   }
 };
 
+import { getServerSession as nextAuthGetServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
+
 export async function getServerSession() {
   try {
-    const { cookies } = await import("next/headers");
-    const cookieStore = await cookies();
-    const token = cookieStore.get("learnup_token")?.value;
-    if (!token) return null;
-
-    let uid = "";
-    let role = "STUDENT";
-    let name = "";
-    let email = "";
-
-    // Support placeholder tokens in local development
-    if (token.startsWith("jwt-session-token-placeholder-") || token.startsWith("oauth-jwt-placeholder-")) {
-      const prefix = token.startsWith("jwt-session-token-placeholder-")
-        ? "jwt-session-token-placeholder-"
-        : "oauth-jwt-placeholder-";
-      const idAndTimestamp = token.replace(prefix, "");
-      const parts = idAndTimestamp.split("-");
-      if (parts.length >= 4) {
-        uid = parts.slice(0, parts.length - 3).join("-");
-      } else {
-        uid = parts.slice(0, parts.length - 1).join("-");
-      }
-
-      const { db } = await import("@/lib/db");
-      const dbUser = await db.user.findUnique({
-        where: { id: uid }
-      });
-      if (!dbUser) return null;
-      role = dbUser.role;
-      name = dbUser.name || "";
-      email = dbUser.email;
-    } else {
-      const parts = token.split(".");
-      if (parts.length !== 3) return null;
-      const payload = JSON.parse(atob(parts[1]));
-      if (!payload) return null;
-      uid = payload.sub || payload.id || "";
-      role = payload.role || "student";
-      name = payload.name || "";
-      email = payload.email || "";
-    }
-
+    const session = await nextAuthGetServerSession(authOptions);
+    if (!session || !session.user) return null;
+    
     return {
-      id: uid,
+      id: (session.user as any).id || session.user.email,
       user: {
-        id: uid,
-        name: name,
-        email: email,
-        role: role.toUpperCase(),
+        id: (session.user as any).id || session.user.email,
+        name: session.user.name || "",
+        email: session.user.email || "",
+        role: (session as any).role?.toUpperCase() || "STUDENT",
+        avatar: session.user.image || ""
       }
     };
   } catch {
     return null;
   }
 }
-

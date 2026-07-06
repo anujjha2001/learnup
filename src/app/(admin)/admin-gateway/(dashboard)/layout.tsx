@@ -38,12 +38,43 @@ export default async function AdminGatewayLayout({
       <Sidebar user={adminUser} />
 
       {/* Main Content Area */}
-      <main className="flex-1 h-screen overflow-hidden relative flex flex-col bg-[#090816]">
+      <main className="flex-1 h-screen overflow-hidden relative flex flex-col bg-[#070710]">
         {/* Ambient glow orbs */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-20%] right-[-15%] w-[55%] h-[55%] rounded-full bg-purple-600/10 blur-[130px]" />
-          <div className="absolute bottom-[-20%] left-[-15%] w-[50%] h-[50%] rounded-full bg-teal-500/10 blur-[120px]" />
+          <div className="absolute top-[-20%] right-[-15%] w-[55%] h-[55%] rounded-full bg-[#8b5cf6]/10 blur-[130px]" />
+          <div className="absolute bottom-[-20%] left-[-15%] w-[50%] h-[50%] rounded-full bg-[#f97316]/10 blur-[120px]" />
         </div>
+
+        {/* Top Header Bar with Profile & Notification Bell */}
+        <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 md:px-8 relative z-20 bg-[#070710]/40 backdrop-blur-md">
+          <div></div>
+          <div className="flex items-center gap-4">
+            {/* Notification Bell */}
+            <div className="relative shrink-0">
+              <button className="p-2 rounded-xl bg-[#0A0A0A] border border-[#2A2A2A] text-slate-400 hover:text-white transition relative cursor-pointer flex items-center justify-center">
+                <span className="material-symbols-outlined text-lg select-none">notifications</span>
+                <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-[#f97316] text-[9px] font-black text-white">2</span>
+              </button>
+            </div>
+            
+            <div className="w-px h-6 bg-white/10" />
+
+            {/* Admin Profile Section */}
+            <div className="flex items-center gap-3">
+              <div className="text-right hidden sm:block">
+                <p className="text-xs font-black text-slate-100 leading-tight">{adminUser.name}</p>
+                <p className="text-[10px] text-slate-500 mt-0.5">Admin Lead</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-[#8b5cf6]/20 border border-[#8b5cf6]/30 flex items-center justify-center font-bold text-purple-300 overflow-hidden shrink-0">
+                {adminUser.avatar ? (
+                  <img src={adminUser.avatar} alt={adminUser.name} className="w-full h-full object-cover" />
+                ) : (
+                  "A"
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
 
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-6 md:p-8 lg:p-10 relative z-10">

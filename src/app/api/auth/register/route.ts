@@ -36,6 +36,10 @@ export async function POST(req: Request) {
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes expiry
 
+    // Generate learnupId
+    const baseId = (name || email.split('@')[0]).toLowerCase().replace(/[^a-z0-9]/g, '');
+    const newLearnupId = `@${baseId}_${Math.random().toString(36).substring(2, 6)}`;
+
     // Save user to database
     const newUser = await db.user.create({
       data: {
@@ -47,6 +51,12 @@ export async function POST(req: Request) {
         otp: otpCode,
         otpExpiry,
         isVerified: false,
+        learnupId: newLearnupId,
+        wallet: {
+          create: {
+            balance: role === "STUDENT" ? 20000.0 : 0.0
+          }
+        }
       },
     });
 

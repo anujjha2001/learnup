@@ -65,6 +65,7 @@ export async function POST(req: Request) {
     // Try to load quiz details from database
     const dbQuiz = await db.quiz.findUnique({
       where: { id: quizId },
+      include: { course: true }
     });
 
     if (!dbQuiz) {
@@ -73,30 +74,61 @@ export async function POST(req: Request) {
 
     const quizQuestions = (dbQuiz.questions as any) || [];
     const title = dbQuiz.title;
+    const instructorId = dbQuiz.course?.instructorId || "inst-1";
 
     // Calculate score
     let scoreCount = 0;
     const totalQuestions = quizQuestions.length || 1;
+    const results: any[] = [];
 
     quizQuestions.forEach((q: any, idx: number) => {
-      const studentAnswer = answers[idx];
-      const correctAnswer = q.correctAnswer;
+      let studentAnswer = answers[idx];
+      let correctAnswer = q.correctAnswer;
+      let isCorrect = false;
 
-      if (studentAnswer !== undefined && studentAnswer !== null) {
-        if (typeof correctAnswer === "number") {
-          if (studentAnswer === correctAnswer) {
-            scoreCount++;
+      // Extract value if it's an object
+      if (typeof studentAnswer === 'object' && studentAnswer !== null) {
+        studentAnswer = studentAnswer.id ?? studentAnswer.value ?? studentAnswer;
+      }
+      if (typeof correctAnswer === 'object' && correctAnswer !== null) {
+        correctAnswer = correctAnswer.id ?? correctAnswer.value ?? correctAnswer;
+      }
+
+      if (studentAnswer !== undefined && studentAnswer !== null && correctAnswer !== undefined && correctAnswer !== null) {
+        // Deep Validation: strict string comparison with trim to avoid hidden whitespace
+        const studentAnswerStr = studentAnswer.toString().trim();
+        const correctAnswerStr = correctAnswer.toString().trim();
+
+        if (studentAnswerStr === correctAnswerStr) {
+          isCorrect = true;
+        } else if (studentAnswerStr.toLowerCase() === correctAnswerStr.toLowerCase()) {
+          isCorrect = true;
+        } else if (typeof correctAnswer === "number") {
+          if (Number(studentAnswerStr) === correctAnswer) {
+            isCorrect = true;
           }
         } else if (typeof correctAnswer === "string") {
           const studentText = typeof studentAnswer === "number" ? q.options?.[studentAnswer] : studentAnswer;
-          if (studentText?.toString().trim().toLowerCase() === correctAnswer.toString().trim().toLowerCase()) {
-            scoreCount++;
+          if (studentText?.toString().trim().toLowerCase() === correctAnswerStr.toLowerCase()) {
+            isCorrect = true;
           }
         }
       }
+
+      if (isCorrect) scoreCount++;
+
+      results.push({
+        questionIndex: idx,
+        isCorrect,
+        studentAnswer,
+        correctAnswer
+      });
     });
 
     const finalPercent = Math.round((scoreCount / totalQuestions) * 100);
+    const passingThreshold = 60;
+    const passed = finalPercent >= passingThreshold;
+    const submissionStatus = passed ? "passed" : "failed";
 
     // Save submission to database
     const dbSubmission = await db.submission.create({
@@ -105,6 +137,7 @@ export async function POST(req: Request) {
         quizId,
         score: finalPercent,
         answers: answers as any,
+        status: submissionStatus
       },
     });
 
@@ -114,10 +147,33 @@ export async function POST(req: Request) {
         data: {
           title: "New Quiz Submission",
           message: `${studentName} completed ${title} scoring ${finalPercent}%.`,
+          type: "QUIZ_SUBMITTED",
           isRead: false,
-          userId: "inst-1", // default instructor id
+          userId: instructorId,
         },
       });
+
+      if (finalPercent >= 80) {
+        await db.notification.create({
+          data: {
+            title: "Course Completed",
+            message: `${studentName} completed ${dbQuiz.course?.title || 'the course'} with score ${finalPercent}%.`,
+            type: "QUIZ_SUBMITTED",
+            isRead: false,
+            userId: instructorId,
+          },
+        });
+      }
+
+      // Generate certificate asynchronously if passed
+      if (finalPercent >= 60 && dbQuiz.courseId) {
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+        fetch(`${appUrl}/api/certificates/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ studentId, courseId: dbQuiz.courseId })
+        }).catch(err => console.error("Async cert generate trigger failed:", err));
+      }
     } catch (notifErr) {
       console.warn("Notification insert failed:", notifErr);
     }
@@ -132,7 +188,7 @@ export async function POST(req: Request) {
             title: "New Quiz Submission",
             message: `${studentName} completed ${title} scoring ${finalPercent}%.`,
             isRead: false,
-            userId: "inst-1",
+            userId: instructorId,
             createdAt: new Date().toISOString(),
           },
         ]);
@@ -147,6 +203,14 @@ export async function POST(req: Request) {
       total: totalQuestions,
       percentage: finalPercent,
       submissionId: dbSubmission.id,
+      debugInfo: {
+        submittedAnswers: answers,
+        expectedAnswers: quizQuestions.map((q: any) => q.correctAnswer),
+        comparisonLog: results.map(r => ({
+          questionId: r.questionIndex + 1,
+          match: r.isCorrect
+        }))
+      }
     }, { status: 200 });
   } catch (error: any) {
     console.error("Submission processing error:", error);

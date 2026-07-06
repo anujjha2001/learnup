@@ -10,6 +10,7 @@ import {
   ShieldAlert,
   Menu,
   X,
+  HelpCircle,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -21,6 +22,7 @@ const navItems = [
   { name: "Manage Instructors", href: "/admin-gateway/instructors",  icon: Users },
   { name: "Manage Students",    href: "/admin-gateway/students",     icon: GraduationCap },
   { name: "Content Moderation", href: "/admin-gateway/moderation",  icon: ShieldAlert },
+  { name: "Support Center",     href: "/admin-gateway/support",     icon: HelpCircle },
 ];
 
 export default function Sidebar({ user }: SidebarProps) {
@@ -39,8 +41,8 @@ export default function Sidebar({ user }: SidebarProps) {
     <svg className="h-9 w-9 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
       <defs>
         <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: "#06B6D4", stopOpacity: 1 }} />
+          <stop offset="0%"   style={{ stopColor: "#f97316", stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
         </linearGradient>
       </defs>
       <rect width="200" height="200" rx="40" fill="transparent" />
@@ -62,7 +64,7 @@ export default function Sidebar({ user }: SidebarProps) {
               <span className="text-xl font-black text-white tracking-tight block leading-none">
                 LearnUp
               </span>
-              <span className="text-[9px] font-black tracking-widest text-[#00c0a8] uppercase block mt-1">
+              <span className="text-[9px] font-black tracking-widest text-[#f97316] uppercase block mt-1">
                 ADMIN GATEWAY
               </span>
             </div>
@@ -100,33 +102,9 @@ export default function Sidebar({ user }: SidebarProps) {
 
       {/* User footer */}
       <div className="p-4 border-t border-white/5">
-        <div className="flex items-center justify-between gap-3 mb-4 px-1">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-300 overflow-hidden shrink-0">
-              {user.avatar ? (
-                <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
-              ) : (
-                "A"
-              )}
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs font-black text-slate-100 truncate leading-tight">{user.name}</p>
-              <p className="text-[10px] text-slate-500 truncate mt-0.5">{user.email}</p>
-            </div>
-          </div>
-          
-          {/* Notification Bell with Badge */}
-          <div className="relative shrink-0">
-            <button className="p-2 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white transition relative cursor-pointer flex items-center justify-center">
-              <span className="material-symbols-outlined text-lg select-none">notifications</span>
-              <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-black text-white">2</span>
-            </button>
-          </div>
-        </div>
-
         <button
           onClick={handleLogout}
-          className="flex items-center justify-center gap-2 border border-white/10 bg-transparent hover:bg-white/5 text-slate-300 hover:text-white transition w-full py-2 px-3 rounded-full text-xs font-bold cursor-pointer"
+          className="flex items-center justify-center gap-2 border border-white/10 bg-transparent hover:bg-white/5 text-slate-300 hover:text-white transition w-full py-2.5 px-3 rounded-full text-xs font-bold cursor-pointer"
         >
           <span className="material-symbols-outlined text-sm select-none">logout</span>
           Exit Dashboard
@@ -145,7 +123,7 @@ export default function Sidebar({ user }: SidebarProps) {
             <span className="text-lg font-black text-white tracking-tight block leading-none">
               LearnUp
             </span>
-            <span className="text-[8px] font-black tracking-widest text-[#00c0a8] uppercase block mt-0.5">
+            <span className="text-[8px] font-black tracking-widest text-[#f97316] uppercase block mt-0.5">
               ADMIN GATEWAY
             </span>
           </div>

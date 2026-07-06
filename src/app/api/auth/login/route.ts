@@ -41,6 +41,32 @@ export async function POST(req: Request) {
       );
     }
 
+    // Calculate streak
+    const now = new Date();
+    let newStreak = (user as any).streak || 0;
+    if ((user as any).lastLogin) {
+      const lastLoginDate = new Date((user as any).lastLogin);
+      const lastMidnight = new Date(lastLoginDate.getFullYear(), lastLoginDate.getMonth(), lastLoginDate.getDate());
+      const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffDays = Math.round((todayMidnight.getTime() - lastMidnight.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (diffDays === 1) {
+        newStreak += 1;
+      } else if (diffDays > 1) {
+        newStreak = 1;
+      }
+    } else {
+      newStreak = 1;
+    }
+
+    await db.user.update({
+      where: { id: user.id },
+      data: {
+        lastLogin: now,
+        streak: newStreak
+      }
+    });
+
     // Create session token placeholder
     const sessionTokenPlaceholder = `jwt-session-token-placeholder-${user.id}-${user.role}-${user.status || "APPROVED"}-${Date.now()}`;
 
@@ -54,6 +80,9 @@ export async function POST(req: Request) {
           name: user.name,
           phone: user.phone,
           role: user.role,
+          streak: newStreak,
+          lastLogin: now.toISOString(),
+          learnupId: (user as any).learnupId,
         },
       },
       { status: 200 }

@@ -32,7 +32,7 @@ export function middleware(req: NextRequest) {
   }
 
   // Hotfix debugging log
-  console.log(`[Middleware] Pathname: ${pathname} | Token Role: ${role} | Status: ${status} | UserID: ${userId}`);
+  // console.log(`[Middleware] Pathname: ${pathname} | Token Role: ${role} | Status: ${status} | UserID: ${userId}`);
 
   // 1. Protect /admin-gateway (Role: ADMIN)
   if (pathname.startsWith("/admin-gateway")) {
@@ -41,7 +41,7 @@ export function middleware(req: NextRequest) {
     }
 
     if (!token || !prefix || !role || role === "GUEST" || role.toUpperCase() !== "ADMIN") {
-      console.log(`[Middleware Failure] Access denied on admin route. Redirecting to login.`);
+      // console.log(`[Middleware Failure] Access denied on admin route. Redirecting to login.`);
       const url = req.nextUrl.clone();
       url.pathname = "/admin-gateway/login";
       return NextResponse.redirect(url);

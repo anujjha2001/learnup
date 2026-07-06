@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "@/lib/auth";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 import { db } from "@/lib/db";
 import { cookies } from "next/headers";
 
@@ -7,8 +8,8 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const session = await getServerSession();
-    console.log("[Debug Admin] Session detected:", session);
+    const session = await getServerSession(authOptions);
+    // console.log("[Debug Admin] Session detected:", session);
 
     const cookieStore = await cookies();
     const token = cookieStore.get("learnup_token")?.value;
@@ -45,7 +46,7 @@ export async function GET() {
       where: { id: session.id },
     });
 
-    console.log("[Debug Admin] Database User record:", {
+    // console.log("[Debug Admin] Database User record:", {
       id: dbUser?.id,
       email: dbUser?.email,
       role: dbUser?.role,

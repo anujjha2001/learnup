@@ -37,9 +37,17 @@ export async function POST(req: Request) {
       if (transaction && transaction.status !== "SUCCESS") {
         // Run database updates atomically using a Prisma Transaction
         await db.$transaction(async (tx) => {
+          const adminShare = parseFloat((transaction.amount * 0.20).toFixed(2));
+          const instShare = parseFloat((transaction.amount * 0.80).toFixed(2));
+
           await tx.transaction.update({
             where: { razorpayOrderId: orderId },
-            data: { status: "SUCCESS", razorpayPaymentId: payment.id }
+            data: { 
+              status: "SUCCESS", 
+              razorpayPaymentId: payment.id,
+              adminShare,
+              instShare
+            }
           });
 
           if (transaction.courseId) {
@@ -70,11 +78,25 @@ export async function POST(req: Request) {
                 where: { userId: course.instructorId },
                 create: {
                   userId: course.instructorId,
-                  balance: transaction.amount
+                  balance: instShare
                 },
                 update: {
                   balance: {
-                    increment: transaction.amount
+                    increment: instShare
+                  }
+                }
+              });
+
+              // 4. Credit admin's wallet balance
+              await tx.wallet.upsert({
+                where: { userId: "admin-1" },
+                create: {
+                  userId: "admin-1",
+                  balance: adminShare
+                },
+                update: {
+                  balance: {
+                    increment: adminShare
                   }
                 }
               });

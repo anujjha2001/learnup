@@ -25,19 +25,35 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, description, courseId = "c1", questions = [] } = body;
+    const { title, description, topic, courseId = "c1", questions = [] } = body;
 
     if (!title) {
       return NextResponse.json({ error: "Quiz title is required" }, { status: 400 });
     }
 
+    // Fetch Unsplash image based on topic query
+    let imageUrl = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600"; // default high-contrast abstract purple-orange artwork
+    if (topic) {
+      try {
+        const unsplashRes = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(topic)}&per_page=1&client_id=rV6E3zK1Q0J52T7P1-8a8w7p3z2x5h3zQWp5h3zQWp5`);
+        if (unsplashRes.ok) {
+          const data = await unsplashRes.json();
+          if (data.results && data.results.length > 0) {
+            imageUrl = data.results[0].urls.regular;
+          }
+        }
+      } catch (err) {
+        console.warn("Unsplash API query fallback trigger:", err);
+      }
+    }
+
     const isConnected = await checkDatabaseConnection();
     if (!isConnected) {
-      // In-memory mock response to ensure frontend never breaks even if DB goes offline
       const mockQuiz = {
         id: `q-mock-${Date.now()}`,
         title,
         description,
+        image: imageUrl,
         courseId,
         questions,
         createdAt: new Date().toISOString(),
@@ -52,8 +68,34 @@ export async function POST(req: Request) {
         description,
         courseId,
         questions: questions as any,
+        image: imageUrl,
       }
     });
+
+    // Trigger In-App Notifications for students enrolled in this course
+    try {
+      const existingEnrollments = await db.courseEnrollment.findMany({
+        where: { courseId: courseId },
+        select: { userId: true },
+        distinct: ['userId']
+      });
+
+      if (existingEnrollments.length > 0) {
+        const notifications = existingEnrollments.map((enr) => ({
+          title: "New Quiz Available!",
+          message: `A new quiz '${title}' has been added to your course.`,
+          isRead: false,
+          userId: enr.userId,
+        }));
+
+        await db.notification.createMany({
+          data: notifications
+        });
+      }
+    } catch (notifErr) {
+      console.error("Failed to send quiz notifications:", notifErr);
+    }
+
     return NextResponse.json(newQuiz, { status: 201 });
   } catch (error) {
     console.error("POST /api/quizzes error:", error);
@@ -64,15 +106,30 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const body = await req.json();
-    const { id, title, description, courseId, questions } = body;
+    const { id, title, description, topic, courseId, questions } = body;
 
     if (!id) {
       return NextResponse.json({ error: "Quiz ID is required" }, { status: 400 });
     }
 
+    let imageUrl: string | undefined = undefined;
+    if (topic) {
+      try {
+        const unsplashRes = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(topic)}&per_page=1&client_id=rV6E3zK1Q0J52T7P1-8a8w7p3z2x5h3zQWp5h3zQWp5`);
+        if (unsplashRes.ok) {
+          const data = await unsplashRes.json();
+          if (data.results && data.results.length > 0) {
+            imageUrl = data.results[0].urls.regular;
+          }
+        }
+      } catch (err) {
+        console.warn("Unsplash API query fallback trigger:", err);
+      }
+    }
+
     const isConnected = await checkDatabaseConnection();
     if (!isConnected) {
-      return NextResponse.json({ id, title, description, courseId, questions }, { status: 200 });
+      return NextResponse.json({ id, title, description, courseId, questions, image: imageUrl }, { status: 200 });
     }
 
     const updatedQuiz = await db.quiz.update({
@@ -82,6 +139,7 @@ export async function PATCH(req: Request) {
         ...(description !== undefined && { description }),
         ...(courseId && { courseId }),
         ...(questions && { questions: questions as any }),
+        ...(imageUrl && { image: imageUrl }),
       }
     });
     return NextResponse.json(updatedQuiz, { status: 200 });

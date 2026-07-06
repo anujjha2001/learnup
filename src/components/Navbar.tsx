@@ -30,8 +30,8 @@ export default function Navbar({
         <svg className="h-9 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
           <defs>
             <linearGradient id="global-header-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: "#bc3ef4", stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: "#06B6D4", stopOpacity: 1 }} />
+              <stop offset="0%" style={{ stopColor: "#f97316", stopOpacity: 1 }} />
+              <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
             </linearGradient>
           </defs>
           <rect width="200" height="200" rx="40" fill="transparent" />
@@ -45,7 +45,7 @@ export default function Navbar({
           />
           <path
             d="M110 90 L140 60 L170 90"
-            stroke="#06B6D4"
+            stroke="#8b5cf6"
             strokeWidth="20"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -53,7 +53,7 @@ export default function Navbar({
           />
           <path
             d="M140 60 V120"
-            stroke="#06B6D4"
+            stroke="#8b5cf6"
             strokeWidth="20"
             strokeLinecap="round"
             strokeLinejoin="round"
