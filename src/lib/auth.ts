@@ -186,3 +186,26 @@ export const authService = {
     localStorage.removeItem("user_name");
   }
 };
+
+import { getServerSession as nextAuthGetServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
+
+export async function getServerSession() {
+  try {
+    const session = await nextAuthGetServerSession(authOptions);
+    if (!session || !session.user) return null;
+    
+    return {
+      id: (session.user as any).id || session.user.email,
+      user: {
+        id: (session.user as any).id || session.user.email,
+        name: session.user.name || "",
+        email: session.user.email || "",
+        role: (session as any).role?.toUpperCase() || "STUDENT",
+        avatar: session.user.image || ""
+      }
+    };
+  } catch {
+    return null;
+  }
+}

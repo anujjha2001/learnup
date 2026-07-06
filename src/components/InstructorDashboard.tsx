@@ -2,6 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import NotificationBell from "@/components/NotificationBell";
+import GlobalSearch from "@/components/GlobalSearch";
+import QuizReviewScreen from "./instructor/QuizReviewScreen";
+import CourseBuilder from "./instructor/CourseBuilder";
+import SettingsForm from "@/components/settings/SettingsForm";
+import LiveClassRoom from "./live/LiveClassRoom";
 
 // Strict type parameters for instructor pipeline tracking
 type InstructorTabType = 
@@ -13,6 +18,7 @@ type InstructorTabType =
   | "analytics" 
   | "payments" 
   | "settings" 
+  | "live-class"
   | "create-course";
 
 interface Question {
@@ -32,11 +38,22 @@ interface Quiz {
 }
 
 interface InstructorDashboardProps {
-  onLogout: () => void;
+  onLogout?: () => void;
+  user?: any;
 }
 
-export default function InstructorDashboard({ onLogout }: InstructorDashboardProps) {
+export default function InstructorDashboard({ onLogout, user }: InstructorDashboardProps) {
   const [activeTab, setActiveTab] = useState<InstructorTabType>("dashboard");
+  
+  // Wallet / Payout states
+  const [walletBalance, setWalletBalance] = useState<number>(0);
+  const [payoutHistory, setPayoutHistory] = useState<any[]>([]);
+  const [loadingWallet, setLoadingWallet] = useState<boolean>(false);
+  const [withdrawAmount, setWithdrawAmount] = useState<string>("");
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState<boolean>(false);
+  const [withdrawing, setWithdrawing] = useState<boolean>(false);
+  const [withdrawError, setWithdrawError] = useState<string>("");
+
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -46,6 +63,11 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
   const [loadingSubmissions, setLoadingSubmissions] = useState(false);
   const [submissionsError, setSubmissionsError] = useState("");
   const [toastMessage, setToastMessage] = useState("");
+  const [enrolledStudents, setEnrolledStudents] = useState<any[]>([]);
+  const [loadingStudents, setLoadingStudents] = useState(false);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(user || null);
 
   // Course states
   const [courses, setCourses] = useState<any[]>([]);
@@ -65,6 +87,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
     title: "",
     description: "",
     courseId: "c1",
+    topic: "",
   });
   const [quizQuestions, setQuizQuestions] = useState<Question[]>([
     { text: "", options: ["", "", "", ""], correctAnswer: 0, points: 1 }
@@ -76,6 +99,55 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
   const [previewSelectedAnswer, setPreviewSelectedAnswer] = useState<number | null>(null);
   const [previewScore, setPreviewScore] = useState(0);
   const [previewDone, setPreviewDone] = useState(false);
+
+  // Live Class States
+  const [activeLiveSession, setActiveLiveSession] = useState<any>(null);
+  const [selectedCourseForLive, setSelectedCourseForLive] = useState("");
+  const [isStartingLive, setIsStartingLive] = useState(false);
+
+  const handleStartLiveClass = async () => {
+    if (!selectedCourseForLive) return;
+    setIsStartingLive(true);
+    try {
+      const roomName = `room-${Date.now()}`;
+      const res = await fetch("/api/live", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          courseId: selectedCourseForLive,
+          instructorId: currentUser?.id || "inst-1",
+          roomName
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setActiveLiveSession(data);
+      } else {
+        alert(data.error || "Failed to start live session");
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsStartingLive(false);
+    }
+  };
+
+  const handleEndLiveClass = async () => {
+    if (!activeLiveSession) return;
+    try {
+      await fetch("/api/live", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: activeLiveSession.id,
+          isLive: false
+        })
+      });
+      setActiveLiveSession(null);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // Fetch courses
   const fetchCourses = async () => {
@@ -139,10 +211,138 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
     }
   };
 
+  const getInstructorId = () => {
+    if (typeof window === "undefined") return "inst-1";
+    const userStr = localStorage.getItem("learnup_user");
+    if (!userStr) return "inst-1";
+    try {
+      const u = JSON.parse(userStr);
+      return u.id || "inst-1";
+    } catch {
+      return "inst-1";
+    }
+  };
+
+  const fetchWallet = async () => {
+    setLoadingWallet(true);
+    try {
+      const uid = getInstructorId();
+      const res = await fetch(`/api/payout/wallet?userId=${uid}`);
+      if (res.ok) {
+        const data = await res.json();
+        setWalletBalance(data.balance);
+      }
+      const historyRes = await fetch(`/api/payout/history?userId=${uid}`);
+      if (historyRes.ok) {
+        const historyData = await historyRes.json();
+        setPayoutHistory(historyData);
+      }
+    } catch (err) {
+      console.error("Failed to fetch wallet info:", err);
+    } finally {
+      setLoadingWallet(false);
+    }
+  };
+
+  const handleWithdraw = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setWithdrawError("");
+    const amt = parseFloat(withdrawAmount);
+    if (isNaN(amt) || amt < 500) {
+      setWithdrawError("Minimum withdrawal amount is ₹500");
+      return;
+    }
+    setWithdrawing(true);
+    try {
+      const uid = getInstructorId();
+      const res = await fetch("/api/payout/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: uid, amount: withdrawAmount })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to process withdrawal");
+      }
+      setToastMessage(`Successfully withdrew ₹${parseFloat(withdrawAmount).toFixed(2)}`);
+      setWithdrawAmount("");
+      setWithdrawModalOpen(false);
+      fetchWallet(); // Reload wallet balance and history
+      
+      // Clear toast after 5 seconds
+      setTimeout(() => setToastMessage(""), 5000);
+    } catch (err: any) {
+      setWithdrawError(err.message || "Withdrawal failed");
+    } finally {
+      setWithdrawing(false);
+    }
+  };
+
+  const fetchStudents = async () => {
+    setLoadingStudents(true);
+    try {
+      const res = await fetch("/api/instructor/students");
+      if (res.ok) {
+        const data = await res.json();
+        setEnrolledStudents(data);
+      }
+    } catch (e) {
+      console.error("Failed to fetch students:", e);
+    } finally {
+      setLoadingStudents(false);
+    }
+  };
+
+  const fetchAnalytics = async () => {
+    setLoadingAnalytics(true);
+    try {
+      const res = await fetch("/api/instructor/analytics");
+      if (res.ok) {
+        const data = await res.json();
+        setAnalyticsData(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch analytics:", err);
+    } finally {
+      setLoadingAnalytics(false);
+    }
+  };
+
   useEffect(() => {
+    const handleProfileUpdate = () => {
+      const userStr = localStorage.getItem("learnup_user");
+      if (userStr) {
+        try {
+          setCurrentUser(JSON.parse(userStr));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+
+    handleProfileUpdate();
+    window.addEventListener("profileUpdated", handleProfileUpdate);
+
     fetchQuizzes();
     fetchCourses();
+    fetchWallet();
+    fetchStudents();
+    fetchSubmissions();
+
+    return () => window.removeEventListener("profileUpdated", handleProfileUpdate);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (activeTab === "analytics") {
+      fetchAnalytics();
+    }
+  }, [activeTab]);
 
   // Fetch submissions from API
   const fetchSubmissions = async () => {
@@ -285,6 +485,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
       description: quizForm.description,
       courseId: quizForm.courseId,
       questions: quizQuestions,
+      topic: quizForm.topic,
     };
 
     setLoadingQuizzes(true);
@@ -333,7 +534,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
       // Reset
       setIsEditing(false);
       setEditingQuizId(null);
-      setQuizForm({ title: "", description: "", courseId: "c1" });
+      setQuizForm({ title: "", description: "", courseId: "c1", topic: "" });
       setQuizQuestions([{ text: "", options: ["", "", "", ""], correctAnswer: 0, points: 1 }]);
     } catch (err) {
       console.error("Save failed:", err);
@@ -364,6 +565,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
       title: q.title,
       description: q.description || "",
       courseId: q.courseId,
+      topic: (q as any).topic || "",
     });
     setQuizQuestions(q.questions || [{ text: "", options: ["", "", "", ""], correctAnswer: 0, points: 1 }]);
     setIsEditing(true);
@@ -441,8 +643,12 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
   ];
 
   return (
-    <div className="flex h-screen w-full bg-[#f8f9ff] text-[#0b1c30] antialiased overflow-hidden font-sans">
+    <div className="flex h-screen w-full bg-[#070710] text-[#f1f5f9] antialiased overflow-hidden font-sans relative">
       
+      {/* Background glow effects */}
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-900/10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-orange-900/10 blur-[120px] pointer-events-none" />
+
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
@@ -451,31 +657,92 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
         .animate-fadeIn {
           animation: fadeIn 0.4s ease-out forwards;
         }
+
+        /* Live Skin Overrides for Instructor Glassmorphic Dark UI */
+        .bg-white {
+          background-color: rgba(11, 10, 29, 0.6) !important;
+          backdrop-filter: blur(12px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          color: #f1f5f9 !important;
+        }
+        .text-\[\#0b1c30\] {
+          color: #f1f5f9 !important;
+        }
+        .text-\[\#464555\] {
+          color: #94a3b8 !important;
+        }
+        .border-\[\#c7c4d8\]\/10 {
+          border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        .bg-\[\#eff4ff\] {
+          background-color: rgba(7, 7, 16, 0.6) !important;
+        }
+        .bg-\[\#f8f9ff\]\/80 {
+          background-color: rgba(8, 7, 16, 0.4) !important;
+        }
+        .border-\[\#c7c4d8\]\/20 {
+          border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        table th {
+          background-color: rgba(7, 7, 16, 0.4) !important;
+          color: #94a3b8 !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+        table td {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+          color: #e2e8f0 !important;
+        }
+        tr:hover td {
+          background-color: rgba(255, 255, 255, 0.02) !important;
+        }
+        input, textarea, select {
+          background-color: rgba(7, 7, 16, 0.6) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          color: #fff !important;
+        }
+        input::placeholder {
+          color: #64748b !important;
+        }
+        label {
+          color: #94a3b8 !important;
+        }
+        
+        /* Modal background overlay */
+        .fixed.inset-0 {
+          background-color: rgba(0, 0, 0, 0.6) !important;
+          backdrop-filter: blur(4px) !important;
+        }
+        
+        /* Dropdowns and select options styling */
+        select option {
+          background-color: #0b0a1d !important;
+          color: #fff !important;
+        }
       `}} />
 
       {/* 1. SIDEBAR ARCHITECTURE */}
-      <aside className="w-64 flex flex-col h-full bg-[#eff4ff] border-r border-[#c7c4d8]/20 shadow-md sticky left-0 top-0 z-50 p-4 gap-2 shrink-0">
+      <aside className="w-64 flex flex-col h-full bg-[#070710] border-r border-white/5 sticky left-0 top-0 z-50 p-4 gap-2 shrink-0">
         
         {/* BRAND IDENTITY */}
         <div className="flex items-center gap-3 px-2 py-4 mb-4">
           <svg className="h-9 w-9 shrink-0 transition-transform duration-200 hover:scale-105" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
             <defs>
-              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: '#4F46E5', stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: '#7C3AED', stopOpacity: 1 }} />
+              <linearGradient id="logo-grad-instructor" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{ stopColor: '#f97316', stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: '#8b5cf6', stopOpacity: 1 }} />
               </linearGradient>
             </defs>
             <rect width="200" height="200" rx="40" fill="transparent"/>
-            <path d="M60 40 V140 H140" stroke="url(#grad1)" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-            <path d="M110 90 L140 60 L170 90" stroke="#06B6D4" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-            <path d="M140 60 V120" stroke="#06B6D4" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            <path d="M60 40 V140 H140" stroke="url(#logo-grad-instructor)" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            <path d="M110 90 L140 60 L170 90" stroke="#8b5cf6" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            <path d="M140 60 V120" stroke="#8b5cf6" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
           </svg>
           <div>
-            <span className="text-2xl font-black bg-gradient-to-r from-[#3525cd] to-[#712ae2] bg-clip-text text-transparent tracking-tight block leading-none">
+            <span className="text-2xl font-black text-white tracking-tight block leading-none">
               LearnUp
             </span>
-            <p className="text-[10px] text-[#464555] opacity-75 mt-1 font-bold uppercase tracking-widest leading-none">
-              Instructor Hub
+            <p className="text-[9px] font-black tracking-widest text-[#f97316] uppercase block mt-1">
+              INSTRUCTOR HUB
             </p>
           </div>
         </div>
@@ -489,6 +756,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
             { id: "students", label: "Students", icon: "group" },
             { id: "analytics", label: "Analytics", icon: "bar_chart" },
             { id: "payments", label: "Payments", icon: "payments" },
+            { id: "live-class", label: "Live Class", icon: "video_camera_front" },
             { id: "settings", label: "Settings", icon: "settings" },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
@@ -499,69 +767,57 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                   setActiveTab(tab.id as InstructorTabType);
                   setIsEditing(false);
                 }}
-                className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer ${
+                className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group cursor-pointer relative ${
                   isActive
-                    ? "bg-[#3525cd] text-[#fffbff] font-bold shadow-md shadow-[#3525cd]/20"
-                    : "text-[#464555] hover:bg-[#d3e4fe]/30"
+                    ? "bg-[#140e2d]/80 text-[#f97316] font-bold"
+                    : "text-slate-400 hover:bg-white/5 hover:text-white"
                 }`}
               >
-                <span className="material-symbols-outlined transition-transform group-hover:scale-110 select-none">{tab.icon}</span>
-                <span className="text-sm font-medium">{tab.label}</span>
+                {isActive && (
+                  <span className="absolute left-0 w-[3px] h-5 bg-gradient-to-b from-[#8b5cf6] to-[#f97316] rounded-full" />
+                )}
+                <span className={`material-symbols-outlined transition-transform group-hover:scale-110 select-none ${isActive ? "text-[#f97316]" : "text-slate-500"}`}>{tab.icon}</span>
+                <span className="text-xs font-bold tracking-wide">{tab.label}</span>
               </button>
             );
           })}
-          
-          <div className="mt-6 pt-6 border-t border-[#c7c4d8]/20">
-            <button className="w-full bg-gradient-to-r from-[#3525cd] to-[#712ae2] text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 shadow-[#3525cd]/20 cursor-pointer">
-              Upgrade Pro
-            </button>
-          </div>
         </nav>
         
-        <div className="mt-auto flex flex-col gap-1 pt-4 border-t border-[#c7c4d8]/10">
-          <button className="text-[#464555] flex items-center gap-3 px-4 py-2.5 hover:bg-[#d3e4fe]/30 rounded-xl transition-all active:scale-95 text-left w-full cursor-pointer">
+        <div className="mt-auto flex flex-col gap-1 pt-4 border-t border-white/5">
+          <button className="text-slate-400 flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 rounded-xl transition-all text-left w-full cursor-pointer">
             <span className="material-symbols-outlined text-sm select-none">contact_support</span>
-            <span className="text-sm font-medium">Help Center</span>
+            <span className="text-xs font-bold">Help Center</span>
           </button>
           <button
             onClick={onLogout}
-            className="text-[#464555] flex items-center gap-3 px-4 py-2.5 hover:bg-[#d3e4fe]/30 rounded-xl transition-all active:scale-95 text-left w-full cursor-pointer font-semibold text-red-600/90"
+            className="text-slate-400 flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 rounded-xl transition-all text-left w-full cursor-pointer font-bold text-red-500/90"
           >
             <span className="material-symbols-outlined text-sm select-none">logout</span>
-            <span className="text-sm font-medium">Logout</span>
+            <span className="text-xs font-bold">Logout</span>
           </button>
         </div>
       </aside>
 
       {/* MAIN DATA STREAM WRAPPER */}
-      <main className="flex-1 overflow-y-auto scroll-smooth flex flex-col h-screen">
+      <main className="flex-1 overflow-y-auto scroll-smooth flex flex-col h-screen relative">
         
         {/* 2. TOP NAVBAR */}
-        <header className="sticky top-0 z-40 bg-[#f8f9ff]/80 backdrop-blur-xl border-b border-[#c7c4d8]/20 h-16 flex justify-between items-center px-8 shrink-0">
+        <header className="sticky top-0 z-40 bg-[#070710]/40 backdrop-blur-md border-b border-white/5 h-16 flex justify-between items-center px-8 shrink-0">
           <div className="flex items-center gap-6">
-            <div className="relative w-96 max-w-full">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#777587] select-none">search</span>
-              <input 
-                type="text" 
-                placeholder="Search parameters, courses, rosters..." 
-                className="w-full pl-10 pr-4 py-2.5 bg-[#eff4ff] border-none rounded-full text-sm focus:ring-2 focus:ring-[#3525cd]/20 transition-all placeholder:text-[#777587]/60 outline-none"
-              />
-            </div>
+            <GlobalSearch />
           </div>
           
           <div className="flex items-center gap-4">
             <NotificationBell />
-            <div className="w-px h-6 bg-[#c7c4d8]/30 mx-1"></div>
+            <div className="w-px h-6 bg-white/10 mx-1"></div>
             <div className="flex items-center gap-3">
               <div className="text-right">
-                <p className="text-sm font-bold text-[#0b1c30] leading-tight">Amit</p>
-                <p className="text-[11px] text-[#464555] font-semibold opacity-80">Senior Instructor • New Dev</p>
+                <p className="text-xs font-black text-slate-200 leading-tight">{currentUser?.name || "Instructor"}</p>
+                <p className="text-[10px] text-purple-400 font-bold uppercase tracking-wider mt-0.5">Senior Instructor</p>
               </div>
-              <img 
-                alt="Amit Profile" 
-                className="w-10 h-10 rounded-full border-2 border-[#3525cd]/20 object-cover shadow-sm transition-transform hover:scale-105" 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"
-              />
+              <div className="w-9 h-9 rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#f97316] flex items-center justify-center text-white font-extrabold text-sm border border-white/10 shadow-sm shadow-purple-500/10">
+                {(currentUser?.name || "I")[0].toUpperCase()}
+              </div>
             </div>
           </div>
         </header>
@@ -586,11 +842,11 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                   <h2 className="text-2xl font-black tracking-tight text-[#0b1c30]">Instructor Overview</h2>
-                  <p className="text-[#464555] text-sm mt-1">Welcome back, Amit! Monitor real-time dynamic course matrices here.</p>
+                  <p className="text-[#464555] text-sm mt-1">Welcome back, {currentUser?.name || "Instructor"}! Monitor real-time dynamic course matrices here.</p>
                 </div>
                 <button 
                   onClick={() => setActiveTab("create-course")}
-                  className="bg-[#3525cd] text-white py-3 px-6 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 text-sm shadow-[#3525cd]/20 cursor-pointer"
+                  className="bg-[#f97316] hover:bg-[#ea580c] text-white py-3 px-6 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all duration-300 hover:-translate-y-0.5 active:scale-95 text-sm shadow-orange-500/10 cursor-pointer"
                 >
                   <span className="material-symbols-outlined select-none">add_circle</span> Create New Course
                 </button>
@@ -599,12 +855,12 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
               {/* METRIC FACTOR CARDS */}
               <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { title: "Total Earnings", val: "$42,904.00", meta: "+12% this month", up: true, icon: "payments", color: "text-[#3525cd] bg-[#3525cd]/10" },
-                  { title: "Active Students", val: "1,284", meta: "Across 8 live modules", up: false, icon: "group", color: "text-[#712ae2] bg-[#712ae2]/10" },
+                  { title: "Total Earnings", val: `₹${walletBalance.toFixed(2)}`, meta: "Current wallet balance", up: true, icon: "payments", color: "text-[#f97316] bg-[#f97316]/10" },
+                  { title: "Active Students", val: "1,284", meta: "Across 8 live modules", up: false, icon: "group", color: "text-[#8b5cf6] bg-[#8b5cf6]/10" },
                   { title: "Avg Rating Matrix", val: "4.9 / 5.0", meta: "Top 2% satisfaction", up: false, icon: "star", color: "text-amber-600 bg-amber-500/10" },
-                  { title: "Monthly Trajectory", val: "18.4%", meta: "Consistent scaling loop", up: true, icon: "trending_up", color: "text-[#ba1a1a] bg-[#ffdad6]" },
+                  { title: "Monthly Trajectory", val: "18.4%", meta: "Consistent scaling loop", up: true, icon: "trending_up", color: "text-emerald-500 bg-emerald-500/10" },
                 ].map((card, idx) => (
-                  <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-[#c7c4d8]/10 transition-all hover:-translate-y-1 hover:shadow-md active:scale-[0.99] cursor-pointer">
+                  <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-[#c7c4d8]/10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[#8b5cf6]/5 hover:border-[#8b5cf6]/20 active:scale-[0.99] cursor-pointer">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${card.color}`}>
                       <span className="material-symbols-outlined select-none">{card.icon}</span>
                     </div>
@@ -626,18 +882,18 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                       <p className="text-[#464555] text-xs">Payout progression metrics for the past cycle</p>
                     </div>
                   </div>
-                  <div className="relative flex-1 min-h-[240px] flex items-end justify-between gap-4 pt-6 bg-gradient-to-b from-[#3525cd]/5 to-transparent rounded-xl p-2">
+                  <div className="relative flex-1 min-h-[240px] flex items-end justify-between gap-4 pt-6 bg-gradient-to-b from-[#8b5cf6]/5 to-transparent rounded-xl p-2">
                     <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8">
                       <div className="border-t border-[#c7c4d8]/10 w-full h-px"></div>
                       <div className="border-t border-[#c7c4d8]/10 w-full h-px"></div>
                       <div className="border-t border-[#c7c4d8]/10 w-full h-px"></div>
                     </div>
-                    <div className="w-full bg-[#3525cd]/30 rounded-t-lg transition-all hover:bg-[#3525cd]/50 h-[35%] cursor-pointer"></div>
-                    <div className="w-full bg-[#3525cd]/40 rounded-t-lg transition-all hover:bg-[#3525cd]/60 h-[55%] cursor-pointer"></div>
-                    <div className="w-full bg-[#3525cd]/50 rounded-t-lg transition-all hover:bg-[#3525cd]/70 h-[45%] cursor-pointer"></div>
-                    <div className="w-full bg-[#3525cd]/70 rounded-t-lg transition-all hover:bg-[#3525cd]/80 h-[80%] cursor-pointer"></div>
-                    <div className="w-full bg-[#3525cd]/80 rounded-t-lg transition-all hover:bg-[#3525cd]/90 h-[65%] cursor-pointer"></div>
-                    <div className="w-full bg-[#3525cd] rounded-t-lg transition-all hover:brightness-110 h-[95%] cursor-pointer"></div>
+                    <div className="w-full bg-[#8b5cf6]/35 rounded-t-lg transition-all hover:bg-[#8b5cf6]/55 h-[35%] cursor-pointer"></div>
+                    <div className="w-full bg-[#f97316]/45 rounded-t-lg transition-all hover:bg-[#f97316]/65 h-[55%] cursor-pointer"></div>
+                    <div className="w-full bg-[#8b5cf6]/55 rounded-t-lg transition-all hover:bg-[#8b5cf6]/75 h-[45%] cursor-pointer"></div>
+                    <div className="w-full bg-[#f97316]/75 rounded-t-lg transition-all hover:bg-[#f97316]/85 h-[80%] cursor-pointer"></div>
+                    <div className="w-full bg-[#8b5cf6]/85 rounded-t-lg transition-all hover:bg-[#8b5cf6]/95 h-[65%] cursor-pointer"></div>
+                    <div className="w-full bg-[#f97316] rounded-t-lg transition-all hover:brightness-110 h-[95%] cursor-pointer"></div>
                   </div>
                   <div className="flex justify-between mt-4 px-1 border-t border-[#c7c4d8]/10 pt-4 text-[#777587] font-bold text-xs">
                     <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
@@ -648,7 +904,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                 <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#c7c4d8]/10 shadow-sm flex flex-col">
                   <div className="flex justify-between items-center mb-6">
                     <h4 className="text-lg font-bold text-[#0b1c30]">Recent Milestones</h4>
-                    <span className="px-2 py-0.5 bg-[#3525cd]/10 text-[#3525cd] text-[10px] font-black rounded-full uppercase tracking-wider">Live Feed</span>
+                    <span className="px-2 py-0.5 bg-[#f97316]/10 text-[#f97316] text-[10px] font-black rounded-full uppercase tracking-wider">Live Feed</span>
                   </div>
                   <div className="flex-1 overflow-y-auto space-y-5">
                     {milestones.map((milestone) => (
@@ -668,6 +924,69 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                   </button>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* SCREEN: LIVE CLASS */}
+          {activeTab === "live-class" && (
+            <div className="space-y-8 animate-fadeIn h-full flex flex-col">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shrink-0">
+                <div>
+                  <h2 className="text-2xl font-black tracking-tight text-[#0b1c30]">Live Class Studio</h2>
+                  <p className="text-[#464555] text-sm mt-1">Host interactive live sessions with your enrolled students.</p>
+                </div>
+              </div>
+
+              {activeLiveSession ? (
+                <div className="flex-1 min-h-0">
+                  <LiveClassRoom
+                    roomId={activeLiveSession.roomName}
+                    courseTitle={courses.find(c => c.id === activeLiveSession.courseId)?.title || "Live Session"}
+                    isInstructor={true}
+                    user={currentUser || { name: "Instructor" }}
+                    onLeave={handleEndLiveClass}
+                  />
+                </div>
+              ) : (
+                <div className="flex-1 flex flex-col items-center justify-center p-12 rounded-3xl border border-white/5 bg-[#0b0a1d]/60">
+                  <span className="material-symbols-outlined text-6xl text-slate-500 mb-6">video_camera_front</span>
+                  <h3 className="text-xl font-bold text-white mb-2">Start a New Live Session</h3>
+                  <p className="text-slate-400 text-sm mb-8 text-center max-w-md">Select a course to generate a unique secure room. Enrolled students will instantly be notified and able to join.</p>
+                  
+                  <div className="w-full max-w-sm space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-400 mb-2">Select Course</label>
+                      <select
+                        value={selectedCourseForLive}
+                        onChange={(e) => setSelectedCourseForLive(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f97316] transition-colors appearance-none"
+                      >
+                        <option value="">-- Choose a course --</option>
+                        {courses.map((course) => (
+                          <option key={course.id} value={course.id}>
+                            {course.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    
+                    <button
+                      onClick={handleStartLiveClass}
+                      disabled={!selectedCourseForLive || isStartingLive}
+                      className="w-full bg-[#f97316] hover:bg-[#ea580c] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-500/10 transition-colors"
+                    >
+                      {isStartingLive ? (
+                        "Starting..."
+                      ) : (
+                        <>
+                          <span className="material-symbols-outlined text-sm">play_circle</span>
+                          Go Live Now
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -730,7 +1049,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                   <button 
                     onClick={() => {
                       setEditingQuizId(null);
-                      setQuizForm({ title: "", description: "", courseId: "c1" });
+                      setQuizForm({ title: "", description: "", courseId: "c1", topic: "" });
                       setQuizQuestions([{ text: "", options: ["", "", "", ""], correctAnswer: 0, points: 1 }]);
                       setIsEditing(true);
                     }}
@@ -826,7 +1145,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                   </div>
 
                   {/* Base quiz info */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="md:col-span-2 space-y-2">
                       <label className="block text-xs font-bold text-[#464555] uppercase tracking-wider">Quiz Title</label>
                       <input 
@@ -846,6 +1165,17 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                         value={quizForm.courseId}
                         onChange={(e) => setQuizForm({...quizForm, courseId: e.target.value})}
                         placeholder="c1" 
+                        className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold text-[#464555] uppercase tracking-wider">Topic</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={quizForm.topic}
+                        onChange={(e) => setQuizForm({...quizForm, topic: e.target.value})}
+                        placeholder="e.g., programming" 
                         className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none"
                       />
                     </div>
@@ -937,14 +1267,14 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
                             </div>
                             <div className="space-y-1">
                               <label className="block text-[11px] font-bold text-[#464555] uppercase">Points Allocated</label>
-                              <input 
-                                type="number" 
-                                required
-                                min={1}
-                                value={q.points}
-                                onChange={(e) => handlePointsChange(qIdx, parseInt(e.target.value) || 1)}
-                                className="w-full bg-white border border-[#c7c4d8]/30 rounded-xl text-xs py-2.5 px-3 focus:ring-1 focus:ring-[#3525cd] outline-none"
-                              />
+                                <input 
+                                  type="number" 
+                                  required
+                                  min={1}
+                                  value={q.points ?? ""}
+                                  onChange={(e) => handlePointsChange(qIdx, parseInt(e.target.value) || 1)}
+                                  className="w-full bg-white border border-[#c7c4d8]/30 rounded-xl text-xs py-2.5 px-3 focus:ring-1 focus:ring-[#3525cd] outline-none"
+                                />
                             </div>
                           </div>
 
@@ -976,292 +1306,402 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
 
           {/* SCREEN: QUIZ REVIEW */}
           {activeTab === "quiz-review" && (
-            <div className="space-y-6 animate-fadeIn">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h2 className="text-2xl font-black text-[#0b1c30]">Quiz Review Terminal</h2>
-                  <p className="text-[#464555] text-sm mt-1">Review live student submissions and grading metrics fetched from database.</p>
-                </div>
-                <button 
-                  onClick={fetchSubmissions}
-                  className="bg-[#eff4ff] border border-[#c7c4d8]/20 p-2.5 rounded-xl text-[#3525cd] hover:bg-[#d3e4fe] transition cursor-pointer flex items-center justify-center"
-                >
-                  <span className="material-symbols-outlined text-lg select-none">refresh</span>
-                </button>
-              </div>
-
-              {submissionsError && (
-                <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-xs font-semibold flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fadeIn">
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-sm select-none">error</span>
-                    <span>{submissionsError}</span>
-                  </div>
-                  <button 
-                    type="button"
-                    onClick={fetchSubmissions}
-                    className="bg-[#3525cd] text-white px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-[#4f46e5] active:scale-95 cursor-pointer shrink-0"
-                  >
-                    Retry Connection
-                  </button>
-                </div>
-              )}
-
-              {loadingSubmissions ? (
-                <div className="space-y-4 animate-pulse">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="h-20 bg-white border border-[#c7c4d8]/15 rounded-2xl" />
-                  ))}
-                </div>
-              ) : submissions.length === 0 ? (
-                <div className="bg-white border border-[#c7c4d8]/20 rounded-2xl p-16 text-center text-slate-400 text-sm">
-                  No submissions logged in database records yet.
-                </div>
-              ) : (
-                <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
-                  <div className="p-5 flex items-center justify-between border-b border-[#c7c4d8]/10 bg-[#eff4ff]/30 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    <span className="w-1/3">Student Name</span>
-                    <span className="w-1/3">Quiz Target</span>
-                    <span className="w-1/6 text-center">Score Grade</span>
-                    <span className="w-1/6 text-right">Submitted At</span>
-                  </div>
-                  <div className="divide-y divide-[#c7c4d8]/10">
-                    {submissions.map((sub: any) => (
-                      <div key={sub.id} className="p-5 flex items-center justify-between hover:bg-[#f8f9ff]/80 transition">
-                        <div className="w-1/3 flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-[#3525cd]/10 text-[#3525cd] flex items-center justify-center font-bold text-xs">
-                            {sub.studentName ? sub.studentName[0] : "S"}
-                          </div>
-                          <div>
-                            <h5 className="text-sm font-bold text-[#0b1c30]">{sub.studentName || `User (${sub.studentId?.substring(0,6)})`}</h5>
-                            <p className="text-[10px] font-mono text-slate-400">ID: {sub.studentId}</p>
-                          </div>
-                        </div>
-                        <div className="w-1/3">
-                          <p className="text-sm font-semibold text-[#464555]">{sub.quizTitle || `Quiz ID: ${sub.quizId?.substring(0,8)}`}</p>
-                        </div>
-                        <div className="w-1/6 text-center">
-                          <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                            sub.score >= 80 ? "text-green-700 bg-green-50" : "text-amber-700 bg-amber-50"
-                          }`}>
-                            {sub.score}%
-                          </span>
-                        </div>
-                        <div className="w-1/6 text-right text-xs text-slate-400 font-medium">
-                          {new Date(sub.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          <p className="text-[9px] text-slate-400 mt-0.5">{new Date(sub.submittedAt).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            <QuizReviewScreen 
+              submissions={submissions}
+              loadingSubmissions={loadingSubmissions}
+              submissionsError={submissionsError}
+              fetchSubmissions={fetchSubmissions}
+            />
           )}
 
           {/* SCREEN: STUDENTS */}
           {activeTab === "students" && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <h2 className="text-2xl font-bold text-[#0b1c30]">Enrolled Cohort Roster</h2>
-                <p className="text-[#464555] text-sm">Monitor student analytics pipelines and grading benchmarks.</p>
+                <h2 className="text-2xl font-bold text-white">Enrolled Cohort Roster</h2>
+                <p className="text-slate-400 text-sm">Monitor student analytics pipelines and grading benchmarks.</p>
               </div>
-              <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
-                <div className="p-5 flex items-center justify-between border-b border-[#c7c4d8]/10 bg-[#eff4ff]/30">
-                  <span className="text-sm font-bold">Roster Manifest</span>
+              <div className="bg-[#0b0a1d]/60 rounded-3xl border border-white/5 shadow-sm overflow-hidden">
+                <div className="p-5 flex items-center justify-between border-b border-white/5 bg-[#070710]/40">
+                  <span className="text-xs font-black tracking-widest text-slate-400 uppercase">Roster Manifest</span>
                 </div>
-                <div className="p-5 flex items-center justify-between hover:bg-[#f8f9ff]">
-                  <div className="flex items-center gap-3">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" className="w-11 h-11 rounded-full object-cover border" alt="Student" />
-                    <div>
-                      <h5 className="text-sm font-bold text-[#0b1c30]">Amara Sterling</h5>
-                      <p className="text-xs text-[#464555]">amara.sterling@edu.io</p>
-                    </div>
+                {loadingStudents ? (
+                  <div className="p-5 text-slate-400 text-sm">Loading cohort roster...</div>
+                ) : enrolledStudents.length === 0 ? (
+                  <div className="p-8 text-center text-slate-400 text-sm">No students currently enrolled in your courses.</div>
+                ) : (
+                  <div className="divide-y divide-white/5">
+                    {enrolledStudents.map((st) => (
+                      <div key={st.id} className="p-5 flex items-center justify-between hover:bg-white/5 transition-colors">
+                        <div className="flex items-center gap-3">
+                          <div className="w-11 h-11 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center font-extrabold text-sm border border-white/10 shadow-sm text-white">
+                            {st.name[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <h5 className="text-sm font-bold text-slate-100">{st.name}</h5>
+                            <p className="text-xs text-slate-400">{st.email}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs font-bold text-purple-400 bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-full">{st.courseTitle}</span>
+                          <p className="text-[10px] text-slate-500 mt-1">Progress Check: {st.progress}%</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <span className="text-xs font-bold text-green-700 bg-green-50 px-2 py-1 rounded-md">Progress Check: 92%</span>
-                </div>
+                )}
               </div>
             </div>
           )}
 
           {/* SCREEN: ANALYTICS */}
           {activeTab === "analytics" && (
-            <div className="space-y-6 animate-fadeIn">
-              <div>
-                <h2 className="text-2xl font-bold text-[#0b1c30]">Performance Diagnostics</h2>
-                <p className="text-[#464555] text-sm">Systemized retainment heatmaps and tracking matrix arrays.</p>
-              </div>
-              <div className="bg-white p-6 rounded-2xl border border-[#c7c4d8]/10 shadow-sm">
-                <p className="text-xs font-bold text-[#464555] tracking-wider uppercase mb-4">Retention Factor Logs</p>
-                <div className="h-40 bg-[#f8f9ff] rounded-xl flex items-end p-4 justify-between gap-4">
-                  <div className="h-full bg-[#3525cd] w-12 rounded-t-md"></div>
-                  <div className="h-[75%] bg-[#3525cd] w-12 rounded-t-md"></div>
-                  <div className="h-[50%] bg-[#3525cd] w-12 rounded-t-md"></div>
+            <div className="space-y-8 animate-fadeIn text-slate-100">
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="text-[10px] font-black tracking-widest text-[#3525cd] uppercase font-mono bg-[#eff4ff] px-2.5 py-1 rounded-md">LIVE TELEMETRY</span>
+                  <h2 className="text-2xl font-black text-[#0b1c30] mt-1">Instructor Analytics</h2>
+                  <p className="text-xs text-[#464555]">Real-time system diagnostics, program revenues, and cohort progress metrics.</p>
                 </div>
+                <button
+                  onClick={fetchAnalytics}
+                  disabled={loadingAnalytics}
+                  className="px-4 py-2 border border-[#c7c4d8]/40 hover:bg-[#3525cd] hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer text-[#464555] bg-white"
+                >
+                  <span className="material-symbols-outlined text-sm select-none">refresh</span>
+                  {loadingAnalytics ? "Syncing..." : "Sync Live Data"}
+                </button>
               </div>
+
+              {loadingAnalytics && !analyticsData ? (
+                <div className="text-slate-500 text-sm">Synchronizing ledger matrices...</div>
+              ) : !analyticsData ? (
+                <div className="p-8 text-center bg-white rounded-2xl border border-[#c7c4d8]/25 text-[#464555] text-xs">
+                  No real-time diagnostic parameters loaded.
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* Grid cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Glassmorphic Card 1: Revenue */}
+                    <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase">INSTRUCTOR EARNINGS (80% SHARE)</span>
+                          <h3 className="text-3xl font-black text-[#0b1c30]">₹{analyticsData.totalInstructorRevenue.toFixed(2)}</h3>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-600 border border-purple-500/20">
+                          <span className="material-symbols-outlined select-none text-xl">payments</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-slate-400 mt-4">Calculated from course purchases matching ₹ (INR).</p>
+                    </div>
+
+                    {/* Glassmorphic Card 2: Support Tickets */}
+                    <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase">ACTIVE OPEN SUPPORT TICKETS</span>
+                          <h3 className="text-3xl font-black text-red-600">{analyticsData.openSupportTicketsCount}</h3>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-red-50/10 text-red-600 border border-red-200">
+                          <span className="material-symbols-outlined select-none text-xl">support_agent</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-slate-400 mt-4">Needs immediate instructor resolution response.</p>
+                    </div>
+
+                    {/* Glassmorphic Card 3: Total Enrolled */}
+                    <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase">TOTAL MATRICULATED STUDENTS</span>
+                          <h3 className="text-3xl font-black text-indigo-600">{analyticsData.studentMatrix.length}</h3>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-indigo-50/10 text-indigo-600 border border-indigo-200">
+                          <span className="material-symbols-outlined select-none text-xl">groups</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-slate-400 mt-4">Dynamic count mapped from CourseEnrollment records.</p>
+                    </div>
+                  </div>
+
+                  {/* Revenue Graph Over Time */}
+                  <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm space-y-4">
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm">Revenue Ledger Timeline</h4>
+                      <p className="text-[10px] text-slate-400">Total transaction earnings mapped daily/monthly.</p>
+                    </div>
+                    {analyticsData.revenueGraphData.length === 0 ? (
+                      <div className="h-40 flex items-center justify-center text-slate-400 text-xs">
+                        No transactions recorded. Sell courses to populate.
+                      </div>
+                    ) : (
+                      <div className="h-40 bg-[#f8f9ff]/50 border border-[#c7c4d8]/10 rounded-xl flex items-end p-4 justify-start gap-4 overflow-x-auto">
+                        {analyticsData.revenueGraphData.map((data: any, idx: number) => {
+                          const maxRevenue = Math.max(...analyticsData.revenueGraphData.map((d: any) => d.revenue), 1);
+                          const barHeight = `${(data.revenue / maxRevenue) * 80 + 10}%`;
+                          return (
+                            <div key={idx} className="flex flex-col items-center gap-1.5 shrink-0 group relative">
+                              {/* Hover Tooltip */}
+                              <div className="absolute bottom-full mb-1 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-[9px] px-2 py-0.5 rounded pointer-events-none whitespace-nowrap z-10">
+                                ₹{data.revenue.toFixed(2)}
+                              </div>
+                              <div 
+                                style={{ height: barHeight }} 
+                                className="bg-[#3525cd] hover:bg-[#712ae2] w-10 rounded-t-md transition-all duration-300"
+                              />
+                              <span className="text-[8px] font-mono text-slate-500">{data.date}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Dynamic Tables: Quiz Averages & Student Matrix */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 font-medium">
+                    {/* Performance Metrics Table */}
+                    <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm space-y-4 flex flex-col justify-between">
+                      <div>
+                        <h4 className="font-bold text-slate-800 text-sm">Program Quality & Performance</h4>
+                        <p className="text-[10px] text-slate-400">Average quiz score benchmarks computed from Student Submissions.</p>
+                      </div>
+                      
+                      {analyticsData.coursePerformance.length === 0 ? (
+                        <div className="text-slate-400 text-xs py-8 text-center">No program parameters linked.</div>
+                      ) : (
+                        <div className="max-h-64 overflow-y-auto pr-1">
+                          <table className="w-full text-left text-xs border-collapse">
+                            <thead>
+                              <tr className="border-b border-slate-200 text-slate-400 text-[9px] uppercase tracking-wider font-mono">
+                                <th className="pb-2">Course Module</th>
+                                <th className="pb-2 text-center">Submissions</th>
+                                <th className="pb-2 text-right">Avg Score</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {analyticsData.coursePerformance.map((item: any) => (
+                                <tr key={item.courseId} className="hover:bg-slate-50/50">
+                                  <td className="py-2.5 font-semibold text-slate-700">{item.courseTitle}</td>
+                                  <td className="py-2.5 text-center text-slate-500">{item.submissionsCount}</td>
+                                  <td className={`py-2.5 text-right font-bold ${
+                                    item.averageScore >= 80 ? "text-green-600" : item.averageScore >= 50 ? "text-amber-600" : "text-red-500"
+                                  }`}>{item.averageScore}%</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Student Matrix Table */}
+                    <div className="p-6 rounded-2xl border border-[#c7c4d8]/20 bg-white/70 backdrop-blur-md shadow-sm space-y-4 flex flex-col justify-between">
+                      <div>
+                        <h4 className="font-bold text-slate-800 text-sm">Student Cohort Matrix</h4>
+                        <p className="text-[10px] text-slate-400">Active roster enrolled via CourseEnrollment logs.</p>
+                      </div>
+                      
+                      {analyticsData.studentMatrix.length === 0 ? (
+                        <div className="text-slate-400 text-xs py-8 text-center">No students registered.</div>
+                      ) : (
+                        <div className="max-h-64 overflow-y-auto pr-1">
+                          <table className="w-full text-left text-xs border-collapse">
+                            <thead>
+                              <tr className="border-b border-slate-200 text-slate-400 text-[9px] uppercase tracking-wider font-mono">
+                                <th className="pb-2">Student Name</th>
+                                <th className="pb-2">Target Course</th>
+                                <th className="pb-2 text-right">Enrolled At</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {analyticsData.studentMatrix.map((st: any, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50/50">
+                                  <td className="py-2.5">
+                                    <div className="font-semibold text-slate-800">{st.name}</div>
+                                    <div className="text-[9px] text-slate-400 font-mono">{st.email}</div>
+                                  </td>
+                                  <td className="py-2.5 text-slate-600 font-semibold">{st.courseTitle}</td>
+                                  <td className="py-2.5 text-right text-slate-400 font-mono text-[9px]">
+                                    {new Date(st.enrolledAt).toLocaleDateString()}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           {/* SCREEN: PAYMENTS */}
           {activeTab === "payments" && (
             <div className="space-y-6 animate-fadeIn">
-              <div>
-                <h2 className="text-2xl font-bold text-[#0b1c30]">Financial Ledger Pipelines</h2>
-                <p className="text-[#464555] text-sm">Tracking settlement validation tokens and billing nodes.</p>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-[#0b1c30]">Instructor Wallet</h2>
+                  <p className="text-[#464555] text-sm">Manage your course earnings and request bank payouts.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setWithdrawError("");
+                    setWithdrawAmount("");
+                    setWithdrawModalOpen(true);
+                  }}
+                  className="bg-[#3525cd] text-white py-3 px-6 rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all hover:-translate-y-0.5 active:scale-95 text-sm shadow-[#3525cd]/20 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined select-none text-base">account_balance_wallet</span>
+                  Withdraw Funds
+                </button>
               </div>
-              <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-[#eff4ff] text-xs font-bold text-[#464555] uppercase tracking-wider">
-                    <tr>
-                      <th className="p-4">Transaction Identification Token</th>
-                      <th className="p-4">Net Allocation Valuation</th>
-                      <th className="p-4">Status Node</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#c7c4d8]/10">
-                    <tr className="hover:bg-[#f8f9ff]">
-                      <td className="p-4 font-mono text-xs text-[#3525cd]">TXN-98421-X9</td>
-                      <td className="p-4 font-bold">$3,575.00</td>
-                      <td className="p-4"><span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-bold">Cleared to Bank</span></td>
-                    </tr>
-                  </tbody>
-                </table>
+
+              {/* Balance Card */}
+              <div className="bg-gradient-to-br from-[#3525cd] to-[#712ae2] text-white p-8 rounded-3xl shadow-xl flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold opacity-85 uppercase tracking-wider">Available Balance</p>
+                  <h3 className="text-4xl font-black">₹{walletBalance.toFixed(2)}</h3>
+                </div>
+                <p className="text-xs opacity-75 mt-6">Instant bank transfers via Razorpay mode.</p>
               </div>
+
+              {/* Payout History Ledger */}
+              <div className="space-y-4">
+                <h4 className="text-base font-bold text-[#0b1c30]">Payout Transactions</h4>
+                {payoutHistory.length === 0 ? (
+                  <div className="bg-white border border-[#c7c4d8]/20 rounded-2xl p-16 text-center text-[#464555] text-sm">
+                    No payouts requested yet.
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-[#eff4ff] text-xs font-bold text-[#464555] uppercase tracking-wider">
+                        <tr>
+                          <th className="p-4">Payout ID</th>
+                          <th className="p-4">Amount</th>
+                          <th className="p-4">Date</th>
+                          <th className="p-4">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#c7c4d8]/10">
+                        {payoutHistory.map((payout: any) => (
+                          <tr key={payout.id} className="hover:bg-[#f8f9ff]">
+                            <td className="p-4 font-mono text-xs text-[#3525cd]">
+                              {payout.razorpayPayoutId || payout.id}
+                            </td>
+                            <td className="p-4 font-bold text-[#0b1c30]">₹{payout.amount.toFixed(2)}</td>
+                            <td className="p-4 text-xs text-[#464555]">
+                              {new Date(payout.createdAt).toLocaleDateString()} at{" "}
+                              {new Date(payout.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            </td>
+                            <td className="p-4">
+                              <span
+                                className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase ${
+                                  payout.status === "SUCCESS"
+                                    ? "bg-green-100 text-green-800"
+                                    : payout.status === "FAILED"
+                                    ? "bg-red-100 text-red-800"
+                                    : "bg-amber-100 text-amber-800"
+                                }`}
+                              >
+                                {payout.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+
+              {/* Withdraw Modal */}
+              {withdrawModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
+                  <div className="bg-white rounded-3xl max-w-md w-full p-8 border border-[#c7c4d8]/30 shadow-2xl relative space-y-6">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-lg font-bold text-[#0b1c30]">Withdraw Balance</h4>
+                      <button
+                        type="button"
+                        onClick={() => setWithdrawModalOpen(false)}
+                        className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-sm select-none">close</span>
+                      </button>
+                    </div>
+
+                    <form onSubmit={handleWithdraw} className="space-y-4">
+                      {withdrawError && (
+                        <div className="p-3.5 bg-red-50 border border-red-200 text-red-800 rounded-xl text-xs font-semibold">
+                          {withdrawError}
+                        </div>
+                      )}
+
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold text-[#464555] uppercase tracking-wider">
+                          Withdrawal Amount (INR)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">₹</span>
+                          <input
+                            type="number"
+                            required
+                            min={1}
+                            max={walletBalance}
+                            step="0.01"
+                            value={withdrawAmount}
+                            onChange={(e) => setWithdrawAmount(e.target.value)}
+                            placeholder="0.00"
+                            className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3.5 pl-8 pr-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none font-bold text-[#0b1c30]"
+                          />
+                        </div>
+                        <p className="text-[11px] text-slate-400">
+                          Maximum available for withdrawal: ₹{walletBalance.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setWithdrawModalOpen(false)}
+                          className="flex-1 py-3 border border-[#c7c4d8]/40 rounded-xl font-bold text-xs hover:bg-slate-50 transition cursor-pointer text-[#464555]"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={withdrawing || !withdrawAmount || parseFloat(withdrawAmount) > walletBalance}
+                          className="flex-1 py-3 bg-[#3525cd] text-white hover:bg-[#4f46e5] disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed rounded-xl font-bold text-xs transition cursor-pointer"
+                        >
+                          {withdrawing ? "Processing..." : "Confirm Payout"}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           {/* SCREEN: SETTINGS */}
           {activeTab === "settings" && (
-            <div className="space-y-6 animate-fadeIn">
-              <div>
-                <h2 className="text-2xl font-bold text-[#0b1c30]">System Parameter Rules</h2>
-                <p className="text-[#464555] text-sm">Manage API routing keys and identity credentials.</p>
-              </div>
-              <div className="bg-white p-6 rounded-2xl border border-[#c7c4d8]/10 shadow-sm max-w-xl space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-[#464555] mb-2 uppercase tracking-wider">Instructor Persona Anchor Name</label>
-                  <input type="text" defaultValue="Amit" className="w-full bg-[#eff4ff] border-none rounded-xl text-sm focus:ring-1 focus:ring-[#3525cd] outline-none p-3" />
-                </div>
-                <button className="bg-[#3525cd] text-white py-2.5 px-4 rounded-xl font-bold text-sm transition-all hover:-translate-y-0.5 active:scale-95 cursor-pointer">Commit Global Changes</button>
-              </div>
+            <div className="animate-fadeIn">
+              <SettingsForm onClose={() => setActiveTab("dashboard")} />
             </div>
           )}
 
           {/* SCREEN: CREATE NEW COURSE */}
           {activeTab === "create-course" && (
-            <div className="space-y-6 animate-fadeIn">
-              <div className="flex items-center gap-3">
-                <button 
-                  type="button"
-                  onClick={() => setActiveTab("dashboard")} 
-                  className="w-9 h-9 bg-[#eff4ff] rounded-xl flex items-center justify-center text-[#464555] hover:bg-[#d3e4fe] transition-all active:scale-95 cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-sm select-none">arrow_back</span>
-                </button>
-                <div>
-                  <h2 className="text-2xl font-black text-[#0b1c30]">Course Creation Studio</h2>
-                  <p className="text-[#464555] text-sm">Deploy new interactive syllabus frameworks to the distribution matrix cloud.</p>
-                </div>
-              </div>
-
-              <form onSubmit={handleCreateCourse} className="bg-white rounded-2xl border border-[#c7c4d8]/10 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-3">
-                <div className="lg:col-span-2 p-8 space-y-6 border-r border-[#c7c4d8]/10">
-                  <h3 className="text-sm font-black text-[#3525cd] uppercase tracking-wider">Core Curriculum Parameters</h3>
-                  
-                  <div className="space-y-5">
-                    <div>
-                      <label className="block text-xs font-bold text-[#464555] mb-2 uppercase tracking-wider">Course Syllabus Title</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={courseForm.title}
-                        onChange={(e) => setCourseForm({ ...courseForm, title: e.target.value })}
-                        placeholder="e.g., Next.js Monolithic Scalability with TypeScript Architecture" 
-                        className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none"
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-[#464555] mb-2 uppercase tracking-wider">Domain Stream</label>
-                        <select 
-                          value={courseForm.category}
-                          onChange={(e) => setCourseForm({ ...courseForm, category: e.target.value })}
-                          className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-[#3525cd]/20 text-[#464555] outline-none"
-                        >
-                          <option>Software Engineering Modules</option>
-                          <option>Distributed Computing System</option>
-                          <option>UI/UX Design Frameworks</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-[#464555] mb-2 uppercase tracking-wider">Price Index Tier (USD)</label>
-                        <input 
-                          type="number" 
-                          required
-                          value={courseForm.price}
-                          onChange={(e) => setCourseForm({ ...courseForm, price: e.target.value })}
-                          placeholder="199" 
-                          className="w-full bg-[#eff4ff] border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-[#464555] mb-2 uppercase tracking-wider">Abstract Syllabus Overview</label>
-                      <textarea 
-                        rows={4} 
-                        value={courseForm.description}
-                        onChange={(e) => setCourseForm({ ...courseForm, description: e.target.value })}
-                        placeholder="Detail explicit performance nodes, milestones, structural configurations, and target goals..." 
-                        className="w-full bg-[#eff4ff] border-none rounded-xl text-sm p-4 focus:ring-2 focus:ring-[#3525cd]/20 outline-none"
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-8 bg-[#eff4ff]/20 space-y-6 flex flex-col justify-between">
-                  <div className="space-y-5">
-                    <h3 className="text-xs font-bold text-[#0b1c30] uppercase tracking-wider">Media Assets Routing</h3>
-                    <div className="border-2 border-dashed border-[#c7c4d8]/60 rounded-2xl p-6 text-center bg-white flex flex-col items-center justify-center cursor-pointer hover:bg-[#d3e4fe]/30 transition-all group active:scale-[0.98]">
-                      <span className="material-symbols-outlined text-3xl text-[#777587] group-hover:text-[#3525cd] transition-colors select-none">cloud_upload</span>
-                      <p className="text-xs font-bold text-[#0b1c30] mt-3">Upload Media Container</p>
-                      <p className="text-[10px] text-[#464555] mt-1">Recommended aspect scaling ratio: 16:9</p>
-                    </div>
-
-                    <div className="bg-white p-4 rounded-xl border border-[#c7c4d8]/10">
-                      <h5 className="text-[10px] font-bold uppercase tracking-wider text-[#464555] mb-1">Allocated Instructor Profile</h5>
-                      <p className="text-sm font-bold text-[#0b1c30]">Amit (Senior Lead Node)</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 pt-6">
-                    <button 
-                      type="submit"
-                      disabled={loadingCourses}
-                      className="w-full bg-[#3525cd] text-white py-3.5 rounded-xl font-bold text-sm shadow-md transition-all hover:-translate-y-0.5 active:scale-95 shadow-[#3525cd]/10 cursor-pointer disabled:opacity-50"
-                    >
-                      {loadingCourses ? "Deploying..." : "Commit Draft Node & Live Deploy"}
-                    </button>
-                    <button 
-                      type="button" 
-                      onClick={() => {
-                        setCourseForm({
-                          title: "",
-                          description: "",
-                          price: "199",
-                          category: "Software Engineering Modules",
-                          image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=400&auto=format&fit=crop"
-                        });
-                        setActiveTab("dashboard");
-                      }} 
-                      className="w-full bg-transparent text-[#464555] hover:bg-[#c7c4d8]/20 py-3 rounded-xl font-bold text-xs transition-all active:scale-95 cursor-pointer"
-                    >
-                      Discard Blueprint Draft
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
+            <CourseBuilder 
+              onBack={() => setActiveTab("dashboard")} 
+              instructorId={getInstructorId()} 
+            />
           )}
 
         </div>

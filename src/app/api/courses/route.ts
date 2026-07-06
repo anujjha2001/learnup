@@ -22,15 +22,33 @@ const MOCK_COURSES = [
   }
 ];
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get('userId');
+
     const dbCourses = await db.course.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      include: { instructor: true }
     });
+
+    if (userId) {
+      const enrollments = await db.courseEnrollment.findMany({
+        where: { userId }
+      });
+      const enrolledCourseIds = new Set(enrollments.map(e => e.courseId));
+      
+      const coursesWithEnrollment = dbCourses.map(course => ({
+        ...course,
+        isEnrolled: enrolledCourseIds.has(course.id)
+      }));
+      return NextResponse.json(coursesWithEnrollment);
+    }
+
     return NextResponse.json(dbCourses);
   } catch (error) {
     // Return mock data if db is not initialized/configured yet
-    return NextResponse.json(MOCK_COURSES);
+    return NextResponse.json(MOCK_COURSES.map(c => ({ ...c, isEnrolled: false })));
   }
 }
 

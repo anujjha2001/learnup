@@ -1,3 +1,4 @@
+// Trigger rebuild
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
@@ -28,14 +29,37 @@ const MOCK_NOTIFICATIONS = [
   }
 ];
 
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
+
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userId = session.id;
+    const role = session.user?.role || "STUDENT";
+
+    // Define role-specific notification types
+    const instructorTypes = ['ENROLLMENT', 'QUERY_RECEIVED', 'QUIZ_SUBMITTED'];
+    const studentTypes = ['QUIZ_ANNOUNCEMENT', 'QUERY_REPLY', 'QUIZ_REVIEW', 'PAYMENT_CONFIRMATION', 'CERTIFICATE_AWARDED'];
+
+    const allowedTypes = role === "INSTRUCTOR" ? instructorTypes : studentTypes;
+
     const dbNotifications = await db.notification.findMany({
+      where: {
+        userId,
+        type: { in: allowedTypes }
+      },
       orderBy: { createdAt: 'desc' }
     });
+
     return NextResponse.json(dbNotifications);
   } catch (error) {
-    return NextResponse.json(MOCK_NOTIFICATIONS);
+    console.error("Notifications GET error:", error);
+    return NextResponse.json([]);
   }
 }
 

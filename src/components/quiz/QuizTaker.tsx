@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface Question {
   q?: string;
@@ -180,10 +181,12 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
             {currentQuestion.options.map((opt, idx) => {
               const isSelected = selectedOptionIndex === idx;
               return (
-                <button
+                <motion.button
                   key={idx}
                   disabled={submitting}
                   onClick={() => handleSelectOption(idx)}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.985 }}
                   className={`w-full p-4 rounded-xl border text-left text-sm font-medium transition duration-200 cursor-pointer flex items-center gap-3 ${
                     isSelected
                       ? "border-[#3525cd] bg-[#eff4ff] text-[#3525cd]"
@@ -196,7 +199,7 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
                     {String.fromCharCode(65 + idx)}
                   </span>
                   <span>{opt}</span>
-                </button>
+                </motion.button>
               );
             })}
           </div>
