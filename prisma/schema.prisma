@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated-client"
 }
 
 datasource db {
@@ -61,6 +62,7 @@ model Course {
   isFree        Boolean            @default(false)
   certificates  Certificate[]
   liveSessions  LiveSession[]
+  resources     Resource[]
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
 
@@ -224,4 +226,27 @@ model LiveSession {
   endedAt      DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+}
+
+model Resource {
+  id        String   @id @default(uuid())
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title     String
+  url       String
+  type      String   @default("PDF")
+  size      String   @default("0 KB")
+  createdAt DateTime @default(now())
+
+  @@index([courseId])
+}
+
+model StudentDeletedResource {
+  id         String   @id @default(uuid())
+  userId     String
+  resourceId String
+  deletedAt  DateTime @default(now())
+
+  @@unique([userId, resourceId])
+  @@index([userId])
 }

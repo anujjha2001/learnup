@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, X, Upload, CheckCircle, Video, Tag, LayoutTemplate } from "lucide-react";
+import { Plus, X, Upload, CheckCircle, Video, Tag, LayoutTemplate, FolderOpen } from "lucide-react";
 
 interface CourseBuilderProps {
   onBack: () => void;
@@ -16,6 +16,9 @@ export default function CourseBuilder({ onBack, instructorId }: CourseBuilderPro
   const [template, setTemplate] = useState("default");
   
   const [modules, setModules] = useState([{ title: "", url: "", duration: "" }]);
+  const [courseResources, setCourseResources] = useState<{ title: string; url: string; size: string }[]>([
+    { title: "", url: "", size: "" }
+  ]);
   
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -36,6 +39,22 @@ export default function CourseBuilder({ onBack, instructorId }: CourseBuilderPro
     setModules(newModules);
   };
 
+  const handleAddResource = () => {
+    setCourseResources([...courseResources, { title: "", url: "", size: "" }]);
+  };
+
+  const handleRemoveResource = (index: number) => {
+    const newRes = [...courseResources];
+    newRes.splice(index, 1);
+    setCourseResources(newRes);
+  };
+
+  const handleResourceChange = (index: number, field: string, value: string) => {
+    const newRes = [...courseResources];
+    (newRes[index] as any)[field] = value;
+    setCourseResources(newRes);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -49,6 +68,7 @@ export default function CourseBuilder({ onBack, instructorId }: CourseBuilderPro
         price: isFree ? 0 : parseFloat(price),
         template,
         modules,
+        resources: courseResources.filter(r => r.url),
         instructorId
       };
 
@@ -228,6 +248,80 @@ export default function CourseBuilder({ onBack, instructorId }: CourseBuilderPro
                       </div>
                       {modules.length > 1 && (
                         <button type="button" onClick={() => handleRemoveModule(idx)} className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <X className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* PDF Resources Section */}
+              <div className="pt-6 border-t border-white/10">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-black text-purple-400 uppercase tracking-wider flex items-center gap-2">
+                    <FolderOpen className="w-4 h-4" /> PDF Resources
+                  </h3>
+                  <button type="button" onClick={handleAddResource} className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                    <Plus className="w-3 h-3" /> Add PDF
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  {courseResources.map((res, idx) => (
+                    <div key={idx} className="p-4 rounded-xl border border-white/5 bg-white/5 relative group">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Resource Name</label>
+                          <input type="text" required value={res.title} onChange={e => handleResourceChange(idx, 'title', e.target.value)} className="w-full bg-black/20 border border-white/10 rounded-lg text-xs py-2 px-3 text-white focus:outline-none focus:border-purple-500/50" placeholder="Lecture Notes" />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold text-slate-400 mb-1 uppercase">PDF File</label>
+                          <div className="flex gap-2 items-center">
+                            <input type="text" required value={res.url} onChange={e => handleResourceChange(idx, 'url', e.target.value)} className="flex-1 bg-black/20 border border-white/10 rounded-lg text-xs py-2 px-3 text-white focus:outline-none focus:border-purple-500/50" placeholder="PDF URL or upload file" />
+                            <label className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-xl font-bold text-xs cursor-pointer flex items-center gap-1.5 transition-all shrink-0">
+                              <Upload className="w-3.5 h-3.5" /> Upload PDF
+                              <input
+                                type="file"
+                                accept="application/pdf"
+                                className="hidden"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const formData = new FormData();
+                                  formData.append("file", file);
+                                  formData.append("bucket", "course-videos");
+                                  try {
+                                    const resApi = await fetch("/api/media/upload", {
+                                      method: "POST",
+                                      body: formData,
+                                    });
+                                    if (resApi.ok) {
+                                      const data = await resApi.json();
+                                      const sizeStr = file.size > 1024 * 1024
+                                        ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+                                        : `${(file.size / 1024).toFixed(0)} KB`;
+                                      handleResourceChange(idx, 'url', data.url);
+                                      handleResourceChange(idx, 'size', sizeStr);
+                                      if (!res.title) {
+                                        handleResourceChange(idx, 'title', file.name.replace(/\.[^/.]+$/, ""));
+                                      }
+                                      alert(`PDF file ${file.name} uploaded successfully!`);
+                                    } else {
+                                      alert("PDF upload failed.");
+                                    }
+                                  } catch (err) {
+                                    console.error(err);
+                                    alert("Error uploading PDF file.");
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      {courseResources.length > 1 && (
+                        <button type="button" onClick={() => handleRemoveResource(idx)} className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                           <X className="w-3 h-3" />
                         </button>
                       )}

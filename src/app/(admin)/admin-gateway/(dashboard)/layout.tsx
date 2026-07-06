@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import Sidebar from "@/components/admin/Sidebar";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Admin Gateway | LearnUp",
@@ -17,13 +18,34 @@ export default async function AdminGatewayLayout({
 }: {
   children: React.ReactNode;
 }) {
+  let isAdmin = false;
+  let adminId = "";
+
   const session = await getServerSession();
-  if (!session || session.user.role !== "ADMIN") {
+  if (session && session.user.role === "ADMIN") {
+    isAdmin = true;
+    adminId = session.id;
+  } else {
+    // Check learnup_token cookie
+    const cookieStore = await cookies();
+    const token = cookieStore.get("learnup_token")?.value;
+    if (token && token.startsWith("jwt-session-token-placeholder-")) {
+      const tokenPart = token.replace("jwt-session-token-placeholder-", "");
+      const parts = tokenPart.split("-");
+      const role = parts[parts.length - 3]?.toUpperCase();
+      if (role === "ADMIN") {
+        isAdmin = true;
+        adminId = parts.slice(0, parts.length - 3).join("-");
+      }
+    }
+  }
+
+  if (!isAdmin) {
     redirect("/admin-gateway/login");
   }
 
   const user = await db.user.findUnique({
-    where: { id: session.id },
+    where: { id: adminId },
     select: { name: true, email: true, avatar: true },
   });
 

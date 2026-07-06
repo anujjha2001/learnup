@@ -46,7 +46,7 @@ const defaultValues: ProfileForm = {
   avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500",
 };
 
-export default function SettingsForm({ onClose }: { onClose?: () => void }) {
+export default function SettingsForm({ onClose, user }: { onClose?: () => void; user?: any }) {
   const methods = useForm<ProfileForm>({
     resolver: zodResolver(profileSchema),
     defaultValues,
@@ -96,6 +96,11 @@ export default function SettingsForm({ onClose }: { onClose?: () => void }) {
       loadedValues.email = userSession.email || loadedValues.email;
       loadedValues.phone = userSession.phone || loadedValues.phone;
     }
+    if (user) {
+      loadedValues.fullName = user.name || loadedValues.fullName;
+      loadedValues.email = user.email || loadedValues.email;
+      loadedValues.phone = user.phone || loadedValues.phone;
+    }
     reset(loadedValues);
     if (onClose) {
       onClose();
@@ -116,8 +121,13 @@ export default function SettingsForm({ onClose }: { onClose?: () => void }) {
       loadedValues.email = userSession.email || loadedValues.email;
       loadedValues.phone = userSession.phone || loadedValues.phone;
     }
+    if (user) {
+      loadedValues.fullName = user.name || loadedValues.fullName;
+      loadedValues.email = user.email || loadedValues.email;
+      loadedValues.phone = user.phone || loadedValues.phone;
+    }
     reset(loadedValues);
-  }, [reset]);
+  }, [reset, user]);
 
   useEffect(() => {
     const unload = (e: BeforeUnloadEvent) => {

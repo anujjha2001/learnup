@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="bg-[#f8f9ff] min-h-screen flex flex-col items-center justify-center p-4 relative overflow-x-hidden antialiased">
+    <div className="bg-[#070710] min-h-screen flex flex-col items-center justify-center p-4 relative overflow-x-hidden antialiased text-slate-100">
       {/* Dynamic injection of Material Symbols */}
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
@@ -46,11 +46,11 @@ export default function ForgotPasswordPage() {
 
       {/* Subtle Atmospheric Background Patterns */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-[#3525cd]/10 rounded-full blur-[120px]"></div>
-        <div className="absolute -bottom-[10%] -right-[5%] w-[40%] h-[40%] bg-[#712ae2]/10 rounded-full blur-[120px]"></div>
+        <div className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-[#8b5cf6]/5 rounded-full blur-[120px]"></div>
+        <div className="absolute -bottom-[10%] -right-[5%] w-[40%] h-[40%] bg-[#f97316]/5 rounded-full blur-[120px]"></div>
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]"
-          style={{ backgroundImage: "radial-gradient(#3525cd 1px, transparent 1px)", backgroundSize: "32px 32px" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.02]"
+          style={{ backgroundImage: "radial-gradient(#8b5cf6 1px, transparent 1px)", backgroundSize: "32px 32px" }}
         ></div>
       </div>
 
@@ -59,33 +59,54 @@ export default function ForgotPasswordPage() {
         <div className="flex items-center gap-3">
           <svg className="h-9 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
             <defs>
-              <linearGradient id="grad-auth-logo" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#4F46E5", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#7C3AED", stopOpacity: 1 }} />
+              <linearGradient id="global-header-grad-forgot" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{ stopColor: "#f97316", stopOpacity: 1 }} />
+                <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
               </linearGradient>
             </defs>
             <rect width="200" height="200" rx="40" fill="transparent" />
-            <path d="M60 40 V140 H140" stroke="url(#grad-auth-logo)" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <path d="M110 90 L140 60 L170 90" stroke="#06B6D4" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <path d="M140 60 V120" stroke="#06B6D4" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <path
+              d="M60 40 V140 H140"
+              stroke="url(#global-header-grad-forgot)"
+              strokeWidth="24"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+            <path
+              d="M110 90 L140 60 L170 90"
+              stroke="#8b5cf6"
+              strokeWidth="20"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+            <path
+              d="M140 60 V120"
+              stroke="#8b5cf6"
+              strokeWidth="20"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
           </svg>
-          <span className="text-2xl font-black bg-gradient-to-r from-[#3525cd] to-[#712ae2] bg-clip-text text-transparent tracking-tight">
+          <span className="text-2xl font-black bg-gradient-to-r from-[#8b5cf6] via-[#f97316] to-[#8b5cf6] bg-clip-text text-transparent tracking-tight">
             LearnUp
           </span>
         </div>
       </div>
 
-      <div className="w-full max-w-[480px] glass-card rounded-2xl overflow-hidden shadow-2xl border border-[#c7c4d8]/20 bg-white/95 p-8 md:p-10 text-center relative z-10 animate-fadeIn">
+      <div className="w-full max-w-[480px] bg-[#0d0c22]/90 backdrop-blur-xl rounded-3xl p-8 md:p-10 text-center relative z-10 border border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.15)] animate-fadeIn">
         <div className="flex flex-col items-center mb-6">
-          <div className="w-16 h-16 rounded-full bg-[#eff4ff] flex items-center justify-center text-[#3525cd] mb-4">
+          <div className="w-16 h-16 rounded-full bg-[#8b5cf6]/10 border border-[#8b5cf6]/20 flex items-center justify-center text-[#f97316] mb-4">
             <span className="material-symbols-outlined text-[36px] select-none">
               lock_reset
             </span>
           </div>
-          <h2 className="text-3xl font-black bg-gradient-to-r from-[#3525cd] to-[#712ae2] bg-clip-text text-transparent tracking-tight">
+          <h2 className="text-3xl font-black bg-gradient-to-r from-[#8b5cf6] via-[#f97316] to-[#8b5cf6] bg-clip-text text-transparent tracking-tight">
             Forgot Password
           </h2>
-          <p className="text-slate-500 text-sm mt-2 max-w-[320px] mx-auto leading-relaxed">
+          <p className="text-slate-400 text-sm mt-2 max-w-[320px] mx-auto leading-relaxed">
             {success
               ? "Account recognized. Directing to password reset screen..."
               : "Enter your registered email address below. We'll send you a 6-digit OTP code to reset your password securely."
@@ -96,13 +117,13 @@ export default function ForgotPasswordPage() {
         {!success && (
           <form onSubmit={handleSubmit} className="space-y-6 text-left">
             <div className="space-y-2">
-              <label className="font-bold text-[#0b1c30] text-sm" htmlFor="email">Email Address</label>
+              <label className="font-bold text-slate-300 text-xs uppercase tracking-wider" htmlFor="email">Email Address</label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#464555] group-focus-within:text-[#3525cd]">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-[#f97316] transition-colors">
                   <span className="material-symbols-outlined text-md select-none">mail</span>
                 </div>
                 <input
-                  className="w-full bg-[#eff4ff] border border-[#c7c4d8]/20 focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-[#0b1c30]"
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#f97316] focus:ring-2 focus:ring-[#f97316]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-white placeholder-slate-500"
                   id="email"
                   placeholder="name@example.com"
                   required
@@ -114,8 +135,8 @@ export default function ForgotPasswordPage() {
             </div>
 
             {error && (
-              <div className="p-3.5 bg-red-50 border border-red-200 text-red-800 rounded-xl text-xs font-semibold flex items-center gap-2">
-                <span className="material-symbols-outlined text-red-600 text-[18px] select-none">error</span>
+              <div className="p-3.5 bg-red-500/10 border border-red-500/20 text-red-200 rounded-xl text-xs font-semibold flex items-center gap-2">
+                <span className="material-symbols-outlined text-red-400 text-[18px] select-none">error</span>
                 <span>{error}</span>
               </div>
             )}
@@ -124,7 +145,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 rounded-xl bg-[#3525cd] text-white font-bold shadow-lg hover:shadow-xl hover:bg-[#2b1db0] flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer text-sm"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#8b5cf6] to-[#f97316] hover:from-[#712ae2] hover:to-[#ea580c] text-white font-black shadow-lg hover:shadow-orange-500/20 hover:-translate-y-0.5 flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 cursor-pointer text-sm"
               >
                 <span>{loading ? "Sending..." : "Send Verification OTP"}</span>
                 {!loading && <span className="material-symbols-outlined text-[18px] select-none">send</span>}
@@ -132,7 +153,7 @@ export default function ForgotPasswordPage() {
 
               <Link
                 href="/auth"
-                className="inline-block text-xs font-bold text-[#3525cd] hover:underline"
+                className="inline-block text-xs font-bold text-purple-400 hover:text-orange-400 transition-colors"
               >
                 Back to Sign In
               </Link>
@@ -142,13 +163,13 @@ export default function ForgotPasswordPage() {
 
         {success && (
           <div className="py-6 flex flex-col items-center justify-center">
-            <div className="w-12 h-12 border-4 border-[#3525cd] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-12 h-12 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
       </div>
 
-      <footer className="w-full py-8 text-center border-t border-[#c7c4d8]/10 bg-white/40 absolute bottom-0 left-0 right-0">
-        <p className="text-xs text-[#464555] opacity-70">© 2026 LearnUp LMS. All rights reserved.</p>
+      <footer className="w-full py-8 text-center border-t border-white/5 bg-[#070710]/40 absolute bottom-0 left-0 right-0">
+        <p className="text-xs text-slate-500">© 2026 LearnUp LMS. All rights reserved.</p>
       </footer>
     </div>
   );

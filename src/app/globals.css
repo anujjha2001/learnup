@@ -194,3 +194,10 @@ button:hover, a:hover, .card:hover, tr:hover, li:hover {
   transform: scale(1.05) !important;
   box-shadow: 0 0 15px rgba(139, 92, 246, 0.3) !important;
 }
+
+/* Hide Next.js Development Indicator Portals & overlays */
+nextjs-portal,
+#nextjs-dev-indicator,
+#__next-route-announcer__ {
+  display: none !important;
+}

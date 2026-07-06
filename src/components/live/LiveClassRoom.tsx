@@ -86,6 +86,7 @@ const LiveClassRoom: React.FC<LiveClassRoomProps> = ({ roomId, courseTitle, isIn
           }}
           userInfo={{
             displayName: user?.name || "Student",
+            email: user?.email || "",
           }}
           onApiReady={(externalApi) => {
             externalApi.addListener("videoConferenceLeft", () => {

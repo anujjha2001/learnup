@@ -47,11 +47,11 @@ export async function GET() {
     });
 
     // console.log("[Debug Admin] Database User record:", {
-      id: dbUser?.id,
-      email: dbUser?.email,
-      role: dbUser?.role,
-      status: dbUser?.status,
-    });
+    //   id: dbUser?.id,
+    //   email: dbUser?.email,
+    //   role: dbUser?.role,
+    //   status: dbUser?.status,
+    // });
 
     return NextResponse.json({
       success: true,

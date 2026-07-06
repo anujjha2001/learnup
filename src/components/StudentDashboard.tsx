@@ -540,6 +540,24 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
     ? Math.round(submissions.reduce((acc, s) => acc + s.score, 0) / quizzesTaken) 
     : 0;
   const certificatesEarned = submissions.filter((s) => s.score >= 80).length;
+  const handleDeleteResource = async (resourceId: string) => {
+    try {
+      const res = await fetch("/api/student/resources", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resourceId })
+      });
+      if (res.ok) {
+        setResources(prev => prev.filter(r => r.id !== resourceId));
+        toast.success("Resource removed from view");
+      } else {
+        toast.error("Failed to remove resource");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Error removing resource");
+    }
+  };
 
   return (
     <div className="flex h-screen w-full bg-[#080710] text-[#f1f5f9] antialiased overflow-hidden font-sans relative">
@@ -1014,7 +1032,7 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
           )}
 
           {activeTab === "resources" && (
-            <ResourcesList resources={resources} />
+            <ResourcesList resources={resources} onDelete={handleDeleteResource} />
           )}
 
           {activeTab === "certificates" && (

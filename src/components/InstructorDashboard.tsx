@@ -38,10 +38,11 @@ interface Quiz {
 }
 
 interface InstructorDashboardProps {
-  onLogout: () => void;
+  onLogout?: () => void;
+  user?: any;
 }
 
-export default function InstructorDashboard({ onLogout }: InstructorDashboardProps) {
+export default function InstructorDashboard({ onLogout, user }: InstructorDashboardProps) {
   const [activeTab, setActiveTab] = useState<InstructorTabType>("dashboard");
   
   // Wallet / Payout states
@@ -66,7 +67,7 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
   const [loadingStudents, setLoadingStudents] = useState(false);
   const [analyticsData, setAnalyticsData] = useState<any>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(user || null);
 
   // Course states
   const [courses, setCourses] = useState<any[]>([]);
@@ -330,6 +331,12 @@ export default function InstructorDashboard({ onLogout }: InstructorDashboardPro
 
     return () => window.removeEventListener("profileUpdated", handleProfileUpdate);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (activeTab === "analytics") {

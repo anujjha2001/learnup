@@ -81,11 +81,11 @@ export async function sendOTP(
 
     // Log email structure before sending
     // console.log(`[SMTP Mailer] Attempting to send email. Structure:`, {
-      from: mailOptions.from,
-      to: mailOptions.to,
-      subject: mailOptions.subject,
-      textLength: mailOptions.text.length,
-    });
+    //   from: mailOptions.from,
+    //   to: mailOptions.to,
+    //   subject: mailOptions.subject,
+    //   textLength: mailOptions.text.length,
+    // });
 
     // Send email with success/error logging
     await transporter.sendMail(mailOptions)

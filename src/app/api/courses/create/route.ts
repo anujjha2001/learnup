@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, description, image, thumbnailUrl, isFree, price, template, modules, instructorId } = body;
+    const { title, description, image, thumbnailUrl, isFree, price, template, modules, resources, instructorId } = body;
 
     if (!title || !instructorId) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -34,6 +34,23 @@ export async function POST(req: Request) {
               title: mod.title || `Module ${index + 1}`,
               videoUrl: mod.url || mod.videoUrl || "",
               order: index + 1,
+            }
+          })
+        )
+      );
+    }
+
+    // Save PDF resources dynamically in the Resource table
+    if (Array.isArray(resources)) {
+      await Promise.all(
+        resources.map((res: any) =>
+          db.resource.create({
+            data: {
+              courseId: newCourse.id,
+              title: res.title || "Lecture Resource",
+              url: res.url || "",
+              type: "PDF",
+              size: res.size || "0 KB",
             }
           })
         )
