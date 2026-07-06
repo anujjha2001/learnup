@@ -1,6 +1,6 @@
 import React from "react";
 import { db } from "@/lib/db";
-import InstructorTable from "@/components/admin/InstructorTable";
+import InstructorTable from "../../../../../components/admin/InstructorTable";
 import { Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
