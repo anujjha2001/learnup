@@ -93,7 +93,7 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
       if (response.status !== 200) {
         const bodyText = await response.text();
         console.error(`Submission failed with status code: ${response.status}. Response body:`, bodyText);
-        setError(`Failed to submit results (Status: ${response.status}).`);
+        setError(`failed to submit results (Status: ${response.status}).`);
         setSubmitting(false);
         return;
       }
@@ -126,7 +126,7 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
   return (
     <div className="fixed inset-0 bg-[#0b1c30]/40 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fadeIn">
       <div className={`w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#c7c4d8]/20 overflow-hidden flex flex-col justify-between ${submitting ? "animate-pulse" : ""}`}>
-        
+
         {/* Header */}
         <header className="p-6 border-b border-[#c7c4d8]/20 bg-slate-50/50 flex justify-between items-center">
           <div>
@@ -135,9 +135,9 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
             </span>
             <h2 className="text-lg font-black text-[#0b1c30] mt-1">{quiz.title}</h2>
           </div>
-          <button 
+          <button
             disabled={submitting}
-            onClick={onClose} 
+            onClick={onClose}
             className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-200 transition-colors cursor-pointer text-slate-400 hover:text-[#0b1c30]"
           >
             <span className="material-symbols-outlined text-sm select-none">close</span>
@@ -146,7 +146,7 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
 
         {/* Progress Bar */}
         <div className="w-full bg-slate-100 h-1.5 relative overflow-hidden">
-          <div 
+          <div
             className="h-full bg-gradient-to-r from-[#3525cd] to-[#4f46e5] transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
@@ -178,15 +178,13 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
                   key={idx}
                   disabled={submitting}
                   onClick={() => handleSelectOption(idx)}
-                  className={`w-full p-4 rounded-xl border text-left text-sm font-medium transition duration-200 cursor-pointer flex items-center gap-3 ${
-                    isSelected
-                      ? "border-[#3525cd] bg-[#eff4ff] text-[#3525cd]"
-                      : "border-[#c7c4d8]/40 hover:border-[#3525cd]/40 hover:bg-slate-50 text-[#464555]"
-                  }`}
+                  className={`w-full p-4 rounded-xl border text-left text-sm font-medium transition duration-200 cursor-pointer flex items-center gap-3 ${isSelected
+                    ? "border-[#3525cd] bg-[#eff4ff] text-[#3525cd]"
+                    : "border-[#c7c4d8]/40 hover:border-[#3525cd]/40 hover:bg-slate-50 text-[#464555]"
+                    }`}
                 >
-                  <span className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold ${
-                    isSelected ? "border-[#3525cd] bg-[#3525cd] text-white" : "border-slate-300 bg-white"
-                  }`}>
+                  <span className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] font-bold ${isSelected ? "border-[#3525cd] bg-[#3525cd] text-white" : "border-slate-300 bg-white"
+                    }`}>
                     {String.fromCharCode(65 + idx)}
                   </span>
                   <span>{opt}</span>
@@ -211,8 +209,8 @@ export default function QuizTaker({ quiz, onClose, onComplete }: QuizTakerProps)
             onClick={handleNext}
             className="px-6 py-3 rounded-xl bg-[#3525cd] text-white font-bold text-xs hover:bg-[#4f46e5] active:scale-95 disabled:opacity-40 disabled:pointer-events-none cursor-pointer transition-all flex items-center gap-1 shadow-md shadow-[#3525cd]/15"
           >
-            {currentIndex + 1 === totalQuestions 
-              ? (submitting ? "Submitting..." : "Submit Attempt") 
+            {currentIndex + 1 === totalQuestions
+              ? (submitting ? "Submitting..." : "Submit Attempt")
               : "Next Question"
             }
             {currentIndex + 1 !== totalQuestions && <span className="material-symbols-outlined text-sm select-none">chevron_right</span>}

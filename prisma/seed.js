@@ -23,7 +23,16 @@ const SEED_QUIZZES = [
   { id: "q19", title: "AWS Lambda Provisioning", description: "Serverless setups, memory scales, and execution triggers.", courseId: "c3", difficulty: "Med", questions: [{ text: "What is Lambda's max timeout?", options: ["5 mins", "15 mins", "30 mins"], correctAnswer: 1 }] },
   { id: "q20", title: "JWT Authentication Tokens", description: "Secret signatures, payloads, and client token storage.", courseId: "c1", difficulty: "Easy", questions: [{ text: "What does JWT stand for?", options: ["JSON Web Token", "Java Wire Transfer", "Joint Web Term"], correctAnswer: 0 }] },
   { id: "q21", title: "REST vs GraphQL Endpoints", description: "Overfetching resolutions, resolvers, schema definition.", courseId: "c1", difficulty: "Med", questions: [{ text: "Which handles overfetching?", options: ["REST", "GraphQL", "SOAP"], correctAnswer: 1 }] }
-];
+].map(quiz => {
+  while (quiz.questions.length < 10) {
+    quiz.questions.push({
+      text: `Practice Question ${quiz.questions.length + 1} for ${quiz.title}`,
+      options: ["Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+      correctAnswer: 0
+    });
+  }
+  return quiz;
+});
 
 async function main() {
   console.log("Seeding database...");
@@ -31,104 +40,126 @@ async function main() {
   // 1. Create Users
   const instructor = await db.user.upsert({
     where: { email: "instructor@learnup.com" },
-    update: { id: "inst-1", name: "Alex Rivera", role: "INSTRUCTOR" },
+    update: { id: "inst-1", name: "Alex Rivera", role: "INSTRUCTOR", isVerified: true, password: "password123" },
     create: {
       id: "inst-1",
       email: "instructor@learnup.com",
       name: "Alex Rivera",
-      role: "INSTRUCTOR"
+      role: "INSTRUCTOR",
+      isVerified: true,
+      password: "password123"
     }
   });
   console.log("Instructor created:", instructor);
 
   const student = await db.user.upsert({
     where: { email: "student@learnup.com" },
-    update: { id: "std-1", name: "Anuj", role: "STUDENT" },
+    update: { id: "std-1", name: "Anuj", role: "STUDENT", isVerified: true, password: "password123" },
     create: {
       id: "std-1",
       email: "student@learnup.com",
       name: "Anuj",
-      role: "STUDENT"
+      role: "STUDENT",
+      isVerified: true,
+      password: "password123"
     }
   });
   console.log("Student created:", student);
 
+  const admin = await db.user.upsert({
+    where: { email: "admin@learnup.com" },
+    update: { id: "admin-1", name: "Admin Lead", role: "ADMIN", isVerified: true, password: "password123" },
+    create: {
+      id: "admin-1",
+      email: "admin@learnup.com",
+      name: "Admin Lead",
+      role: "ADMIN",
+      isVerified: true,
+      password: "password123"
+    }
+  });
+  console.log("Admin created:", admin);
+
+  // Seed wallets for users
+  await db.wallet.upsert({
+    where: { userId: "std-1" },
+    update: { balance: 20000.0 },
+    create: { userId: "std-1", balance: 20000.0 }
+  });
+  await db.wallet.upsert({
+    where: { userId: "inst-1" },
+    update: {},
+    create: { userId: "inst-1", balance: 0.0 }
+  });
+  await db.wallet.upsert({
+    where: { userId: "admin-1" },
+    update: {},
+    create: { userId: "admin-1", balance: 0.0 }
+  });
+  console.log("Seeded wallets for seed users");
+
   // 2. Create Courses
-  const c1 = await db.course.upsert({
-    where: { id: "c1" },
-    update: {
-      title: "Advanced React Architecture",
-      description: "Modular systems and performance optimization.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80",
-      price: 49.99,
-      instructorId: "inst-1"
-    },
-    create: {
-      id: "c1",
-      title: "Advanced React Architecture",
-      description: "Modular systems and performance optimization.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80",
-      price: 49.99,
-      instructorId: "inst-1"
-    }
-  });
+  const premiumCourses = [
+    { id: "c1", title: "Advanced React Architecture", description: "Design systems, folder setups, state dividers, and components.", price: 1499, image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80" },
+    { id: "c2", title: "Machine Learning Operational Scaling", description: "Scale model training pipelines and deploy API endpoints.", price: 2999, image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80" },
+    { id: "c3", title: "Cloud Architecture & Kubernetes Grid", description: "AWS provisioning, cloud grids, container networks, and ingress scaling.", price: 3499, image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400" },
+    { id: "c4", title: "Go Concurrency & Microservices", description: "Goroutines, channels, workers, mutexes, and gRPC scaling.", price: 1999, image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400" },
+    { id: "c5", title: "Next.js Production SaaS Boilerplates", description: "Server actions, auth integrations, Stripe checkout, and database adapters.", price: 2499, image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=400" },
+    { id: "c6", title: "PostgreSQL Performance Tuning", description: "Indexes, vacuuming, connection pool management, and query optimization.", price: 1299, image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400" },
+    { id: "c7", title: "Docker Masterclass for DevOps", description: "Caching layers, multi-stage builds, rootless containers, and swarm.", price: 999, image: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=400" },
+    { id: "c8", title: "Full-Stack Security & Pentesting", description: "CORS, CSRF protection, sanitization, Rate limit configurations, and JWT safety.", price: 3999, image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400" },
+    { id: "c9", title: "AI Agents with LangChain & Python", description: "Function calling, embeddings, semantic search vector stores, and custom chains.", price: 4999, image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" },
+    { id: "c10", title: "Rust Systems Programming Foundations", description: "Ownership mechanics, memory layouts, smart pointers, and concurrency grids.", price: 2199, image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400" }
+  ];
 
-  const c2 = await db.course.upsert({
-    where: { id: "c2" },
-    update: {
-      title: "Machine Learning Operational Scaling",
-      description: "Scale model training pipelines and deploy API endpoints.",
-      image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80",
-      price: 89.99,
-      instructorId: "inst-1"
-    },
-    create: {
-      id: "c2",
-      title: "Machine Learning Operational Scaling",
-      description: "Scale model training pipelines and deploy API endpoints.",
-      image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80",
-      price: 89.99,
-      instructorId: "inst-1"
-    }
-  });
+  const subjects = ["JavaScript", "Python", "TypeScript", "DevOps", "Database", "Security", "Web Dev", "CSS", "Next.js", "AI", "Cloud", "Git", "React", "State Management", "API Design", "Serverless"];
+  const levels = ["Introduction", "Fundamentals", "Basics", "Essentials", "Quickstart", "Bootcamp", "Deep Dive", "101"];
 
-  const c3 = await db.course.upsert({
-    where: { id: "c3" },
-    update: {
-      title: "Cloud Architecture & Kubernetes Grid",
-      description: "AWS provisioning, cloud grids, container networks, and ingress scaling.",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400",
-      price: 99.99,
-      instructorId: "inst-1"
-    },
-    create: {
-      id: "c3",
-      title: "Cloud Architecture & Kubernetes Grid",
-      description: "AWS provisioning, cloud grids, container networks, and ingress scaling.",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400",
-      price: 99.99,
-      instructorId: "inst-1"
-    }
-  });
-  console.log("Courses seeded.");
+  const coursesToSeed = [...premiumCourses];
 
-  // Enroll student in all three courses
-  await db.courseEnrollment.upsert({
-    where: { userId_courseId: { userId: "std-1", courseId: "c1" } },
-    update: {},
-    create: { userId: "std-1", courseId: "c1" }
-  });
-  await db.courseEnrollment.upsert({
-    where: { userId_courseId: { userId: "std-1", courseId: "c2" } },
-    update: {},
-    create: { userId: "std-1", courseId: "c2" }
-  });
-  await db.courseEnrollment.upsert({
-    where: { userId_courseId: { userId: "std-1", courseId: "c3" } },
-    update: {},
-    create: { userId: "std-1", courseId: "c3" }
-  });
-  console.log("Student enrolled in courses.");
+  for (let i = 11; i <= 42; i++) {
+    const subj = subjects[(i - 11) % subjects.length];
+    const lvl = levels[Math.floor((i - 11) / subjects.length) % levels.length];
+    coursesToSeed.push({
+      id: `c${i}`,
+      title: `${lvl} to ${subj}`,
+      description: `A complete comprehensive guide to learning the foundational principles of ${subj}. Learn via interactive modules.`,
+      price: 0,
+      image: `https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80`
+    });
+  }
+
+  for (const c of coursesToSeed) {
+    await db.course.upsert({
+      where: { id: c.id },
+      update: {
+        title: c.title,
+        description: c.description,
+        image: c.image,
+        price: c.price,
+        instructorId: "inst-1"
+      },
+      create: {
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        image: c.image,
+        price: c.price,
+        instructorId: "inst-1"
+      }
+    });
+  }
+  console.log(`Successfully seeded ${coursesToSeed.length} courses (10 premium, 32 free).`);
+
+  // Enroll student in a few courses (c1, c2, c3)
+  for (const cid of ["c1", "c2", "c3"]) {
+    await db.courseEnrollment.upsert({
+      where: { userId_courseId: { userId: "std-1", courseId: cid } },
+      update: {},
+      create: { userId: "std-1", courseId: cid }
+    });
+  }
+  console.log("Student enrolled in baseline courses.");
 
   // 3. Create Quizzes
   for (const quiz of SEED_QUIZZES) {

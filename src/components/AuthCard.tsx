@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { RegisterValidationSchema, LoginValidationSchema } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
 import { useProfileStore } from "@/store/profileStore";
@@ -11,14 +12,12 @@ interface AuthCardProps {
   authMode: "login" | "register";
   setAuthMode: (mode: "login" | "register") => void;
   onAuthSubmit: (role: "student" | "instructor") => void;
-  onSocialAuth: (provider: "google" | "linkedin" | "github", role: "student" | "instructor") => void;
 }
 
 export default function AuthCard({
   authMode,
   setAuthMode,
   onAuthSubmit,
-  onSocialAuth,
 }: AuthCardProps) {
   const router = useRouter();
   const [role, setRole] = useState<"student" | "instructor">("student");
@@ -118,6 +117,11 @@ export default function AuthCard({
         localStorage.setItem("user_name", sessionUser.name);
         localStorage.setItem("user_avatar", sessionUser.avatar);
         localStorage.setItem("user_tier", sessionUser.role === "student" ? "Premium Student" : "Senior Instructor");
+        const token = res.data?.token;
+        if (token) {
+          localStorage.setItem("learnup_token", token);
+          document.cookie = `learnup_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+        }
 
         // Sync store
         const store = useProfileStore.getState();
@@ -267,7 +271,10 @@ export default function AuthCard({
                 {/* Google */}
                 <button
                   type="button"
-                  onClick={() => onSocialAuth("google", role)}
+                  onClick={() => {
+                    document.cookie = `selected_role=${role}; path=/; max-age=300; SameSite=Lax`;
+                    signIn('google', { callbackUrl: '/dashboard' });
+                  }}
                   className="social-btn w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm py-3.5 px-4 rounded-xl border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +289,10 @@ export default function AuthCard({
                 {/* LinkedIn */}
                 <button
                   type="button"
-                  onClick={() => onSocialAuth("linkedin", role)}
+                  onClick={() => {
+                    document.cookie = `selected_role=${role}; path=/; max-age=300; SameSite=Lax`;
+                    signIn('linkedin', { callbackUrl: '/dashboard' });
+                  }}
                   className="social-btn w-full flex items-center justify-center gap-3 bg-[#0077B5] hover:bg-[#006699] text-white font-bold text-sm py-3.5 px-4 rounded-xl border border-transparent shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -294,7 +304,10 @@ export default function AuthCard({
                 {/* GitHub */}
                 <button
                   type="button"
-                  onClick={() => onSocialAuth("github", role)}
+                  onClick={() => {
+                    document.cookie = `selected_role=${role}; path=/; max-age=300; SameSite=Lax`;
+                    signIn('github', { callbackUrl: '/dashboard' });
+                  }}
                   className="social-btn w-full flex items-center justify-center gap-3 bg-[#0f141c] hover:bg-[#19222f] text-white font-bold text-sm py-3.5 px-4 rounded-xl border border-transparent shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer hover:-translate-y-0.5"
                 >
                   <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

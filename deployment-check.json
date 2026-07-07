@@ -1,0 +1,30 @@
+{
+  "environment_variables": {
+    "DATABASE_URL": {
+      "required": true,
+      "description": "Supabase Connection Pooler string (Transaction mode). Must start with postgresql://",
+      "local_set": false,
+      "production_required": true
+    },
+    "DIRECT_URL": {
+      "required": true,
+      "description": "Supabase Direct Connection string (Session mode). Required for Prisma migrations and generation.",
+      "local_set": false,
+      "production_required": true
+    },
+    "NEXT_PUBLIC_SUPABASE_URL": {
+      "required": true,
+      "description": "Supabase Project URL",
+      "local_set": true,
+      "production_required": true
+    },
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+      "required": true,
+      "description": "Supabase Project Anonymous Key",
+      "local_set": true,
+      "production_required": true
+    }
+  },
+  "deployment_ready": true,
+  "notes": "Ensure that DATABASE_URL and DIRECT_URL are configured in your Vercel project settings before deploying."
+}

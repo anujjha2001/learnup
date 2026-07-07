@@ -14,8 +14,14 @@ const SubmissionBodySchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    const { getServerSession } = await import("@/lib/auth");
+    const session = await getServerSession();
+    
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
-    console.log("Incoming Quiz Submission Payload:", JSON.stringify(body, null, 2));
     
     // Zod validation check
     const validationResult = SubmissionBodySchema.safeParse(body);
@@ -30,14 +36,18 @@ export async function POST(req: Request) {
     // Load quiz details from database or fallback to mock quizzes
     let quizQuestions: any[] = [];
     let title = quizTitle || "Quiz";
+    let instructorId = "inst-1";
+    let dbQuiz: any = null;
 
     try {
-      const dbQuiz = await db.quiz.findUnique({
+      dbQuiz = await db.quiz.findUnique({
         where: { id: quizId },
+        include: { course: true }
       });
       if (dbQuiz) {
         title = dbQuiz.title;
         quizQuestions = (dbQuiz.questions as any) || [];
+        instructorId = dbQuiz.course?.instructorId || "inst-1";
       }
     } catch (dbError) {
       console.warn("DB offline or Quiz table missing, using static fallback");
@@ -56,26 +66,61 @@ export async function POST(req: Request) {
     // Calculate score
     let scoreCount = 0;
     const totalQuestions = quizQuestions.length || 1;
+    const results: any[] = [];
+
+    // console.log('Submitted Answers:', answers, 'Correct Answers:', quizQuestions.map((q: any) => q.correctAnswer), 'Calculated Score:', scoreCount);
 
     quizQuestions.forEach((q, idx) => {
-      const studentAnswer = answers[idx]; 
-      const correctAnswer = q.correctAnswer; 
+      let studentAnswer = answers[idx]; 
+      let correctAnswer = q.correctAnswer; 
+      let isCorrect = false;
 
-      if (studentAnswer !== undefined && studentAnswer !== null) {
-        if (typeof correctAnswer === "number") {
-          if (studentAnswer === correctAnswer) {
-            scoreCount++;
+      // Extract value if it's an object
+      if (typeof studentAnswer === 'object' && studentAnswer !== null) {
+        studentAnswer = studentAnswer.id ?? studentAnswer.value ?? studentAnswer;
+      }
+      if (typeof correctAnswer === 'object' && correctAnswer !== null) {
+        correctAnswer = correctAnswer.id ?? correctAnswer.value ?? correctAnswer;
+      }
+
+      if (studentAnswer !== undefined && studentAnswer !== null && correctAnswer !== undefined && correctAnswer !== null) {
+        // Deep Validation: strict string comparison with trim to avoid hidden whitespace
+        const studentAnswerStr = studentAnswer.toString().trim();
+        const correctAnswerStr = correctAnswer.toString().trim();
+
+        if (studentAnswerStr === correctAnswerStr) {
+          isCorrect = true;
+        } else if (studentAnswerStr.toLowerCase() === correctAnswerStr.toLowerCase()) {
+           // Fallback case-insensitive match for text-based answers
+          isCorrect = true;
+        } else if (typeof correctAnswer === "number") {
+          // If it was a number index (e.g. index 0, 1, 2 for options)
+          if (Number(studentAnswerStr) === correctAnswer) {
+            isCorrect = true;
           }
-        } else if (typeof correctAnswer === "string") {
-          const studentText = typeof studentAnswer === "number" ? q.options?.[studentAnswer] : studentAnswer;
-          if (studentText?.toString().trim().toLowerCase() === correctAnswer.toString().trim().toLowerCase()) {
-            scoreCount++;
-          }
+        } else if (typeof correctAnswer === "string" && q.options) {
+           // If answer matches text of the option
+           const studentText = typeof studentAnswer === "number" ? q.options[studentAnswer] : studentAnswer;
+           if (studentText?.toString().trim().toLowerCase() === correctAnswerStr.toLowerCase()) {
+             isCorrect = true;
+           }
         }
       }
+
+      if (isCorrect) scoreCount++;
+
+      results.push({
+        questionIndex: idx,
+        isCorrect,
+        studentAnswer,
+        correctAnswer
+      });
     });
 
     const finalPercent = Math.round((scoreCount / totalQuestions) * 100);
+    const passingThreshold = 60;
+    const passed = finalPercent >= passingThreshold;
+    const submissionStatus = passed ? "passed" : "failed";
 
     // Save to PostgreSQL via Prisma Client
     let dbSubmission = null;
@@ -86,6 +131,7 @@ export async function POST(req: Request) {
           quizId,
           score: finalPercent,
           answers: answers as any,
+          status: submissionStatus
         },
       });
 
@@ -93,11 +139,35 @@ export async function POST(req: Request) {
       await db.notification.create({
         data: {
           title: "New Quiz Submission",
-          message: `${studentName} completed ${title} scoring ${finalPercent}%.`,
+          message: `${studentName} completed ${title} scoring ${finalPercent}%. Result: ${passed ? 'PASS' : 'FAIL'}`,
+          type: "QUIZ_SUBMITTED",
           isRead: false,
-          userId: "inst-1", // default instructor id
+          userId: instructorId,
         },
       });
+
+      // Course Completion Notification
+      if (finalPercent >= 80) {
+        await db.notification.create({
+          data: {
+            title: "Course Completed",
+            message: `${studentName} completed ${dbQuiz?.course?.title || 'the course'} with score ${finalPercent}%.`,
+            type: "QUIZ_SUBMITTED",
+            isRead: false,
+            userId: instructorId,
+          },
+        });
+      }
+
+      // Generate certificate asynchronously if passed
+      if (finalPercent >= 60 && dbQuiz?.courseId) {
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+        fetch(`${appUrl}/api/certificates/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ studentId, courseId: dbQuiz.courseId })
+        }).catch(err => console.error("Async cert generate trigger failed:", err));
+      }
     } catch (dbError) {
       console.warn("Prisma failed to write submission, relying on runtime mock");
     }
@@ -112,7 +182,7 @@ export async function POST(req: Request) {
             title: "New Quiz Submission",
             message: `${studentName} completed ${title} scoring ${finalPercent}%.`,
             isRead: false,
-            userId: "inst-1",
+            userId: instructorId,
             createdAt: new Date().toISOString(),
           },
         ]);
@@ -126,7 +196,17 @@ export async function POST(req: Request) {
       score: scoreCount,
       total: totalQuestions,
       percentage: finalPercent,
+      passed,
+      results,
       submissionId: dbSubmission?.id || `sub-mock-${Date.now()}`,
+      debugInfo: {
+        submittedAnswers: answers,
+        expectedAnswers: quizQuestions.map((q: any) => q.correctAnswer),
+        comparisonLog: results.map(r => ({
+          questionId: r.questionIndex + 1,
+          match: r.isCorrect
+        }))
+      }
     }, { status: 200 });
 
   } catch (error: any) {
@@ -161,5 +241,14 @@ function getStaticQuizzes() {
     { id: "q19", title: "AWS Lambda Provisioning", questions: [{ text: "What is Lambda's max timeout?", options: ["5 mins", "15 mins", "30 mins"], correctAnswer: 1 }] },
     { id: "q20", title: "JWT Authentication Tokens", questions: [{ text: "What does JWT stand for?", options: ["JSON Web Token", "Java Wire Transfer", "Joint Web Term"], correctAnswer: 0 }] },
     { id: "q21", title: "REST vs GraphQL Endpoints", questions: [{ text: "Which handles overfetching?", options: ["REST", "GraphQL", "SOAP"], correctAnswer: 1 }] }
-  ];
+  ].map(quiz => {
+    while (quiz.questions.length < 10) {
+      quiz.questions.push({
+        text: `Practice Question ${quiz.questions.length + 1} for ${quiz.title}`,
+        options: ["Correct Answer", "Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        correctAnswer: 0
+      });
+    }
+    return quiz;
+  });
 }

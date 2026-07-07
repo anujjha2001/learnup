@@ -36,6 +36,11 @@ export default function NotificationBell() {
   useEffect(() => {
     fetchNotifications();
 
+    // Poll the database for real-time notification updates
+    const pollInterval = setInterval(() => {
+      fetchNotifications();
+    }, 4000);
+
     // Connect to Supabase Realtime channel for Submissions
     const channel = supabase
       .channel("schema-db-changes")
@@ -75,6 +80,7 @@ export default function NotificationBell() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       channel.unsubscribe();
+      clearInterval(pollInterval);
     };
   }, []);
 
@@ -114,25 +120,25 @@ export default function NotificationBell() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2.5 rounded-xl bg-white border border-[#c7c4d8]/20 text-[#464555] hover:text-[#3525cd] transition hover:bg-slate-50 cursor-pointer flex items-center justify-center shadow-sm"
+        className="relative p-2.5 rounded-xl bg-[#0b0a1d] border border-white/5 text-slate-400 hover:text-[#f97316] transition cursor-pointer flex items-center justify-center shadow-md hover:border-[#8b5cf6]/30"
       >
         <span className="material-symbols-outlined select-none text-xl">notifications</span>
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white animate-pulse">
+          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#f97316] text-[10px] font-bold text-white ring-2 ring-[#070710] animate-pulse">
             {unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2.5 w-80 sm:w-96 bg-white/95 backdrop-blur-md rounded-2xl border border-[#c7c4d8]/20 shadow-xl z-50 overflow-hidden transform origin-top-right animate-fadeIn">
+        <div className="absolute right-0 mt-2.5 w-80 sm:w-96 bg-[#0b0a1d]/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl z-50 overflow-hidden transform origin-top-right animate-fadeIn">
           {/* Header */}
-          <div className="p-4 border-b border-[#c7c4d8]/20 flex items-center justify-between bg-slate-50/50">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">Live Alerts</h3>
+          <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#070710]/60">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Live Alerts</h3>
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="text-[11px] font-bold text-[#3525cd] hover:underline cursor-pointer"
+                className="text-[11px] font-bold text-[#f97316] hover:text-[#ea580c] cursor-pointer"
               >
                 Mark all read
               </button>
@@ -140,7 +146,7 @@ export default function NotificationBell() {
           </div>
 
           {/* List */}
-          <div className="max-h-72 overflow-y-auto divide-y divide-slate-100">
+          <div className="max-h-72 overflow-y-auto divide-y divide-white/5">
             {loading && notifications.length === 0 ? (
               <div className="p-8 text-center text-xs text-slate-400">Loading alerts...</div>
             ) : notifications.length === 0 ? (
@@ -151,19 +157,19 @@ export default function NotificationBell() {
                   key={n.id}
                   onClick={() => !n.isRead && markAsRead(n.id)}
                   className={`p-4 text-left transition-colors cursor-pointer ${
-                    n.isRead ? "bg-white hover:bg-slate-50" : "bg-[#f0f2fe]/60 hover:bg-[#f0f2fe]"
+                    n.isRead ? "bg-[#0b0a1d] hover:bg-white/5" : "bg-[#140e2d]/60 hover:bg-[#140e2d]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <p className={`text-sm ${n.isRead ? "text-[#464555]" : "font-bold text-[#0b1c30]"}`}>
+                    <p className={`text-xs ${n.isRead ? "text-slate-400" : "font-black text-white"}`}>
                       {n.title}
                     </p>
                     {!n.isRead && (
-                      <span className="h-2 w-2 rounded-full bg-[#3525cd] shrink-0 mt-1.5" />
+                      <span className="h-2 w-2 rounded-full bg-[#f97316] shrink-0 mt-1.5" />
                     )}
                   </div>
                   <p className="text-xs text-slate-400 mt-1 leading-relaxed">{n.message}</p>
-                  <p className="text-[10px] text-slate-400 mt-2 font-medium">
+                  <p className="text-[10px] text-slate-500 mt-2 font-medium">
                     {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>

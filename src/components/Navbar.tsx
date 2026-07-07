@@ -17,7 +17,7 @@ export default function Navbar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-16 bg-[#f8f9ff]/80 backdrop-blur-xl border-b border-[#c7c4d8]/10 shadow-sm relative">
+    <header className="sticky top-0 z-50 flex justify-between items-center w-full px-4 sm:px-6 md:px-12 h-16 bg-[#090816]/80 backdrop-blur-xl border-b border-white/10 shadow-sm relative">
 
       {/* Brand Logo and Name */}
       <div
@@ -30,8 +30,8 @@ export default function Navbar({
         <svg className="h-9 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
           <defs>
             <linearGradient id="global-header-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: "#4F46E5", stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: "#7C3AED", stopOpacity: 1 }} />
+              <stop offset="0%" style={{ stopColor: "#f97316", stopOpacity: 1 }} />
+              <stop offset="100%" style={{ stopColor: "#8b5cf6", stopOpacity: 1 }} />
             </linearGradient>
           </defs>
           <rect width="200" height="200" rx="40" fill="transparent" />
@@ -45,7 +45,7 @@ export default function Navbar({
           />
           <path
             d="M110 90 L140 60 L170 90"
-            stroke="#06B6D4"
+            stroke="#8b5cf6"
             strokeWidth="20"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -53,72 +53,72 @@ export default function Navbar({
           />
           <path
             d="M140 60 V120"
-            stroke="#06B6D4"
+            stroke="#8b5cf6"
             strokeWidth="20"
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"
           />
         </svg>
-        <span className="text-xl font-bold text-[#3525cd] tracking-tight">LearnUp</span>
+        <span className="text-xl font-black text-white tracking-tight">LearnUp</span>
       </div>
 
       {/* Desktop Navigation & Actions (Enforces gap-6 spacing between Community and Sign In) */}
       <div className="hidden lg:flex items-center gap-6 ml-auto">
-        <nav className="flex items-center gap-6 text-[#464555] font-medium text-sm">
+        <nav className="flex items-center gap-6 text-slate-300 font-bold text-xs tracking-wider">
           <button
             onClick={() => setCurrentScreen("home")}
-            className={`transition cursor-pointer ${currentScreen === "home" ? "text-[#3525cd] font-bold" : "hover:text-[#3525cd]"
+            className={`transition cursor-pointer uppercase ${currentScreen === "home" ? "text-purple-400 font-black" : "hover:text-purple-400 text-slate-300"
               }`}
           >
-            Home
+            HOME
           </button>
           <button
             onClick={() => setCurrentScreen("courses")}
-            className={`transition cursor-pointer ${currentScreen === "courses" ? "text-[#3525cd] font-bold" : "hover:text-[#3525cd]"
+            className={`transition cursor-pointer uppercase ${currentScreen === "courses" ? "text-purple-400 font-black" : "hover:text-purple-400 text-slate-300"
               }`}
           >
-            Courses
+            COURSES
           </button>
           <button
             onClick={() => setCurrentScreen("mentors")}
-            className={`transition cursor-pointer ${currentScreen === "mentors" ? "text-[#3525cd] font-bold" : "hover:text-[#3525cd]"
+            className={`transition cursor-pointer uppercase ${currentScreen === "mentors" ? "text-purple-400 font-black" : "hover:text-purple-400 text-slate-300"
               }`}
           >
-            Mentors
+            MENTORS
           </button>
           <button
             onClick={() => setCurrentScreen("pricing")}
-            className={`transition cursor-pointer ${currentScreen === "pricing" ? "text-[#3525cd] font-bold" : "hover:text-[#3525cd]"
+            className={`transition cursor-pointer uppercase ${currentScreen === "pricing" ? "text-purple-400 font-black" : "hover:text-purple-400 text-slate-300"
               }`}
           >
-            Pricing
+            PRICING
           </button>
           <button
             onClick={() => setCurrentScreen("community")}
-            className={`transition cursor-pointer ${currentScreen === "community" ? "text-[#3525cd] font-bold" : "hover:text-[#3525cd]"
+            className={`transition cursor-pointer uppercase ${currentScreen === "community" ? "text-purple-400 font-black" : "hover:text-purple-400 text-slate-300"
               }`}
           >
-            Community
+            COMMUNITY
           </button>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <button
             onClick={() => {
               setAuthMode("login");
               setCurrentScreen("auth");
             }}
-            className="text-[#464555] text-sm font-medium hover:text-[#3525cd] transition cursor-pointer"
+            className="text-slate-300 text-xs font-bold tracking-wider hover:text-purple-400 transition cursor-pointer uppercase"
           >
-            Sign In
+            SIGN IN
           </button>
           <button
             onClick={() => {
               setAuthMode("register");
               setCurrentScreen("auth");
             }}
-            className="bg-[#4f46e5] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#3525cd] transition shadow-md shadow-[#4f46e5]/20 cursor-pointer"
+            className="bg-[#6d28d9]/10 text-purple-300 border border-[#6d28d9]/40 hover:border-purple-400 hover:bg-[#6d28d9]/20 hover:text-white px-5 py-2 rounded-full text-xs font-extrabold tracking-wider transition-all duration-300 shadow-md shadow-purple-950/20 cursor-pointer"
           >
             Get Started
           </button>
@@ -128,30 +128,36 @@ export default function Navbar({
       {/* Mobile Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="flex lg:hidden p-2 text-[#464555] hover:bg-[#d3e4fe]/50 rounded-lg transition-all cursor-pointer items-center justify-center"
+        className="flex lg:hidden p-2 text-slate-300 hover:bg-white/10 rounded-lg transition-all cursor-pointer items-center justify-center"
       >
         <span className="material-symbols-outlined text-2xl select-none">
           {isMobileMenuOpen ? "close" : "menu"}
         </span>
       </button>
 
-      {/* Mobile Drawer (UNCHANGED) */}
+      {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-16 left-0 w-full bg-white border-b border-[#c7c4d8]/20 shadow-lg px-6 py-4 flex flex-col gap-4 z-40 animate-fadeIn">
-          <button onClick={() => setCurrentScreen("home")} className="text-left py-2 text-sm font-medium">
-            Home
+        <div className="lg:hidden absolute top-16 left-0 w-full bg-[#090816]/95 border-b border-white/10 shadow-lg px-6 py-6 flex flex-col gap-4 z-40 animate-fadeIn text-slate-300">
+          <button onClick={() => { setCurrentScreen("home"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400">
+            HOME
           </button>
-          <button onClick={() => setCurrentScreen("courses")} className="text-left py-2 text-sm font-medium">
-            Courses
+          <button onClick={() => { setCurrentScreen("courses"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400">
+            COURSES
           </button>
-          <button onClick={() => setCurrentScreen("mentors")} className="text-left py-2 text-sm font-medium">
-            Mentors
+          <button onClick={() => { setCurrentScreen("mentors"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400">
+            MENTORS
           </button>
-          <button onClick={() => setCurrentScreen("pricing")} className="text-left py-2 text-sm font-medium">
-            Pricing
+          <button onClick={() => { setCurrentScreen("pricing"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400">
+            PRICING
           </button>
-          <button onClick={() => setCurrentScreen("community")} className="text-left py-2 text-sm font-medium">
-            Community
+          <button onClick={() => { setCurrentScreen("community"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400">
+            COMMUNITY
+          </button>
+          <button onClick={() => { setAuthMode("login"); setCurrentScreen("auth"); setIsMobileMenuOpen(false); }} className="text-left py-2 text-xs font-bold tracking-wider uppercase hover:text-purple-400 border-t border-white/10 pt-4">
+            SIGN IN
+          </button>
+          <button onClick={() => { setAuthMode("register"); setCurrentScreen("auth"); setIsMobileMenuOpen(false); }} className="text-center py-2.5 text-xs font-bold tracking-wider uppercase bg-[#6d28d9]/10 text-purple-300 border border-[#6d28d9]/40 hover:border-purple-400 rounded-full mt-2">
+            GET STARTED
           </button>
         </div>
       )}
