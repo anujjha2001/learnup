@@ -29,14 +29,13 @@ const MOCK_NOTIFICATIONS = [
   }
 ];
 
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthSession } from "@/lib/getAuthSession";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getAuthSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json([]);
     }
 
     const userId = session.id;

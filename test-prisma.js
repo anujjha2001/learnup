@@ -1,4 +1,16 @@
-require('dotenv').config();
-const { PrismaClient } = require('./prisma/generated-client/index.js');
-const prisma = new PrismaClient({ datasources: { db: { url: process.env.DIRECT_URL } } });
-prisma.user.findFirst().then(console.log).catch(console.error).finally(() => prisma.$disconnect());
+const { PrismaClient } = require('./prisma/generated-client');
+const db = new PrismaClient();
+
+async function main() {
+  try {
+    const user = await db.user.findFirst();
+    console.log('DB OK, first user:', user ? user.email : 'none (empty table)');
+  } catch (e) {
+    console.error('DB ERROR:', e.message);
+    console.error('Full error:', e);
+  } finally {
+    await db.$disconnect();
+  }
+}
+
+main();

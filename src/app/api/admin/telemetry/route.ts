@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthSession } from "@/lib/getAuthSession";
 import os from "os";
 
 // Global cache variables for telemetry safety (5-second cache)
@@ -11,7 +10,7 @@ const CACHE_DURATION_MS = 5000;
 
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getAuthSession();
     if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

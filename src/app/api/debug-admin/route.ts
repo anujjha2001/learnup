@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthSession } from "@/lib/getAuthSession";
 import { db } from "@/lib/db";
 import { cookies } from "next/headers";
 
@@ -8,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getAuthSession();
     // console.log("[Debug Admin] Session detected:", session);
 
     const cookieStore = await cookies();

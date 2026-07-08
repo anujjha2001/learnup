@@ -11,7 +11,7 @@ const io = new Server(server, {
   }
 });
 
-const PORT = 3001;
+const PORT = parseInt(process.env.SOCKET_PORT || '3001', 10);
 
 // Track viewers per room
 const roomViewers = new Map();
@@ -61,10 +61,23 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`[Socket] User disconnected: ${socket.id}`);
+    // Client disconnected (tab closed / navigated away) — no action needed
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Live Session Socket.io Server running on port ${PORT}`);
-});
+// Auto-find an available port if the default is busy
+function startServer(port) {
+  server.listen(port, () => {
+    console.log(`Live Session Socket.io Server running on port ${port}`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`Port ${port} in use, trying ${port + 1}...`);
+      startServer(port + 1);
+    } else {
+      throw err;
+    }
+  });
+}
+
+startServer(PORT);
+

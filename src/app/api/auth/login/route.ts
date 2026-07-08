@@ -67,13 +67,17 @@ export async function POST(req: Request) {
       }
     });
 
-    // Create session token placeholder
-    const sessionTokenPlaceholder = `jwt-session-token-placeholder-${user.id}-${user.role}-${user.status || "APPROVED"}-${Date.now()}`;
+    // Build the user session payload
+    const sessionUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         message: "Login successful.",
-        token: sessionTokenPlaceholder,
         user: {
           id: user.id,
           email: user.email,
@@ -87,8 +91,32 @@ export async function POST(req: Request) {
       },
       { status: 200 }
     );
+
+    // Set an HttpOnly cookie so server-side API routes can read the session
+    response.cookies.set("learnup_session", JSON.stringify(sessionUser), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return response;
   } catch (error: any) {
     console.error("Login error:", error);
+    // Detect DB connection/IP block errors specifically
+    if (
+      error?.message?.includes("EADDRNOTAVAIL") ||
+      error?.message?.includes("allow_list") ||
+      error?.message?.includes("ECONNREFUSED") ||
+      error?.message?.includes("Error querying the database") ||
+      error?.code === "P1001"
+    ) {
+      return NextResponse.json(
+        { error: "Database connection failed. Please try again later or contact support." },
+        { status: 503 }
+      );
+    }
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

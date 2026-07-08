@@ -2317,29 +2317,29 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    certificates: number
     courses: number
     enrolled: number
-    submissions: number
-    notifications: number
-    studentTransactions: number
-    instructorTransactions: number
-    supportTickets: number
-    mentorMessages: number
-    certificates: number
     liveSessions: number
+    mentorMessages: number
+    notifications: number
+    submissions: number
+    supportTickets: number
+    instructorTransactions: number
+    studentTransactions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    certificates?: boolean | UserCountOutputTypeCountCertificatesArgs
     courses?: boolean | UserCountOutputTypeCountCoursesArgs
     enrolled?: boolean | UserCountOutputTypeCountEnrolledArgs
-    submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
-    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
-    studentTransactions?: boolean | UserCountOutputTypeCountStudentTransactionsArgs
-    instructorTransactions?: boolean | UserCountOutputTypeCountInstructorTransactionsArgs
-    supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
-    mentorMessages?: boolean | UserCountOutputTypeCountMentorMessagesArgs
-    certificates?: boolean | UserCountOutputTypeCountCertificatesArgs
     liveSessions?: boolean | UserCountOutputTypeCountLiveSessionsArgs
+    mentorMessages?: boolean | UserCountOutputTypeCountMentorMessagesArgs
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+    submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
+    supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
+    instructorTransactions?: boolean | UserCountOutputTypeCountInstructorTransactionsArgs
+    studentTransactions?: boolean | UserCountOutputTypeCountStudentTransactionsArgs
   }
 
   // Custom InputTypes
@@ -2351,6 +2351,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CertificateWhereInput
   }
 
   /**
@@ -2370,36 +2377,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubmissionWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountStudentTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TransactionWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountInstructorTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TransactionWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SupportTicketWhereInput
+  export type UserCountOutputTypeCountLiveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LiveSessionWhereInput
   }
 
   /**
@@ -2412,15 +2391,36 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CertificateWhereInput
+  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountLiveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LiveSessionWhereInput
+  export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportTicketWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInstructorTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStudentTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
   }
 
 
@@ -2429,23 +2429,23 @@ export namespace Prisma {
    */
 
   export type CourseCountOutputType = {
-    quizzes: number
+    certificates: number
     enrollments: number
+    liveSessions: number
+    quizzes: number
+    resources: number
     transactions: number
     videoModules: number
-    certificates: number
-    liveSessions: number
-    resources: number
   }
 
   export type CourseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quizzes?: boolean | CourseCountOutputTypeCountQuizzesArgs
+    certificates?: boolean | CourseCountOutputTypeCountCertificatesArgs
     enrollments?: boolean | CourseCountOutputTypeCountEnrollmentsArgs
+    liveSessions?: boolean | CourseCountOutputTypeCountLiveSessionsArgs
+    quizzes?: boolean | CourseCountOutputTypeCountQuizzesArgs
+    resources?: boolean | CourseCountOutputTypeCountResourcesArgs
     transactions?: boolean | CourseCountOutputTypeCountTransactionsArgs
     videoModules?: boolean | CourseCountOutputTypeCountVideoModulesArgs
-    certificates?: boolean | CourseCountOutputTypeCountCertificatesArgs
-    liveSessions?: boolean | CourseCountOutputTypeCountLiveSessionsArgs
-    resources?: boolean | CourseCountOutputTypeCountResourcesArgs
   }
 
   // Custom InputTypes
@@ -2462,8 +2462,8 @@ export namespace Prisma {
   /**
    * CourseCountOutputType without action
    */
-  export type CourseCountOutputTypeCountQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuizWhereInput
+  export type CourseCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CertificateWhereInput
   }
 
   /**
@@ -2471,6 +2471,27 @@ export namespace Prisma {
    */
   export type CourseCountOutputTypeCountEnrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CourseEnrollmentWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountLiveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LiveSessionWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuizWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
   }
 
   /**
@@ -2485,27 +2506,6 @@ export namespace Prisma {
    */
   export type CourseCountOutputTypeCountVideoModulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VideoModuleWhereInput
-  }
-
-  /**
-   * CourseCountOutputType without action
-   */
-  export type CourseCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CertificateWhereInput
-  }
-
-  /**
-   * CourseCountOutputType without action
-   */
-  export type CourseCountOutputTypeCountLiveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: LiveSessionWhereInput
-  }
-
-  /**
-   * CourseCountOutputType without action
-   */
-  export type CourseCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ResourceWhereInput
   }
 
 
@@ -2885,17 +2885,17 @@ export namespace Prisma {
     provider?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    certificates?: boolean | User$certificatesArgs<ExtArgs>
     courses?: boolean | User$coursesArgs<ExtArgs>
     enrolled?: boolean | User$enrolledArgs<ExtArgs>
-    submissions?: boolean | User$submissionsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
-    wallet?: boolean | User$walletArgs<ExtArgs>
-    studentTransactions?: boolean | User$studentTransactionsArgs<ExtArgs>
-    instructorTransactions?: boolean | User$instructorTransactionsArgs<ExtArgs>
-    supportTickets?: boolean | User$supportTicketsArgs<ExtArgs>
-    mentorMessages?: boolean | User$mentorMessagesArgs<ExtArgs>
-    certificates?: boolean | User$certificatesArgs<ExtArgs>
     liveSessions?: boolean | User$liveSessionsArgs<ExtArgs>
+    mentorMessages?: boolean | User$mentorMessagesArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    submissions?: boolean | User$submissionsArgs<ExtArgs>
+    supportTickets?: boolean | User$supportTicketsArgs<ExtArgs>
+    instructorTransactions?: boolean | User$instructorTransactionsArgs<ExtArgs>
+    studentTransactions?: boolean | User$studentTransactionsArgs<ExtArgs>
+    wallet?: boolean | User$walletArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2967,17 +2967,17 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "phone" | "role" | "password" | "otp" | "isVerified" | "otpExpiry" | "resetOtp" | "resetOtpExpiry" | "status" | "avatar" | "lastLogin" | "streak" | "learnupId" | "provider" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    certificates?: boolean | User$certificatesArgs<ExtArgs>
     courses?: boolean | User$coursesArgs<ExtArgs>
     enrolled?: boolean | User$enrolledArgs<ExtArgs>
-    submissions?: boolean | User$submissionsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
-    wallet?: boolean | User$walletArgs<ExtArgs>
-    studentTransactions?: boolean | User$studentTransactionsArgs<ExtArgs>
-    instructorTransactions?: boolean | User$instructorTransactionsArgs<ExtArgs>
-    supportTickets?: boolean | User$supportTicketsArgs<ExtArgs>
-    mentorMessages?: boolean | User$mentorMessagesArgs<ExtArgs>
-    certificates?: boolean | User$certificatesArgs<ExtArgs>
     liveSessions?: boolean | User$liveSessionsArgs<ExtArgs>
+    mentorMessages?: boolean | User$mentorMessagesArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    submissions?: boolean | User$submissionsArgs<ExtArgs>
+    supportTickets?: boolean | User$supportTicketsArgs<ExtArgs>
+    instructorTransactions?: boolean | User$instructorTransactionsArgs<ExtArgs>
+    studentTransactions?: boolean | User$studentTransactionsArgs<ExtArgs>
+    wallet?: boolean | User$walletArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2986,17 +2986,17 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      certificates: Prisma.$CertificatePayload<ExtArgs>[]
       courses: Prisma.$CoursePayload<ExtArgs>[]
       enrolled: Prisma.$CourseEnrollmentPayload<ExtArgs>[]
-      submissions: Prisma.$SubmissionPayload<ExtArgs>[]
-      notifications: Prisma.$NotificationPayload<ExtArgs>[]
-      wallet: Prisma.$WalletPayload<ExtArgs> | null
-      studentTransactions: Prisma.$TransactionPayload<ExtArgs>[]
-      instructorTransactions: Prisma.$TransactionPayload<ExtArgs>[]
-      supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
-      mentorMessages: Prisma.$MentorMessagePayload<ExtArgs>[]
-      certificates: Prisma.$CertificatePayload<ExtArgs>[]
       liveSessions: Prisma.$LiveSessionPayload<ExtArgs>[]
+      mentorMessages: Prisma.$MentorMessagePayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+      supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+      instructorTransactions: Prisma.$TransactionPayload<ExtArgs>[]
+      studentTransactions: Prisma.$TransactionPayload<ExtArgs>[]
+      wallet: Prisma.$WalletPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3412,17 +3412,17 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    certificates<T extends User$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, User$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     courses<T extends User$coursesArgs<ExtArgs> = {}>(args?: Subset<T, User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrolled<T extends User$enrolledArgs<ExtArgs> = {}>(args?: Subset<T, User$enrolledArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourseEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    submissions<T extends User$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    wallet<T extends User$walletArgs<ExtArgs> = {}>(args?: Subset<T, User$walletArgs<ExtArgs>>): Prisma__WalletClient<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    studentTransactions<T extends User$studentTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    instructorTransactions<T extends User$instructorTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$instructorTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    supportTickets<T extends User$supportTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    mentorMessages<T extends User$mentorMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$mentorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MentorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    certificates<T extends User$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, User$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     liveSessions<T extends User$liveSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$liveSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mentorMessages<T extends User$mentorMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$mentorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MentorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submissions<T extends User$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    supportTickets<T extends User$supportTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    instructorTransactions<T extends User$instructorTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$instructorTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentTransactions<T extends User$studentTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$studentTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wallet<T extends User$walletArgs<ExtArgs> = {}>(args?: Subset<T, User$walletArgs<ExtArgs>>): Prisma__WalletClient<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3859,6 +3859,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.certificates
+   */
+  export type User$certificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Certificate
+     */
+    select?: CertificateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Certificate
+     */
+    omit?: CertificateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CertificateInclude<ExtArgs> | null
+    where?: CertificateWhereInput
+    orderBy?: CertificateOrderByWithRelationInput | CertificateOrderByWithRelationInput[]
+    cursor?: CertificateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CertificateScalarFieldEnum | CertificateScalarFieldEnum[]
+  }
+
+  /**
    * User.courses
    */
   export type User$coursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3907,142 +3931,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.submissions
+   * User.liveSessions
    */
-  export type User$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$liveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the LiveSession
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: LiveSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the LiveSession
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: LiveSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
-    where?: SubmissionWhereInput
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
-    cursor?: SubmissionWhereUniqueInput
+    include?: LiveSessionInclude<ExtArgs> | null
+    where?: LiveSessionWhereInput
+    orderBy?: LiveSessionOrderByWithRelationInput | LiveSessionOrderByWithRelationInput[]
+    cursor?: LiveSessionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
-  }
-
-  /**
-   * User.notifications
-   */
-  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Notification
-     */
-    select?: NotificationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Notification
-     */
-    omit?: NotificationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NotificationInclude<ExtArgs> | null
-    where?: NotificationWhereInput
-    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
-    cursor?: NotificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
-  }
-
-  /**
-   * User.wallet
-   */
-  export type User$walletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Wallet
-     */
-    select?: WalletSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Wallet
-     */
-    omit?: WalletOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WalletInclude<ExtArgs> | null
-    where?: WalletWhereInput
-  }
-
-  /**
-   * User.studentTransactions
-   */
-  export type User$studentTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Transaction
-     */
-    select?: TransactionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Transaction
-     */
-    omit?: TransactionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TransactionInclude<ExtArgs> | null
-    where?: TransactionWhereInput
-    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
-    cursor?: TransactionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
-  }
-
-  /**
-   * User.instructorTransactions
-   */
-  export type User$instructorTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Transaction
-     */
-    select?: TransactionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Transaction
-     */
-    omit?: TransactionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TransactionInclude<ExtArgs> | null
-    where?: TransactionWhereInput
-    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
-    cursor?: TransactionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
-  }
-
-  /**
-   * User.supportTickets
-   */
-  export type User$supportTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SupportTicket
-     */
-    select?: SupportTicketSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SupportTicket
-     */
-    omit?: SupportTicketOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SupportTicketInclude<ExtArgs> | null
-    where?: SupportTicketWhereInput
-    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
-    cursor?: SupportTicketWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+    distinct?: LiveSessionScalarFieldEnum | LiveSessionScalarFieldEnum[]
   }
 
   /**
@@ -4070,51 +3979,142 @@ export namespace Prisma {
   }
 
   /**
-   * User.certificates
+   * User.notifications
    */
-  export type User$certificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Certificate
+     * Select specific fields to fetch from the Notification
      */
-    select?: CertificateSelect<ExtArgs> | null
+    select?: NotificationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Certificate
+     * Omit specific fields from the Notification
      */
-    omit?: CertificateOmit<ExtArgs> | null
+    omit?: NotificationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CertificateInclude<ExtArgs> | null
-    where?: CertificateWhereInput
-    orderBy?: CertificateOrderByWithRelationInput | CertificateOrderByWithRelationInput[]
-    cursor?: CertificateWhereUniqueInput
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: CertificateScalarFieldEnum | CertificateScalarFieldEnum[]
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
-   * User.liveSessions
+   * User.submissions
    */
-  export type User$liveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the LiveSession
+     * Select specific fields to fetch from the Submission
      */
-    select?: LiveSessionSelect<ExtArgs> | null
+    select?: SubmissionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the LiveSession
+     * Omit specific fields from the Submission
      */
-    omit?: LiveSessionOmit<ExtArgs> | null
+    omit?: SubmissionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: LiveSessionInclude<ExtArgs> | null
-    where?: LiveSessionWhereInput
-    orderBy?: LiveSessionOrderByWithRelationInput | LiveSessionOrderByWithRelationInput[]
-    cursor?: LiveSessionWhereUniqueInput
+    include?: SubmissionInclude<ExtArgs> | null
+    where?: SubmissionWhereInput
+    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    cursor?: SubmissionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: LiveSessionScalarFieldEnum | LiveSessionScalarFieldEnum[]
+    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.supportTickets
+   */
+  export type User$supportTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    where?: SupportTicketWhereInput
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    cursor?: SupportTicketWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * User.instructorTransactions
+   */
+  export type User$instructorTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * User.studentTransactions
+   */
+  export type User$studentTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * User.wallet
+   */
+  export type User$walletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wallet
+     */
+    select?: WalletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Wallet
+     */
+    omit?: WalletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletInclude<ExtArgs> | null
+    where?: WalletWhereInput
   }
 
   /**
@@ -4386,14 +4386,14 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    certificates?: boolean | Course$certificatesArgs<ExtArgs>
     instructor?: boolean | UserDefaultArgs<ExtArgs>
-    quizzes?: boolean | Course$quizzesArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    liveSessions?: boolean | Course$liveSessionsArgs<ExtArgs>
+    quizzes?: boolean | Course$quizzesArgs<ExtArgs>
+    resources?: boolean | Course$resourcesArgs<ExtArgs>
     transactions?: boolean | Course$transactionsArgs<ExtArgs>
     videoModules?: boolean | Course$videoModulesArgs<ExtArgs>
-    certificates?: boolean | Course$certificatesArgs<ExtArgs>
-    liveSessions?: boolean | Course$liveSessionsArgs<ExtArgs>
-    resources?: boolean | Course$resourcesArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -4446,14 +4446,14 @@ export namespace Prisma {
 
   export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "image" | "thumbnailUrl" | "price" | "instructorId" | "modules" | "template" | "isFree" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    certificates?: boolean | Course$certificatesArgs<ExtArgs>
     instructor?: boolean | UserDefaultArgs<ExtArgs>
-    quizzes?: boolean | Course$quizzesArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    liveSessions?: boolean | Course$liveSessionsArgs<ExtArgs>
+    quizzes?: boolean | Course$quizzesArgs<ExtArgs>
+    resources?: boolean | Course$resourcesArgs<ExtArgs>
     transactions?: boolean | Course$transactionsArgs<ExtArgs>
     videoModules?: boolean | Course$videoModulesArgs<ExtArgs>
-    certificates?: boolean | Course$certificatesArgs<ExtArgs>
-    liveSessions?: boolean | Course$liveSessionsArgs<ExtArgs>
-    resources?: boolean | Course$resourcesArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4466,14 +4466,14 @@ export namespace Prisma {
   export type $CoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Course"
     objects: {
+      certificates: Prisma.$CertificatePayload<ExtArgs>[]
       instructor: Prisma.$UserPayload<ExtArgs>
-      quizzes: Prisma.$QuizPayload<ExtArgs>[]
       enrollments: Prisma.$CourseEnrollmentPayload<ExtArgs>[]
+      liveSessions: Prisma.$LiveSessionPayload<ExtArgs>[]
+      quizzes: Prisma.$QuizPayload<ExtArgs>[]
+      resources: Prisma.$ResourcePayload<ExtArgs>[]
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       videoModules: Prisma.$VideoModulePayload<ExtArgs>[]
-      certificates: Prisma.$CertificatePayload<ExtArgs>[]
-      liveSessions: Prisma.$LiveSessionPayload<ExtArgs>[]
-      resources: Prisma.$ResourcePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4882,14 +4882,14 @@ export namespace Prisma {
    */
   export interface Prisma__CourseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    certificates<T extends Course$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, Course$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     instructor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    quizzes<T extends Course$quizzesArgs<ExtArgs> = {}>(args?: Subset<T, Course$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Course$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourseEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    liveSessions<T extends Course$liveSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Course$liveSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quizzes<T extends Course$quizzesArgs<ExtArgs> = {}>(args?: Subset<T, Course$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resources<T extends Course$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, Course$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Course$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Course$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     videoModules<T extends Course$videoModulesArgs<ExtArgs> = {}>(args?: Subset<T, Course$videoModulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    certificates<T extends Course$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, Course$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    liveSessions<T extends Course$liveSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Course$liveSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    resources<T extends Course$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, Course$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5327,27 +5327,27 @@ export namespace Prisma {
   }
 
   /**
-   * Course.quizzes
+   * Course.certificates
    */
-  export type Course$quizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Course$certificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Quiz
+     * Select specific fields to fetch from the Certificate
      */
-    select?: QuizSelect<ExtArgs> | null
+    select?: CertificateSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Quiz
+     * Omit specific fields from the Certificate
      */
-    omit?: QuizOmit<ExtArgs> | null
+    omit?: CertificateOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: QuizInclude<ExtArgs> | null
-    where?: QuizWhereInput
-    orderBy?: QuizOrderByWithRelationInput | QuizOrderByWithRelationInput[]
-    cursor?: QuizWhereUniqueInput
+    include?: CertificateInclude<ExtArgs> | null
+    where?: CertificateWhereInput
+    orderBy?: CertificateOrderByWithRelationInput | CertificateOrderByWithRelationInput[]
+    cursor?: CertificateWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: QuizScalarFieldEnum | QuizScalarFieldEnum[]
+    distinct?: CertificateScalarFieldEnum | CertificateScalarFieldEnum[]
   }
 
   /**
@@ -5372,6 +5372,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CourseEnrollmentScalarFieldEnum | CourseEnrollmentScalarFieldEnum[]
+  }
+
+  /**
+   * Course.liveSessions
+   */
+  export type Course$liveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LiveSession
+     */
+    select?: LiveSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LiveSession
+     */
+    omit?: LiveSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LiveSessionInclude<ExtArgs> | null
+    where?: LiveSessionWhereInput
+    orderBy?: LiveSessionOrderByWithRelationInput | LiveSessionOrderByWithRelationInput[]
+    cursor?: LiveSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LiveSessionScalarFieldEnum | LiveSessionScalarFieldEnum[]
+  }
+
+  /**
+   * Course.quizzes
+   */
+  export type Course$quizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Quiz
+     */
+    omit?: QuizOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizInclude<ExtArgs> | null
+    where?: QuizWhereInput
+    orderBy?: QuizOrderByWithRelationInput | QuizOrderByWithRelationInput[]
+    cursor?: QuizWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuizScalarFieldEnum | QuizScalarFieldEnum[]
+  }
+
+  /**
+   * Course.resources
+   */
+  export type Course$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
   }
 
   /**
@@ -5420,78 +5492,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VideoModuleScalarFieldEnum | VideoModuleScalarFieldEnum[]
-  }
-
-  /**
-   * Course.certificates
-   */
-  export type Course$certificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Certificate
-     */
-    select?: CertificateSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Certificate
-     */
-    omit?: CertificateOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CertificateInclude<ExtArgs> | null
-    where?: CertificateWhereInput
-    orderBy?: CertificateOrderByWithRelationInput | CertificateOrderByWithRelationInput[]
-    cursor?: CertificateWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CertificateScalarFieldEnum | CertificateScalarFieldEnum[]
-  }
-
-  /**
-   * Course.liveSessions
-   */
-  export type Course$liveSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the LiveSession
-     */
-    select?: LiveSessionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the LiveSession
-     */
-    omit?: LiveSessionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: LiveSessionInclude<ExtArgs> | null
-    where?: LiveSessionWhereInput
-    orderBy?: LiveSessionOrderByWithRelationInput | LiveSessionOrderByWithRelationInput[]
-    cursor?: LiveSessionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: LiveSessionScalarFieldEnum | LiveSessionScalarFieldEnum[]
-  }
-
-  /**
-   * Course.resources
-   */
-  export type Course$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Resource
-     */
-    select?: ResourceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Resource
-     */
-    omit?: ResourceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ResourceInclude<ExtArgs> | null
-    where?: ResourceWhereInput
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
-    cursor?: ResourceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
   }
 
   /**
@@ -5669,8 +5669,8 @@ export namespace Prisma {
     userId?: boolean
     courseId?: boolean
     enrolledAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courseEnrollment"]>
 
   export type CourseEnrollmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5678,8 +5678,8 @@ export namespace Prisma {
     userId?: boolean
     courseId?: boolean
     enrolledAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courseEnrollment"]>
 
   export type CourseEnrollmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5687,8 +5687,8 @@ export namespace Prisma {
     userId?: boolean
     courseId?: boolean
     enrolledAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["courseEnrollment"]>
 
   export type CourseEnrollmentSelectScalar = {
@@ -5700,23 +5700,23 @@ export namespace Prisma {
 
   export type CourseEnrollmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "courseId" | "enrolledAt", ExtArgs["result"]["courseEnrollment"]>
   export type CourseEnrollmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type CourseEnrollmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type CourseEnrollmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $CourseEnrollmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CourseEnrollment"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       course: Prisma.$CoursePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6117,8 +6117,8 @@ export namespace Prisma {
    */
   export interface Prisma__CourseEnrollmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     course<T extends CourseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseDefaultArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7899,9 +7899,9 @@ export namespace Prisma {
     answers?: boolean
     status?: boolean
     submittedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    quiz?: boolean | QuizDefaultArgs<ExtArgs>
     mentorMessages?: boolean | Submission$mentorMessagesArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | SubmissionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submission"]>
 
@@ -7913,8 +7913,8 @@ export namespace Prisma {
     answers?: boolean
     status?: boolean
     submittedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submission"]>
 
   export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7925,8 +7925,8 @@ export namespace Prisma {
     answers?: boolean
     status?: boolean
     submittedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submission"]>
 
   export type SubmissionSelectScalar = {
@@ -7941,26 +7941,26 @@ export namespace Prisma {
 
   export type SubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "quizId" | "score" | "answers" | "status" | "submittedAt", ExtArgs["result"]["submission"]>
   export type SubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
-    quiz?: boolean | QuizDefaultArgs<ExtArgs>
     mentorMessages?: boolean | Submission$mentorMessagesArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | SubmissionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type SubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $SubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Submission"
     objects: {
-      student: Prisma.$UserPayload<ExtArgs>
-      quiz: Prisma.$QuizPayload<ExtArgs>
       mentorMessages: Prisma.$MentorMessagePayload<ExtArgs>[]
+      quiz: Prisma.$QuizPayload<ExtArgs>
+      student: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8364,9 +8364,9 @@ export namespace Prisma {
    */
   export interface Prisma__SubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    quiz<T extends QuizDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuizDefaultArgs<ExtArgs>>): Prisma__QuizClient<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     mentorMessages<T extends Submission$mentorMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Submission$mentorMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MentorMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quiz<T extends QuizDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuizDefaultArgs<ExtArgs>>): Prisma__QuizClient<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9005,8 +9005,8 @@ export namespace Prisma {
     senderId?: boolean
     message?: boolean
     createdAt?: boolean
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mentorMessage"]>
 
   export type MentorMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9015,8 +9015,8 @@ export namespace Prisma {
     senderId?: boolean
     message?: boolean
     createdAt?: boolean
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mentorMessage"]>
 
   export type MentorMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9025,8 +9025,8 @@ export namespace Prisma {
     senderId?: boolean
     message?: boolean
     createdAt?: boolean
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mentorMessage"]>
 
   export type MentorMessageSelectScalar = {
@@ -9039,23 +9039,23 @@ export namespace Prisma {
 
   export type MentorMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "senderId" | "message" | "createdAt", ExtArgs["result"]["mentorMessage"]>
   export type MentorMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }
   export type MentorMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }
   export type MentorMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
+    submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }
 
   export type $MentorMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MentorMessage"
     objects: {
-      submission: Prisma.$SubmissionPayload<ExtArgs>
       sender: Prisma.$UserPayload<ExtArgs>
+      submission: Prisma.$SubmissionPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9457,8 +9457,8 @@ export namespace Prisma {
    */
   export interface Prisma__MentorMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    submission<T extends SubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmissionDefaultArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submission<T extends SubmissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmissionDefaultArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11253,9 +11253,9 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11271,9 +11271,9 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11289,9 +11289,9 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
@@ -11311,27 +11311,27 @@ export namespace Prisma {
 
   export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "razorpayOrderId" | "razorpayPaymentId" | "userId" | "courseId" | "instructorId" | "amount" | "adminShare" | "instShare" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | Transaction$courseArgs<ExtArgs>
     instructor?: boolean | Transaction$instructorArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
-      student: Prisma.$UserPayload<ExtArgs>
       course: Prisma.$CoursePayload<ExtArgs> | null
       instructor: Prisma.$UserPayload<ExtArgs> | null
+      student: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11740,9 +11740,9 @@ export namespace Prisma {
    */
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     course<T extends Transaction$courseArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     instructor<T extends Transaction$instructorArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$instructorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17752,8 +17752,8 @@ export namespace Prisma {
     issueDate?: boolean
     pdfUrl?: boolean
     uniqueCode?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["certificate"]>
 
   export type CertificateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17763,8 +17763,8 @@ export namespace Prisma {
     issueDate?: boolean
     pdfUrl?: boolean
     uniqueCode?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["certificate"]>
 
   export type CertificateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17774,8 +17774,8 @@ export namespace Prisma {
     issueDate?: boolean
     pdfUrl?: boolean
     uniqueCode?: boolean
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["certificate"]>
 
   export type CertificateSelectScalar = {
@@ -17789,23 +17789,23 @@ export namespace Prisma {
 
   export type CertificateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "courseId" | "issueDate" | "pdfUrl" | "uniqueCode", ExtArgs["result"]["certificate"]>
   export type CertificateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type CertificateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type CertificateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
+    student?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $CertificatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Certificate"
     objects: {
-      student: Prisma.$UserPayload<ExtArgs>
       course: Prisma.$CoursePayload<ExtArgs>
+      student: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -18208,8 +18208,8 @@ export namespace Prisma {
    */
   export interface Prisma__CertificateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     course<T extends CourseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourseDefaultArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22246,17 +22246,17 @@ export namespace Prisma {
     provider?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    certificates?: CertificateListRelationFilter
     courses?: CourseListRelationFilter
     enrolled?: CourseEnrollmentListRelationFilter
-    submissions?: SubmissionListRelationFilter
-    notifications?: NotificationListRelationFilter
-    wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
-    studentTransactions?: TransactionListRelationFilter
-    instructorTransactions?: TransactionListRelationFilter
-    supportTickets?: SupportTicketListRelationFilter
-    mentorMessages?: MentorMessageListRelationFilter
-    certificates?: CertificateListRelationFilter
     liveSessions?: LiveSessionListRelationFilter
+    mentorMessages?: MentorMessageListRelationFilter
+    notifications?: NotificationListRelationFilter
+    submissions?: SubmissionListRelationFilter
+    supportTickets?: SupportTicketListRelationFilter
+    instructorTransactions?: TransactionListRelationFilter
+    studentTransactions?: TransactionListRelationFilter
+    wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -22279,17 +22279,17 @@ export namespace Prisma {
     provider?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    certificates?: CertificateOrderByRelationAggregateInput
     courses?: CourseOrderByRelationAggregateInput
     enrolled?: CourseEnrollmentOrderByRelationAggregateInput
-    submissions?: SubmissionOrderByRelationAggregateInput
-    notifications?: NotificationOrderByRelationAggregateInput
-    wallet?: WalletOrderByWithRelationInput
-    studentTransactions?: TransactionOrderByRelationAggregateInput
-    instructorTransactions?: TransactionOrderByRelationAggregateInput
-    supportTickets?: SupportTicketOrderByRelationAggregateInput
-    mentorMessages?: MentorMessageOrderByRelationAggregateInput
-    certificates?: CertificateOrderByRelationAggregateInput
     liveSessions?: LiveSessionOrderByRelationAggregateInput
+    mentorMessages?: MentorMessageOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
+    submissions?: SubmissionOrderByRelationAggregateInput
+    supportTickets?: SupportTicketOrderByRelationAggregateInput
+    instructorTransactions?: TransactionOrderByRelationAggregateInput
+    studentTransactions?: TransactionOrderByRelationAggregateInput
+    wallet?: WalletOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -22315,17 +22315,17 @@ export namespace Prisma {
     provider?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    certificates?: CertificateListRelationFilter
     courses?: CourseListRelationFilter
     enrolled?: CourseEnrollmentListRelationFilter
-    submissions?: SubmissionListRelationFilter
-    notifications?: NotificationListRelationFilter
-    wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
-    studentTransactions?: TransactionListRelationFilter
-    instructorTransactions?: TransactionListRelationFilter
-    supportTickets?: SupportTicketListRelationFilter
-    mentorMessages?: MentorMessageListRelationFilter
-    certificates?: CertificateListRelationFilter
     liveSessions?: LiveSessionListRelationFilter
+    mentorMessages?: MentorMessageListRelationFilter
+    notifications?: NotificationListRelationFilter
+    submissions?: SubmissionListRelationFilter
+    supportTickets?: SupportTicketListRelationFilter
+    instructorTransactions?: TransactionListRelationFilter
+    studentTransactions?: TransactionListRelationFilter
+    wallet?: XOR<WalletNullableScalarRelationFilter, WalletWhereInput> | null
   }, "id" | "email" | "learnupId">
 
   export type UserOrderByWithAggregationInput = {
@@ -22396,14 +22396,14 @@ export namespace Prisma {
     isFree?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    certificates?: CertificateListRelationFilter
     instructor?: XOR<UserScalarRelationFilter, UserWhereInput>
-    quizzes?: QuizListRelationFilter
     enrollments?: CourseEnrollmentListRelationFilter
+    liveSessions?: LiveSessionListRelationFilter
+    quizzes?: QuizListRelationFilter
+    resources?: ResourceListRelationFilter
     transactions?: TransactionListRelationFilter
     videoModules?: VideoModuleListRelationFilter
-    certificates?: CertificateListRelationFilter
-    liveSessions?: LiveSessionListRelationFilter
-    resources?: ResourceListRelationFilter
   }
 
   export type CourseOrderByWithRelationInput = {
@@ -22419,14 +22419,14 @@ export namespace Prisma {
     isFree?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    certificates?: CertificateOrderByRelationAggregateInput
     instructor?: UserOrderByWithRelationInput
-    quizzes?: QuizOrderByRelationAggregateInput
     enrollments?: CourseEnrollmentOrderByRelationAggregateInput
+    liveSessions?: LiveSessionOrderByRelationAggregateInput
+    quizzes?: QuizOrderByRelationAggregateInput
+    resources?: ResourceOrderByRelationAggregateInput
     transactions?: TransactionOrderByRelationAggregateInput
     videoModules?: VideoModuleOrderByRelationAggregateInput
-    certificates?: CertificateOrderByRelationAggregateInput
-    liveSessions?: LiveSessionOrderByRelationAggregateInput
-    resources?: ResourceOrderByRelationAggregateInput
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -22445,14 +22445,14 @@ export namespace Prisma {
     isFree?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    certificates?: CertificateListRelationFilter
     instructor?: XOR<UserScalarRelationFilter, UserWhereInput>
-    quizzes?: QuizListRelationFilter
     enrollments?: CourseEnrollmentListRelationFilter
+    liveSessions?: LiveSessionListRelationFilter
+    quizzes?: QuizListRelationFilter
+    resources?: ResourceListRelationFilter
     transactions?: TransactionListRelationFilter
     videoModules?: VideoModuleListRelationFilter
-    certificates?: CertificateListRelationFilter
-    liveSessions?: LiveSessionListRelationFilter
-    resources?: ResourceListRelationFilter
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
@@ -22501,8 +22501,8 @@ export namespace Prisma {
     userId?: StringFilter<"CourseEnrollment"> | string
     courseId?: StringFilter<"CourseEnrollment"> | string
     enrolledAt?: DateTimeFilter<"CourseEnrollment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type CourseEnrollmentOrderByWithRelationInput = {
@@ -22510,8 +22510,8 @@ export namespace Prisma {
     userId?: SortOrder
     courseId?: SortOrder
     enrolledAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type CourseEnrollmentWhereUniqueInput = Prisma.AtLeast<{
@@ -22523,8 +22523,8 @@ export namespace Prisma {
     userId?: StringFilter<"CourseEnrollment"> | string
     courseId?: StringFilter<"CourseEnrollment"> | string
     enrolledAt?: DateTimeFilter<"CourseEnrollment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId_courseId">
 
   export type CourseEnrollmentOrderByWithAggregationInput = {
@@ -22631,9 +22631,9 @@ export namespace Prisma {
     answers?: JsonFilter<"Submission">
     status?: StringFilter<"Submission"> | string
     submittedAt?: DateTimeFilter<"Submission"> | Date | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
     mentorMessages?: MentorMessageListRelationFilter
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type SubmissionOrderByWithRelationInput = {
@@ -22644,9 +22644,9 @@ export namespace Prisma {
     answers?: SortOrder
     status?: SortOrder
     submittedAt?: SortOrder
-    student?: UserOrderByWithRelationInput
-    quiz?: QuizOrderByWithRelationInput
     mentorMessages?: MentorMessageOrderByRelationAggregateInput
+    quiz?: QuizOrderByWithRelationInput
+    student?: UserOrderByWithRelationInput
   }
 
   export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
@@ -22660,9 +22660,9 @@ export namespace Prisma {
     answers?: JsonFilter<"Submission">
     status?: StringFilter<"Submission"> | string
     submittedAt?: DateTimeFilter<"Submission"> | Date | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
-    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
     mentorMessages?: MentorMessageListRelationFilter
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type SubmissionOrderByWithAggregationInput = {
@@ -22702,8 +22702,8 @@ export namespace Prisma {
     senderId?: StringFilter<"MentorMessage"> | string
     message?: StringFilter<"MentorMessage"> | string
     createdAt?: DateTimeFilter<"MentorMessage"> | Date | string
-    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
   }
 
   export type MentorMessageOrderByWithRelationInput = {
@@ -22712,8 +22712,8 @@ export namespace Prisma {
     senderId?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
-    submission?: SubmissionOrderByWithRelationInput
     sender?: UserOrderByWithRelationInput
+    submission?: SubmissionOrderByWithRelationInput
   }
 
   export type MentorMessageWhereUniqueInput = Prisma.AtLeast<{
@@ -22725,8 +22725,8 @@ export namespace Prisma {
     senderId?: StringFilter<"MentorMessage"> | string
     message?: StringFilter<"MentorMessage"> | string
     createdAt?: DateTimeFilter<"MentorMessage"> | Date | string
-    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    submission?: XOR<SubmissionScalarRelationFilter, SubmissionWhereInput>
   }, "id">
 
   export type MentorMessageOrderByWithAggregationInput = {
@@ -22832,9 +22832,9 @@ export namespace Prisma {
     status?: StringFilter<"Transaction"> | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
     instructor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TransactionOrderByWithRelationInput = {
@@ -22850,9 +22850,9 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    student?: UserOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
     instructor?: UserOrderByWithRelationInput
+    student?: UserOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -22871,9 +22871,9 @@ export namespace Prisma {
     status?: StringFilter<"Transaction"> | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
     instructor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "razorpayOrderId" | "razorpayPaymentId">
 
   export type TransactionOrderByWithAggregationInput = {
@@ -23229,8 +23229,8 @@ export namespace Prisma {
     issueDate?: DateTimeFilter<"Certificate"> | Date | string
     pdfUrl?: StringFilter<"Certificate"> | string
     uniqueCode?: StringFilter<"Certificate"> | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type CertificateOrderByWithRelationInput = {
@@ -23240,8 +23240,8 @@ export namespace Prisma {
     issueDate?: SortOrder
     pdfUrl?: SortOrder
     uniqueCode?: SortOrder
-    student?: UserOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
+    student?: UserOrderByWithRelationInput
   }
 
   export type CertificateWhereUniqueInput = Prisma.AtLeast<{
@@ -23254,8 +23254,8 @@ export namespace Prisma {
     courseId?: StringFilter<"Certificate"> | string
     issueDate?: DateTimeFilter<"Certificate"> | Date | string
     pdfUrl?: StringFilter<"Certificate"> | string
-    student?: XOR<UserScalarRelationFilter, UserWhereInput>
     course?: XOR<CourseScalarRelationFilter, CourseWhereInput>
+    student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "uniqueCode">
 
   export type CertificateOrderByWithAggregationInput = {
@@ -23493,17 +23493,17 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -23526,17 +23526,17 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -23559,17 +23559,17 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -23592,17 +23592,17 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -23683,14 +23683,14 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
     instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    resources?: ResourceCreateNestedManyWithoutCourseInput
     transactions?: TransactionCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
-    resources?: ResourceCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateInput = {
@@ -23706,13 +23706,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUpdateInput = {
@@ -23727,14 +23727,14 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
@@ -23750,13 +23750,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseCreateManyInput = {
@@ -23806,8 +23806,8 @@ export namespace Prisma {
   export type CourseEnrollmentCreateInput = {
     id?: string
     enrolledAt?: Date | string
-    user: UserCreateNestedOneWithoutEnrolledInput
     course: CourseCreateNestedOneWithoutEnrollmentsInput
+    user: UserCreateNestedOneWithoutEnrolledInput
   }
 
   export type CourseEnrollmentUncheckedCreateInput = {
@@ -23820,8 +23820,8 @@ export namespace Prisma {
   export type CourseEnrollmentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEnrolledNestedInput
     course?: CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
+    user?: UserUpdateOneRequiredWithoutEnrolledNestedInput
   }
 
   export type CourseEnrollmentUncheckedUpdateInput = {
@@ -23936,9 +23936,9 @@ export namespace Prisma {
     answers: JsonNullValueInput | InputJsonValue
     status?: string
     submittedAt?: Date | string
-    student: UserCreateNestedOneWithoutSubmissionsInput
-    quiz: QuizCreateNestedOneWithoutSubmissionsInput
     mentorMessages?: MentorMessageCreateNestedManyWithoutSubmissionInput
+    quiz: QuizCreateNestedOneWithoutSubmissionsInput
+    student: UserCreateNestedOneWithoutSubmissionsInput
   }
 
   export type SubmissionUncheckedCreateInput = {
@@ -23958,9 +23958,9 @@ export namespace Prisma {
     answers?: JsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
-    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
     mentorMessages?: MentorMessageUpdateManyWithoutSubmissionNestedInput
+    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
+    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
   }
 
   export type SubmissionUncheckedUpdateInput = {
@@ -24006,8 +24006,8 @@ export namespace Prisma {
     id?: string
     message: string
     createdAt?: Date | string
-    submission: SubmissionCreateNestedOneWithoutMentorMessagesInput
     sender: UserCreateNestedOneWithoutMentorMessagesInput
+    submission: SubmissionCreateNestedOneWithoutMentorMessagesInput
   }
 
   export type MentorMessageUncheckedCreateInput = {
@@ -24022,8 +24022,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    submission?: SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput
     sender?: UserUpdateOneRequiredWithoutMentorMessagesNestedInput
+    submission?: SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput
   }
 
   export type MentorMessageUncheckedUpdateInput = {
@@ -24135,9 +24135,9 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    student: UserCreateNestedOneWithoutStudentTransactionsInput
     course?: CourseCreateNestedOneWithoutTransactionsInput
     instructor?: UserCreateNestedOneWithoutInstructorTransactionsInput
+    student: UserCreateNestedOneWithoutStudentTransactionsInput
   }
 
   export type TransactionUncheckedCreateInput = {
@@ -24165,9 +24165,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
     course?: CourseUpdateOneWithoutTransactionsNestedInput
     instructor?: UserUpdateOneWithoutInstructorTransactionsNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
@@ -24551,8 +24551,8 @@ export namespace Prisma {
     issueDate?: Date | string
     pdfUrl: string
     uniqueCode: string
-    student: UserCreateNestedOneWithoutCertificatesInput
     course: CourseCreateNestedOneWithoutCertificatesInput
+    student: UserCreateNestedOneWithoutCertificatesInput
   }
 
   export type CertificateUncheckedCreateInput = {
@@ -24569,8 +24569,8 @@ export namespace Prisma {
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     pdfUrl?: StringFieldUpdateOperationsInput | string
     uniqueCode?: StringFieldUpdateOperationsInput | string
-    student?: UserUpdateOneRequiredWithoutCertificatesNestedInput
     course?: CourseUpdateOneRequiredWithoutCertificatesNestedInput
+    student?: UserUpdateOneRequiredWithoutCertificatesNestedInput
   }
 
   export type CertificateUncheckedUpdateInput = {
@@ -24875,6 +24875,12 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type CertificateListRelationFilter = {
+    every?: CertificateWhereInput
+    some?: CertificateWhereInput
+    none?: CertificateWhereInput
+  }
+
   export type CourseListRelationFilter = {
     every?: CourseWhereInput
     some?: CourseWhereInput
@@ -24887,33 +24893,10 @@ export namespace Prisma {
     none?: CourseEnrollmentWhereInput
   }
 
-  export type SubmissionListRelationFilter = {
-    every?: SubmissionWhereInput
-    some?: SubmissionWhereInput
-    none?: SubmissionWhereInput
-  }
-
-  export type NotificationListRelationFilter = {
-    every?: NotificationWhereInput
-    some?: NotificationWhereInput
-    none?: NotificationWhereInput
-  }
-
-  export type WalletNullableScalarRelationFilter = {
-    is?: WalletWhereInput | null
-    isNot?: WalletWhereInput | null
-  }
-
-  export type TransactionListRelationFilter = {
-    every?: TransactionWhereInput
-    some?: TransactionWhereInput
-    none?: TransactionWhereInput
-  }
-
-  export type SupportTicketListRelationFilter = {
-    every?: SupportTicketWhereInput
-    some?: SupportTicketWhereInput
-    none?: SupportTicketWhereInput
+  export type LiveSessionListRelationFilter = {
+    every?: LiveSessionWhereInput
+    some?: LiveSessionWhereInput
+    none?: LiveSessionWhereInput
   }
 
   export type MentorMessageListRelationFilter = {
@@ -24922,21 +24905,42 @@ export namespace Prisma {
     none?: MentorMessageWhereInput
   }
 
-  export type CertificateListRelationFilter = {
-    every?: CertificateWhereInput
-    some?: CertificateWhereInput
-    none?: CertificateWhereInput
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
   }
 
-  export type LiveSessionListRelationFilter = {
-    every?: LiveSessionWhereInput
-    some?: LiveSessionWhereInput
-    none?: LiveSessionWhereInput
+  export type SubmissionListRelationFilter = {
+    every?: SubmissionWhereInput
+    some?: SubmissionWhereInput
+    none?: SubmissionWhereInput
+  }
+
+  export type SupportTicketListRelationFilter = {
+    every?: SupportTicketWhereInput
+    some?: SupportTicketWhereInput
+    none?: SupportTicketWhereInput
+  }
+
+  export type TransactionListRelationFilter = {
+    every?: TransactionWhereInput
+    some?: TransactionWhereInput
+    none?: TransactionWhereInput
+  }
+
+  export type WalletNullableScalarRelationFilter = {
+    is?: WalletWhereInput | null
+    isNot?: WalletWhereInput | null
   }
 
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type CertificateOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type CourseOrderByRelationAggregateInput = {
@@ -24947,19 +24951,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SubmissionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NotificationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TransactionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type SupportTicketOrderByRelationAggregateInput = {
+  export type LiveSessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24967,11 +24959,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type CertificateOrderByRelationAggregateInput = {
+  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type LiveSessionOrderByRelationAggregateInput = {
+  export type SubmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SupportTicketOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25182,27 +25182,27 @@ export namespace Prisma {
     none?: QuizWhereInput
   }
 
-  export type VideoModuleListRelationFilter = {
-    every?: VideoModuleWhereInput
-    some?: VideoModuleWhereInput
-    none?: VideoModuleWhereInput
-  }
-
   export type ResourceListRelationFilter = {
     every?: ResourceWhereInput
     some?: ResourceWhereInput
     none?: ResourceWhereInput
   }
 
+  export type VideoModuleListRelationFilter = {
+    every?: VideoModuleWhereInput
+    some?: VideoModuleWhereInput
+    none?: VideoModuleWhereInput
+  }
+
   export type QuizOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type VideoModuleOrderByRelationAggregateInput = {
+  export type ResourceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ResourceOrderByRelationAggregateInput = {
+  export type VideoModuleOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25858,6 +25858,13 @@ export namespace Prisma {
     deletedAt?: SortOrder
   }
 
+  export type CertificateCreateNestedManyWithoutStudentInput = {
+    create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
+    createMany?: CertificateCreateManyStudentInputEnvelope
+    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+  }
+
   export type CourseCreateNestedManyWithoutInstructorInput = {
     create?: XOR<CourseCreateWithoutInstructorInput, CourseUncheckedCreateWithoutInstructorInput> | CourseCreateWithoutInstructorInput[] | CourseUncheckedCreateWithoutInstructorInput[]
     connectOrCreate?: CourseCreateOrConnectWithoutInstructorInput | CourseCreateOrConnectWithoutInstructorInput[]
@@ -25872,45 +25879,11 @@ export namespace Prisma {
     connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
   }
 
-  export type SubmissionCreateNestedManyWithoutStudentInput = {
-    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
-    createMany?: SubmissionCreateManyStudentInputEnvelope
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-  }
-
-  export type NotificationCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type WalletCreateNestedOneWithoutUserInput = {
-    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
-    connect?: WalletWhereUniqueInput
-  }
-
-  export type TransactionCreateNestedManyWithoutStudentInput = {
-    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
-    createMany?: TransactionCreateManyStudentInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
-  export type TransactionCreateNestedManyWithoutInstructorInput = {
-    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
-    createMany?: TransactionCreateManyInstructorInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
-  export type SupportTicketCreateNestedManyWithoutUserInput = {
-    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
-    createMany?: SupportTicketCreateManyUserInputEnvelope
-    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  export type LiveSessionCreateNestedManyWithoutInstructorInput = {
+    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
+    createMany?: LiveSessionCreateManyInstructorInputEnvelope
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
   }
 
   export type MentorMessageCreateNestedManyWithoutSenderInput = {
@@ -25920,18 +25893,52 @@ export namespace Prisma {
     connect?: MentorMessageWhereUniqueInput | MentorMessageWhereUniqueInput[]
   }
 
-  export type CertificateCreateNestedManyWithoutStudentInput = {
+  export type NotificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type SubmissionCreateNestedManyWithoutStudentInput = {
+    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
+    createMany?: SubmissionCreateManyStudentInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type SupportTicketCreateNestedManyWithoutUserInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type TransactionCreateNestedManyWithoutInstructorInput = {
+    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
+    createMany?: TransactionCreateManyInstructorInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type TransactionCreateNestedManyWithoutStudentInput = {
+    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
+    createMany?: TransactionCreateManyStudentInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type WalletCreateNestedOneWithoutUserInput = {
+    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
+    connect?: WalletWhereUniqueInput
+  }
+
+  export type CertificateUncheckedCreateNestedManyWithoutStudentInput = {
     create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
     createMany?: CertificateCreateManyStudentInputEnvelope
     connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-  }
-
-  export type LiveSessionCreateNestedManyWithoutInstructorInput = {
-    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
-    createMany?: LiveSessionCreateManyInstructorInputEnvelope
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
   }
 
   export type CourseUncheckedCreateNestedManyWithoutInstructorInput = {
@@ -25948,45 +25955,11 @@ export namespace Prisma {
     connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
   }
 
-  export type SubmissionUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
-    createMany?: SubmissionCreateManyStudentInputEnvelope
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-  }
-
-  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type WalletUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
-    connect?: WalletWhereUniqueInput
-  }
-
-  export type TransactionUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
-    createMany?: TransactionCreateManyStudentInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
-  export type TransactionUncheckedCreateNestedManyWithoutInstructorInput = {
-    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
-    createMany?: TransactionCreateManyInstructorInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
-  export type SupportTicketUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
-    createMany?: SupportTicketCreateManyUserInputEnvelope
-    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  export type LiveSessionUncheckedCreateNestedManyWithoutInstructorInput = {
+    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
+    createMany?: LiveSessionCreateManyInstructorInputEnvelope
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
   }
 
   export type MentorMessageUncheckedCreateNestedManyWithoutSenderInput = {
@@ -25996,18 +25969,45 @@ export namespace Prisma {
     connect?: MentorMessageWhereUniqueInput | MentorMessageWhereUniqueInput[]
   }
 
-  export type CertificateUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
-    createMany?: CertificateCreateManyStudentInputEnvelope
-    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
-  export type LiveSessionUncheckedCreateNestedManyWithoutInstructorInput = {
-    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
-    createMany?: LiveSessionCreateManyInstructorInputEnvelope
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+  export type SubmissionUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
+    createMany?: SubmissionCreateManyStudentInputEnvelope
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type SupportTicketUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type TransactionUncheckedCreateNestedManyWithoutInstructorInput = {
+    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
+    createMany?: TransactionCreateManyInstructorInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type TransactionUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
+    createMany?: TransactionCreateManyStudentInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type WalletUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
+    connect?: WalletWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -26038,6 +26038,20 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type CertificateUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
+    upsert?: CertificateUpsertWithWhereUniqueWithoutStudentInput | CertificateUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: CertificateCreateManyStudentInputEnvelope
+    set?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    disconnect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    delete?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    update?: CertificateUpdateWithWhereUniqueWithoutStudentInput | CertificateUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: CertificateUpdateManyWithWhereWithoutStudentInput | CertificateUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
+  }
+
   export type CourseUpdateManyWithoutInstructorNestedInput = {
     create?: XOR<CourseCreateWithoutInstructorInput, CourseUncheckedCreateWithoutInstructorInput> | CourseCreateWithoutInstructorInput[] | CourseUncheckedCreateWithoutInstructorInput[]
     connectOrCreate?: CourseCreateOrConnectWithoutInstructorInput | CourseCreateOrConnectWithoutInstructorInput[]
@@ -26066,84 +26080,18 @@ export namespace Prisma {
     deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
   }
 
-  export type SubmissionUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
-    upsert?: SubmissionUpsertWithWhereUniqueWithoutStudentInput | SubmissionUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: SubmissionCreateManyStudentInputEnvelope
-    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    update?: SubmissionUpdateWithWhereUniqueWithoutStudentInput | SubmissionUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: SubmissionUpdateManyWithWhereWithoutStudentInput | SubmissionUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-  }
-
-  export type NotificationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type WalletUpdateOneWithoutUserNestedInput = {
-    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
-    upsert?: WalletUpsertWithoutUserInput
-    disconnect?: WalletWhereInput | boolean
-    delete?: WalletWhereInput | boolean
-    connect?: WalletWhereUniqueInput
-    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutUserInput, WalletUpdateWithoutUserInput>, WalletUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TransactionUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutStudentInput | TransactionUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: TransactionCreateManyStudentInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutStudentInput | TransactionUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutStudentInput | TransactionUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-  }
-
-  export type TransactionUpdateManyWithoutInstructorNestedInput = {
-    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutInstructorInput | TransactionUpsertWithWhereUniqueWithoutInstructorInput[]
-    createMany?: TransactionCreateManyInstructorInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutInstructorInput | TransactionUpdateWithWhereUniqueWithoutInstructorInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutInstructorInput | TransactionUpdateManyWithWhereWithoutInstructorInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-  }
-
-  export type SupportTicketUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
-    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SupportTicketCreateManyUserInputEnvelope
-    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  export type LiveSessionUpdateManyWithoutInstructorNestedInput = {
+    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
+    upsert?: LiveSessionUpsertWithWhereUniqueWithoutInstructorInput | LiveSessionUpsertWithWhereUniqueWithoutInstructorInput[]
+    createMany?: LiveSessionCreateManyInstructorInputEnvelope
+    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    update?: LiveSessionUpdateWithWhereUniqueWithoutInstructorInput | LiveSessionUpdateWithWhereUniqueWithoutInstructorInput[]
+    updateMany?: LiveSessionUpdateManyWithWhereWithoutInstructorInput | LiveSessionUpdateManyWithWhereWithoutInstructorInput[]
+    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
   }
 
   export type MentorMessageUpdateManyWithoutSenderNestedInput = {
@@ -26160,7 +26108,87 @@ export namespace Prisma {
     deleteMany?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
   }
 
-  export type CertificateUpdateManyWithoutStudentNestedInput = {
+  export type NotificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type SubmissionUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutStudentInput | SubmissionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: SubmissionCreateManyStudentInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutStudentInput | SubmissionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutStudentInput | SubmissionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type SupportTicketUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type TransactionUpdateManyWithoutInstructorNestedInput = {
+    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutInstructorInput | TransactionUpsertWithWhereUniqueWithoutInstructorInput[]
+    createMany?: TransactionCreateManyInstructorInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutInstructorInput | TransactionUpdateWithWhereUniqueWithoutInstructorInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutInstructorInput | TransactionUpdateManyWithWhereWithoutInstructorInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type TransactionUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutStudentInput | TransactionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: TransactionCreateManyStudentInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutStudentInput | TransactionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutStudentInput | TransactionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type WalletUpdateOneWithoutUserNestedInput = {
+    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
+    upsert?: WalletUpsertWithoutUserInput
+    disconnect?: WalletWhereInput | boolean
+    delete?: WalletWhereInput | boolean
+    connect?: WalletWhereUniqueInput
+    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutUserInput, WalletUpdateWithoutUserInput>, WalletUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CertificateUncheckedUpdateManyWithoutStudentNestedInput = {
     create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
     upsert?: CertificateUpsertWithWhereUniqueWithoutStudentInput | CertificateUpsertWithWhereUniqueWithoutStudentInput[]
@@ -26172,20 +26200,6 @@ export namespace Prisma {
     update?: CertificateUpdateWithWhereUniqueWithoutStudentInput | CertificateUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: CertificateUpdateManyWithWhereWithoutStudentInput | CertificateUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
-  }
-
-  export type LiveSessionUpdateManyWithoutInstructorNestedInput = {
-    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
-    upsert?: LiveSessionUpsertWithWhereUniqueWithoutInstructorInput | LiveSessionUpsertWithWhereUniqueWithoutInstructorInput[]
-    createMany?: LiveSessionCreateManyInstructorInputEnvelope
-    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    update?: LiveSessionUpdateWithWhereUniqueWithoutInstructorInput | LiveSessionUpdateWithWhereUniqueWithoutInstructorInput[]
-    updateMany?: LiveSessionUpdateManyWithWhereWithoutInstructorInput | LiveSessionUpdateManyWithWhereWithoutInstructorInput[]
-    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
   }
 
   export type CourseUncheckedUpdateManyWithoutInstructorNestedInput = {
@@ -26216,84 +26230,18 @@ export namespace Prisma {
     deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
   }
 
-  export type SubmissionUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
-    upsert?: SubmissionUpsertWithWhereUniqueWithoutStudentInput | SubmissionUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: SubmissionCreateManyStudentInputEnvelope
-    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    update?: SubmissionUpdateWithWhereUniqueWithoutStudentInput | SubmissionUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: SubmissionUpdateManyWithWhereWithoutStudentInput | SubmissionUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type WalletUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
-    upsert?: WalletUpsertWithoutUserInput
-    disconnect?: WalletWhereInput | boolean
-    delete?: WalletWhereInput | boolean
-    connect?: WalletWhereUniqueInput
-    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutUserInput, WalletUpdateWithoutUserInput>, WalletUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TransactionUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutStudentInput | TransactionUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: TransactionCreateManyStudentInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutStudentInput | TransactionUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutStudentInput | TransactionUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-  }
-
-  export type TransactionUncheckedUpdateManyWithoutInstructorNestedInput = {
-    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutInstructorInput | TransactionUpsertWithWhereUniqueWithoutInstructorInput[]
-    createMany?: TransactionCreateManyInstructorInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutInstructorInput | TransactionUpdateWithWhereUniqueWithoutInstructorInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutInstructorInput | TransactionUpdateManyWithWhereWithoutInstructorInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-  }
-
-  export type SupportTicketUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
-    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SupportTicketCreateManyUserInputEnvelope
-    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
-    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  export type LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput = {
+    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
+    upsert?: LiveSessionUpsertWithWhereUniqueWithoutInstructorInput | LiveSessionUpsertWithWhereUniqueWithoutInstructorInput[]
+    createMany?: LiveSessionCreateManyInstructorInputEnvelope
+    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    update?: LiveSessionUpdateWithWhereUniqueWithoutInstructorInput | LiveSessionUpdateWithWhereUniqueWithoutInstructorInput[]
+    updateMany?: LiveSessionUpdateManyWithWhereWithoutInstructorInput | LiveSessionUpdateManyWithWhereWithoutInstructorInput[]
+    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
   }
 
   export type MentorMessageUncheckedUpdateManyWithoutSenderNestedInput = {
@@ -26310,38 +26258,111 @@ export namespace Prisma {
     deleteMany?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
   }
 
-  export type CertificateUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput> | CertificateCreateWithoutStudentInput[] | CertificateUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: CertificateCreateOrConnectWithoutStudentInput | CertificateCreateOrConnectWithoutStudentInput[]
-    upsert?: CertificateUpsertWithWhereUniqueWithoutStudentInput | CertificateUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: CertificateCreateManyStudentInputEnvelope
-    set?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    disconnect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    delete?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    update?: CertificateUpdateWithWhereUniqueWithoutStudentInput | CertificateUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: CertificateUpdateManyWithWhereWithoutStudentInput | CertificateUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
+  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
-  export type LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput = {
-    create?: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput> | LiveSessionCreateWithoutInstructorInput[] | LiveSessionUncheckedCreateWithoutInstructorInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutInstructorInput | LiveSessionCreateOrConnectWithoutInstructorInput[]
-    upsert?: LiveSessionUpsertWithWhereUniqueWithoutInstructorInput | LiveSessionUpsertWithWhereUniqueWithoutInstructorInput[]
-    createMany?: LiveSessionCreateManyInstructorInputEnvelope
-    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    update?: LiveSessionUpdateWithWhereUniqueWithoutInstructorInput | LiveSessionUpdateWithWhereUniqueWithoutInstructorInput[]
-    updateMany?: LiveSessionUpdateManyWithWhereWithoutInstructorInput | LiveSessionUpdateManyWithWhereWithoutInstructorInput[]
-    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
+  export type SubmissionUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput> | SubmissionCreateWithoutStudentInput[] | SubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: SubmissionCreateOrConnectWithoutStudentInput | SubmissionCreateOrConnectWithoutStudentInput[]
+    upsert?: SubmissionUpsertWithWhereUniqueWithoutStudentInput | SubmissionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: SubmissionCreateManyStudentInputEnvelope
+    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+    update?: SubmissionUpdateWithWhereUniqueWithoutStudentInput | SubmissionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: SubmissionUpdateManyWithWhereWithoutStudentInput | SubmissionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutInstructorNestedInput = {
+    create?: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput> | TransactionCreateWithoutInstructorInput[] | TransactionUncheckedCreateWithoutInstructorInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutInstructorInput | TransactionCreateOrConnectWithoutInstructorInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutInstructorInput | TransactionUpsertWithWhereUniqueWithoutInstructorInput[]
+    createMany?: TransactionCreateManyInstructorInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutInstructorInput | TransactionUpdateWithWhereUniqueWithoutInstructorInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutInstructorInput | TransactionUpdateManyWithWhereWithoutInstructorInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput> | TransactionCreateWithoutStudentInput[] | TransactionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutStudentInput | TransactionCreateOrConnectWithoutStudentInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutStudentInput | TransactionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: TransactionCreateManyStudentInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutStudentInput | TransactionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutStudentInput | TransactionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type WalletUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutUserInput
+    upsert?: WalletUpsertWithoutUserInput
+    disconnect?: WalletWhereInput | boolean
+    delete?: WalletWhereInput | boolean
+    connect?: WalletWhereUniqueInput
+    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutUserInput, WalletUpdateWithoutUserInput>, WalletUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CertificateCreateNestedManyWithoutCourseInput = {
+    create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
+    createMany?: CertificateCreateManyCourseInputEnvelope
+    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
   }
 
   export type UserCreateNestedOneWithoutCoursesInput = {
     create?: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
     connectOrCreate?: UserCreateOrConnectWithoutCoursesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type CourseEnrollmentCreateNestedManyWithoutCourseInput = {
+    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
+    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
+    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+  }
+
+  export type LiveSessionCreateNestedManyWithoutCourseInput = {
+    create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
+    createMany?: LiveSessionCreateManyCourseInputEnvelope
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
   }
 
   export type QuizCreateNestedManyWithoutCourseInput = {
@@ -26351,11 +26372,11 @@ export namespace Prisma {
     connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
   }
 
-  export type CourseEnrollmentCreateNestedManyWithoutCourseInput = {
-    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
-    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
-    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+  export type ResourceCreateNestedManyWithoutCourseInput = {
+    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
+    createMany?: ResourceCreateManyCourseInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
   export type TransactionCreateNestedManyWithoutCourseInput = {
@@ -26372,25 +26393,25 @@ export namespace Prisma {
     connect?: VideoModuleWhereUniqueInput | VideoModuleWhereUniqueInput[]
   }
 
-  export type CertificateCreateNestedManyWithoutCourseInput = {
+  export type CertificateUncheckedCreateNestedManyWithoutCourseInput = {
     create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
     createMany?: CertificateCreateManyCourseInputEnvelope
     connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
   }
 
-  export type LiveSessionCreateNestedManyWithoutCourseInput = {
+  export type CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
+    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
+    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+  }
+
+  export type LiveSessionUncheckedCreateNestedManyWithoutCourseInput = {
     create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
     createMany?: LiveSessionCreateManyCourseInputEnvelope
     connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-  }
-
-  export type ResourceCreateNestedManyWithoutCourseInput = {
-    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
-    createMany?: ResourceCreateManyCourseInputEnvelope
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
   export type QuizUncheckedCreateNestedManyWithoutCourseInput = {
@@ -26400,11 +26421,11 @@ export namespace Prisma {
     connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
   }
 
-  export type CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput = {
-    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
-    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
-    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+  export type ResourceUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
+    createMany?: ResourceCreateManyCourseInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
   export type TransactionUncheckedCreateNestedManyWithoutCourseInput = {
@@ -26421,27 +26442,6 @@ export namespace Prisma {
     connect?: VideoModuleWhereUniqueInput | VideoModuleWhereUniqueInput[]
   }
 
-  export type CertificateUncheckedCreateNestedManyWithoutCourseInput = {
-    create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
-    createMany?: CertificateCreateManyCourseInputEnvelope
-    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-  }
-
-  export type LiveSessionUncheckedCreateNestedManyWithoutCourseInput = {
-    create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
-    createMany?: LiveSessionCreateManyCourseInputEnvelope
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-  }
-
-  export type ResourceUncheckedCreateNestedManyWithoutCourseInput = {
-    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
-    createMany?: ResourceCreateManyCourseInputEnvelope
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-  }
-
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -26450,12 +26450,54 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type CertificateUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
+    upsert?: CertificateUpsertWithWhereUniqueWithoutCourseInput | CertificateUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: CertificateCreateManyCourseInputEnvelope
+    set?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    disconnect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    delete?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
+    update?: CertificateUpdateWithWhereUniqueWithoutCourseInput | CertificateUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: CertificateUpdateManyWithWhereWithoutCourseInput | CertificateUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
+  }
+
   export type UserUpdateOneRequiredWithoutCoursesNestedInput = {
     create?: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
     connectOrCreate?: UserCreateOrConnectWithoutCoursesInput
     upsert?: UserUpsertWithoutCoursesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCoursesInput, UserUpdateWithoutCoursesInput>, UserUncheckedUpdateWithoutCoursesInput>
+  }
+
+  export type CourseEnrollmentUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
+    upsert?: CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
+    set?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    disconnect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    delete?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    update?: CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: CourseEnrollmentUpdateManyWithWhereWithoutCourseInput | CourseEnrollmentUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
+  }
+
+  export type LiveSessionUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
+    upsert?: LiveSessionUpsertWithWhereUniqueWithoutCourseInput | LiveSessionUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: LiveSessionCreateManyCourseInputEnvelope
+    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
+    update?: LiveSessionUpdateWithWhereUniqueWithoutCourseInput | LiveSessionUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: LiveSessionUpdateManyWithWhereWithoutCourseInput | LiveSessionUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
   }
 
   export type QuizUpdateManyWithoutCourseNestedInput = {
@@ -26472,18 +26514,18 @@ export namespace Prisma {
     deleteMany?: QuizScalarWhereInput | QuizScalarWhereInput[]
   }
 
-  export type CourseEnrollmentUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
-    upsert?: CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
-    set?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    disconnect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    delete?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    update?: CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: CourseEnrollmentUpdateManyWithWhereWithoutCourseInput | CourseEnrollmentUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
+  export type ResourceUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutCourseInput | ResourceUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: ResourceCreateManyCourseInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutCourseInput | ResourceUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutCourseInput | ResourceUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
   }
 
   export type TransactionUpdateManyWithoutCourseNestedInput = {
@@ -26514,7 +26556,7 @@ export namespace Prisma {
     deleteMany?: VideoModuleScalarWhereInput | VideoModuleScalarWhereInput[]
   }
 
-  export type CertificateUpdateManyWithoutCourseNestedInput = {
+  export type CertificateUncheckedUpdateManyWithoutCourseNestedInput = {
     create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
     upsert?: CertificateUpsertWithWhereUniqueWithoutCourseInput | CertificateUpsertWithWhereUniqueWithoutCourseInput[]
@@ -26528,7 +26570,21 @@ export namespace Prisma {
     deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
   }
 
-  export type LiveSessionUpdateManyWithoutCourseNestedInput = {
+  export type CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
+    upsert?: CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
+    set?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    disconnect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    delete?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
+    update?: CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: CourseEnrollmentUpdateManyWithWhereWithoutCourseInput | CourseEnrollmentUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
+  }
+
+  export type LiveSessionUncheckedUpdateManyWithoutCourseNestedInput = {
     create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
     upsert?: LiveSessionUpsertWithWhereUniqueWithoutCourseInput | LiveSessionUpsertWithWhereUniqueWithoutCourseInput[]
@@ -26540,20 +26596,6 @@ export namespace Prisma {
     update?: LiveSessionUpdateWithWhereUniqueWithoutCourseInput | LiveSessionUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: LiveSessionUpdateManyWithWhereWithoutCourseInput | LiveSessionUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
-  }
-
-  export type ResourceUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
-    upsert?: ResourceUpsertWithWhereUniqueWithoutCourseInput | ResourceUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: ResourceCreateManyCourseInputEnvelope
-    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    update?: ResourceUpdateWithWhereUniqueWithoutCourseInput | ResourceUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: ResourceUpdateManyWithWhereWithoutCourseInput | ResourceUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
   }
 
   export type QuizUncheckedUpdateManyWithoutCourseNestedInput = {
@@ -26570,18 +26612,18 @@ export namespace Prisma {
     deleteMany?: QuizScalarWhereInput | QuizScalarWhereInput[]
   }
 
-  export type CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput> | CourseEnrollmentCreateWithoutCourseInput[] | CourseEnrollmentUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CourseEnrollmentCreateOrConnectWithoutCourseInput | CourseEnrollmentCreateOrConnectWithoutCourseInput[]
-    upsert?: CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: CourseEnrollmentCreateManyCourseInputEnvelope
-    set?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    disconnect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    delete?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    connect?: CourseEnrollmentWhereUniqueInput | CourseEnrollmentWhereUniqueInput[]
-    update?: CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput | CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: CourseEnrollmentUpdateManyWithWhereWithoutCourseInput | CourseEnrollmentUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: CourseEnrollmentScalarWhereInput | CourseEnrollmentScalarWhereInput[]
+  export type ResourceUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutCourseInput | ResourceUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: ResourceCreateManyCourseInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutCourseInput | ResourceUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutCourseInput | ResourceUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
   }
 
   export type TransactionUncheckedUpdateManyWithoutCourseNestedInput = {
@@ -26612,46 +26654,10 @@ export namespace Prisma {
     deleteMany?: VideoModuleScalarWhereInput | VideoModuleScalarWhereInput[]
   }
 
-  export type CertificateUncheckedUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput> | CertificateCreateWithoutCourseInput[] | CertificateUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: CertificateCreateOrConnectWithoutCourseInput | CertificateCreateOrConnectWithoutCourseInput[]
-    upsert?: CertificateUpsertWithWhereUniqueWithoutCourseInput | CertificateUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: CertificateCreateManyCourseInputEnvelope
-    set?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    disconnect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    delete?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-    update?: CertificateUpdateWithWhereUniqueWithoutCourseInput | CertificateUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: CertificateUpdateManyWithWhereWithoutCourseInput | CertificateUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
-  }
-
-  export type LiveSessionUncheckedUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput> | LiveSessionCreateWithoutCourseInput[] | LiveSessionUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: LiveSessionCreateOrConnectWithoutCourseInput | LiveSessionCreateOrConnectWithoutCourseInput[]
-    upsert?: LiveSessionUpsertWithWhereUniqueWithoutCourseInput | LiveSessionUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: LiveSessionCreateManyCourseInputEnvelope
-    set?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    disconnect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    delete?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    connect?: LiveSessionWhereUniqueInput | LiveSessionWhereUniqueInput[]
-    update?: LiveSessionUpdateWithWhereUniqueWithoutCourseInput | LiveSessionUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: LiveSessionUpdateManyWithWhereWithoutCourseInput | LiveSessionUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: LiveSessionScalarWhereInput | LiveSessionScalarWhereInput[]
-  }
-
-  export type ResourceUncheckedUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput> | ResourceCreateWithoutCourseInput[] | ResourceUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutCourseInput | ResourceCreateOrConnectWithoutCourseInput[]
-    upsert?: ResourceUpsertWithWhereUniqueWithoutCourseInput | ResourceUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: ResourceCreateManyCourseInputEnvelope
-    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    update?: ResourceUpdateWithWhereUniqueWithoutCourseInput | ResourceUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: ResourceUpdateManyWithWhereWithoutCourseInput | ResourceUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  export type CourseCreateNestedOneWithoutEnrollmentsInput = {
+    create?: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutEnrollmentsInput
+    connect?: CourseWhereUniqueInput
   }
 
   export type UserCreateNestedOneWithoutEnrolledInput = {
@@ -26660,10 +26666,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type CourseCreateNestedOneWithoutEnrollmentsInput = {
+  export type CourseUpdateOneRequiredWithoutEnrollmentsNestedInput = {
     create?: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
     connectOrCreate?: CourseCreateOrConnectWithoutEnrollmentsInput
+    upsert?: CourseUpsertWithoutEnrollmentsInput
     connect?: CourseWhereUniqueInput
+    update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutEnrollmentsInput, CourseUpdateWithoutEnrollmentsInput>, CourseUncheckedUpdateWithoutEnrollmentsInput>
   }
 
   export type UserUpdateOneRequiredWithoutEnrolledNestedInput = {
@@ -26672,14 +26680,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutEnrolledInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEnrolledInput, UserUpdateWithoutEnrolledInput>, UserUncheckedUpdateWithoutEnrolledInput>
-  }
-
-  export type CourseUpdateOneRequiredWithoutEnrollmentsNestedInput = {
-    create?: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
-    connectOrCreate?: CourseCreateOrConnectWithoutEnrollmentsInput
-    upsert?: CourseUpsertWithoutEnrollmentsInput
-    connect?: CourseWhereUniqueInput
-    update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutEnrollmentsInput, CourseUpdateWithoutEnrollmentsInput>, CourseUncheckedUpdateWithoutEnrollmentsInput>
   }
 
   export type CourseCreateNestedOneWithoutQuizzesInput = {
@@ -26738,10 +26738,11 @@ export namespace Prisma {
     deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutSubmissionsInput = {
-    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
-    connect?: UserWhereUniqueInput
+  export type MentorMessageCreateNestedManyWithoutSubmissionInput = {
+    create?: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput> | MentorMessageCreateWithoutSubmissionInput[] | MentorMessageUncheckedCreateWithoutSubmissionInput[]
+    connectOrCreate?: MentorMessageCreateOrConnectWithoutSubmissionInput | MentorMessageCreateOrConnectWithoutSubmissionInput[]
+    createMany?: MentorMessageCreateManySubmissionInputEnvelope
+    connect?: MentorMessageWhereUniqueInput | MentorMessageWhereUniqueInput[]
   }
 
   export type QuizCreateNestedOneWithoutSubmissionsInput = {
@@ -26750,11 +26751,10 @@ export namespace Prisma {
     connect?: QuizWhereUniqueInput
   }
 
-  export type MentorMessageCreateNestedManyWithoutSubmissionInput = {
-    create?: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput> | MentorMessageCreateWithoutSubmissionInput[] | MentorMessageUncheckedCreateWithoutSubmissionInput[]
-    connectOrCreate?: MentorMessageCreateOrConnectWithoutSubmissionInput | MentorMessageCreateOrConnectWithoutSubmissionInput[]
-    createMany?: MentorMessageCreateManySubmissionInputEnvelope
-    connect?: MentorMessageWhereUniqueInput | MentorMessageWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type MentorMessageUncheckedCreateNestedManyWithoutSubmissionInput = {
@@ -26762,22 +26762,6 @@ export namespace Prisma {
     connectOrCreate?: MentorMessageCreateOrConnectWithoutSubmissionInput | MentorMessageCreateOrConnectWithoutSubmissionInput[]
     createMany?: MentorMessageCreateManySubmissionInputEnvelope
     connect?: MentorMessageWhereUniqueInput | MentorMessageWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
-    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
-    upsert?: UserUpsertWithoutSubmissionsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmissionsInput, UserUpdateWithoutSubmissionsInput>, UserUncheckedUpdateWithoutSubmissionsInput>
-  }
-
-  export type QuizUpdateOneRequiredWithoutSubmissionsNestedInput = {
-    create?: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
-    connectOrCreate?: QuizCreateOrConnectWithoutSubmissionsInput
-    upsert?: QuizUpsertWithoutSubmissionsInput
-    connect?: QuizWhereUniqueInput
-    update?: XOR<XOR<QuizUpdateToOneWithWhereWithoutSubmissionsInput, QuizUpdateWithoutSubmissionsInput>, QuizUncheckedUpdateWithoutSubmissionsInput>
   }
 
   export type MentorMessageUpdateManyWithoutSubmissionNestedInput = {
@@ -26794,6 +26778,22 @@ export namespace Prisma {
     deleteMany?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
   }
 
+  export type QuizUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutSubmissionsInput
+    upsert?: QuizUpsertWithoutSubmissionsInput
+    connect?: QuizWhereUniqueInput
+    update?: XOR<XOR<QuizUpdateToOneWithWhereWithoutSubmissionsInput, QuizUpdateWithoutSubmissionsInput>, QuizUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
+    upsert?: UserUpsertWithoutSubmissionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmissionsInput, UserUpdateWithoutSubmissionsInput>, UserUncheckedUpdateWithoutSubmissionsInput>
+  }
+
   export type MentorMessageUncheckedUpdateManyWithoutSubmissionNestedInput = {
     create?: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput> | MentorMessageCreateWithoutSubmissionInput[] | MentorMessageUncheckedCreateWithoutSubmissionInput[]
     connectOrCreate?: MentorMessageCreateOrConnectWithoutSubmissionInput | MentorMessageCreateOrConnectWithoutSubmissionInput[]
@@ -26808,24 +26808,16 @@ export namespace Prisma {
     deleteMany?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
   }
 
-  export type SubmissionCreateNestedOneWithoutMentorMessagesInput = {
-    create?: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
-    connectOrCreate?: SubmissionCreateOrConnectWithoutMentorMessagesInput
-    connect?: SubmissionWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutMentorMessagesInput = {
     create?: XOR<UserCreateWithoutMentorMessagesInput, UserUncheckedCreateWithoutMentorMessagesInput>
     connectOrCreate?: UserCreateOrConnectWithoutMentorMessagesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput = {
+  export type SubmissionCreateNestedOneWithoutMentorMessagesInput = {
     create?: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
     connectOrCreate?: SubmissionCreateOrConnectWithoutMentorMessagesInput
-    upsert?: SubmissionUpsertWithoutMentorMessagesInput
     connect?: SubmissionWhereUniqueInput
-    update?: XOR<XOR<SubmissionUpdateToOneWithWhereWithoutMentorMessagesInput, SubmissionUpdateWithoutMentorMessagesInput>, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
   }
 
   export type UserUpdateOneRequiredWithoutMentorMessagesNestedInput = {
@@ -26834,6 +26826,14 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutMentorMessagesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMentorMessagesInput, UserUpdateWithoutMentorMessagesInput>, UserUncheckedUpdateWithoutMentorMessagesInput>
+  }
+
+  export type SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput = {
+    create?: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
+    connectOrCreate?: SubmissionCreateOrConnectWithoutMentorMessagesInput
+    upsert?: SubmissionUpsertWithoutMentorMessagesInput
+    connect?: SubmissionWhereUniqueInput
+    update?: XOR<XOR<SubmissionUpdateToOneWithWhereWithoutMentorMessagesInput, SubmissionUpdateWithoutMentorMessagesInput>, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
   }
 
   export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -26850,12 +26850,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
   }
 
-  export type UserCreateNestedOneWithoutStudentTransactionsInput = {
-    create?: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutStudentTransactionsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type CourseCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<CourseCreateWithoutTransactionsInput, CourseUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: CourseCreateOrConnectWithoutTransactionsInput
@@ -26868,12 +26862,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutStudentTransactionsNestedInput = {
+  export type UserCreateNestedOneWithoutStudentTransactionsInput = {
     create?: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutStudentTransactionsInput
-    upsert?: UserUpsertWithoutStudentTransactionsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentTransactionsInput, UserUpdateWithoutStudentTransactionsInput>, UserUncheckedUpdateWithoutStudentTransactionsInput>
   }
 
   export type CourseUpdateOneWithoutTransactionsNestedInput = {
@@ -26894,6 +26886,14 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInstructorTransactionsInput, UserUpdateWithoutInstructorTransactionsInput>, UserUncheckedUpdateWithoutInstructorTransactionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutStudentTransactionsNestedInput = {
+    create?: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStudentTransactionsInput
+    upsert?: UserUpsertWithoutStudentTransactionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStudentTransactionsInput, UserUpdateWithoutStudentTransactionsInput>, UserUncheckedUpdateWithoutStudentTransactionsInput>
   }
 
   export type UserCreateNestedOneWithoutWalletInput = {
@@ -26938,24 +26938,16 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutVideoModulesInput, CourseUpdateWithoutVideoModulesInput>, CourseUncheckedUpdateWithoutVideoModulesInput>
   }
 
-  export type UserCreateNestedOneWithoutCertificatesInput = {
-    create?: XOR<UserCreateWithoutCertificatesInput, UserUncheckedCreateWithoutCertificatesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCertificatesInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type CourseCreateNestedOneWithoutCertificatesInput = {
     create?: XOR<CourseCreateWithoutCertificatesInput, CourseUncheckedCreateWithoutCertificatesInput>
     connectOrCreate?: CourseCreateOrConnectWithoutCertificatesInput
     connect?: CourseWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutCertificatesNestedInput = {
+  export type UserCreateNestedOneWithoutCertificatesInput = {
     create?: XOR<UserCreateWithoutCertificatesInput, UserUncheckedCreateWithoutCertificatesInput>
     connectOrCreate?: UserCreateOrConnectWithoutCertificatesInput
-    upsert?: UserUpsertWithoutCertificatesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCertificatesInput, UserUpdateWithoutCertificatesInput>, UserUncheckedUpdateWithoutCertificatesInput>
   }
 
   export type CourseUpdateOneRequiredWithoutCertificatesNestedInput = {
@@ -26964,6 +26956,14 @@ export namespace Prisma {
     upsert?: CourseUpsertWithoutCertificatesInput
     connect?: CourseWhereUniqueInput
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutCertificatesInput, CourseUpdateWithoutCertificatesInput>, CourseUncheckedUpdateWithoutCertificatesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCertificatesNestedInput = {
+    create?: XOR<UserCreateWithoutCertificatesInput, UserUncheckedCreateWithoutCertificatesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCertificatesInput
+    upsert?: UserUpsertWithoutCertificatesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCertificatesInput, UserUpdateWithoutCertificatesInput>, UserUncheckedUpdateWithoutCertificatesInput>
   }
 
   export type CourseCreateNestedOneWithoutLiveSessionsInput = {
@@ -27244,6 +27244,32 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type CertificateCreateWithoutStudentInput = {
+    id?: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
+    course: CourseCreateNestedOneWithoutCertificatesInput
+  }
+
+  export type CertificateUncheckedCreateWithoutStudentInput = {
+    id?: string
+    courseId: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
+  }
+
+  export type CertificateCreateOrConnectWithoutStudentInput = {
+    where: CertificateWhereUniqueInput
+    create: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput>
+  }
+
+  export type CertificateCreateManyStudentInputEnvelope = {
+    data: CertificateCreateManyStudentInput | CertificateCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CourseCreateWithoutInstructorInput = {
     id?: string
     title: string
@@ -27256,13 +27282,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    resources?: ResourceCreateNestedManyWithoutCourseInput
     transactions?: TransactionCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
-    resources?: ResourceCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutInstructorInput = {
@@ -27277,13 +27303,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutInstructorInput = {
@@ -27318,33 +27344,59 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SubmissionCreateWithoutStudentInput = {
+  export type LiveSessionCreateWithoutInstructorInput = {
     id?: string
-    score: number
-    answers: JsonNullValueInput | InputJsonValue
-    status?: string
-    submittedAt?: Date | string
-    quiz: QuizCreateNestedOneWithoutSubmissionsInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSubmissionInput
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    course: CourseCreateNestedOneWithoutLiveSessionsInput
   }
 
-  export type SubmissionUncheckedCreateWithoutStudentInput = {
+  export type LiveSessionUncheckedCreateWithoutInstructorInput = {
     id?: string
-    quizId: string
-    score: number
-    answers: JsonNullValueInput | InputJsonValue
-    status?: string
-    submittedAt?: Date | string
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSubmissionInput
+    courseId: string
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type SubmissionCreateOrConnectWithoutStudentInput = {
-    where: SubmissionWhereUniqueInput
-    create: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput>
+  export type LiveSessionCreateOrConnectWithoutInstructorInput = {
+    where: LiveSessionWhereUniqueInput
+    create: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput>
   }
 
-  export type SubmissionCreateManyStudentInputEnvelope = {
-    data: SubmissionCreateManyStudentInput | SubmissionCreateManyStudentInput[]
+  export type LiveSessionCreateManyInstructorInputEnvelope = {
+    data: LiveSessionCreateManyInstructorInput | LiveSessionCreateManyInstructorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MentorMessageCreateWithoutSenderInput = {
+    id?: string
+    message: string
+    createdAt?: Date | string
+    submission: SubmissionCreateNestedOneWithoutMentorMessagesInput
+  }
+
+  export type MentorMessageUncheckedCreateWithoutSenderInput = {
+    id?: string
+    submissionId: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type MentorMessageCreateOrConnectWithoutSenderInput = {
+    where: MentorMessageWhereUniqueInput
+    create: XOR<MentorMessageCreateWithoutSenderInput, MentorMessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MentorMessageCreateManySenderInputEnvelope = {
+    data: MentorMessageCreateManySenderInput | MentorMessageCreateManySenderInput[]
     skipDuplicates?: boolean
   }
 
@@ -27376,23 +27428,100 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type WalletCreateWithoutUserInput = {
+  export type SubmissionCreateWithoutStudentInput = {
     id?: string
-    balance?: number
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    status?: string
+    submittedAt?: Date | string
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSubmissionInput
+    quiz: QuizCreateNestedOneWithoutSubmissionsInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutStudentInput = {
+    id?: string
+    quizId: string
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    status?: string
+    submittedAt?: Date | string
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSubmissionInput
+  }
+
+  export type SubmissionCreateOrConnectWithoutStudentInput = {
+    where: SubmissionWhereUniqueInput
+    create: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type SubmissionCreateManyStudentInputEnvelope = {
+    data: SubmissionCreateManyStudentInput | SubmissionCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportTicketCreateWithoutUserInput = {
+    id?: string
+    subject: string
+    message: string
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type WalletUncheckedCreateWithoutUserInput = {
+  export type SupportTicketUncheckedCreateWithoutUserInput = {
     id?: string
-    balance?: number
+    subject: string
+    message: string
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type WalletCreateOrConnectWithoutUserInput = {
-    where: WalletWhereUniqueInput
-    create: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+  export type SupportTicketCreateOrConnectWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
+  }
+
+  export type SupportTicketCreateManyUserInputEnvelope = {
+    data: SupportTicketCreateManyUserInput | SupportTicketCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TransactionCreateWithoutInstructorInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    amount: number
+    adminShare?: number
+    instShare?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    course?: CourseCreateNestedOneWithoutTransactionsInput
+    student: UserCreateNestedOneWithoutStudentTransactionsInput
+  }
+
+  export type TransactionUncheckedCreateWithoutInstructorInput = {
+    id?: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    userId: string
+    courseId?: string | null
+    amount: number
+    adminShare?: number
+    instShare?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransactionCreateOrConnectWithoutInstructorInput = {
+    where: TransactionWhereUniqueInput
+    create: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput>
+  }
+
+  export type TransactionCreateManyInstructorInputEnvelope = {
+    data: TransactionCreateManyInstructorInput | TransactionCreateManyInstructorInput[]
+    skipDuplicates?: boolean
   }
 
   export type TransactionCreateWithoutStudentInput = {
@@ -27433,152 +27562,51 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TransactionCreateWithoutInstructorInput = {
+  export type WalletCreateWithoutUserInput = {
     id?: string
-    razorpayOrderId: string
-    razorpayPaymentId?: string | null
-    amount: number
-    adminShare?: number
-    instShare?: number
-    status?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    student: UserCreateNestedOneWithoutStudentTransactionsInput
-    course?: CourseCreateNestedOneWithoutTransactionsInput
-  }
-
-  export type TransactionUncheckedCreateWithoutInstructorInput = {
-    id?: string
-    razorpayOrderId: string
-    razorpayPaymentId?: string | null
-    userId: string
-    courseId?: string | null
-    amount: number
-    adminShare?: number
-    instShare?: number
-    status?: string
+    balance?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TransactionCreateOrConnectWithoutInstructorInput = {
-    where: TransactionWhereUniqueInput
-    create: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput>
-  }
-
-  export type TransactionCreateManyInstructorInputEnvelope = {
-    data: TransactionCreateManyInstructorInput | TransactionCreateManyInstructorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SupportTicketCreateWithoutUserInput = {
+  export type WalletUncheckedCreateWithoutUserInput = {
     id?: string
-    subject: string
-    message: string
-    status?: string
+    balance?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type SupportTicketUncheckedCreateWithoutUserInput = {
-    id?: string
-    subject: string
-    message: string
-    status?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type WalletCreateOrConnectWithoutUserInput = {
+    where: WalletWhereUniqueInput
+    create: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
   }
 
-  export type SupportTicketCreateOrConnectWithoutUserInput = {
-    where: SupportTicketWhereUniqueInput
-    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
-  }
-
-  export type SupportTicketCreateManyUserInputEnvelope = {
-    data: SupportTicketCreateManyUserInput | SupportTicketCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type MentorMessageCreateWithoutSenderInput = {
-    id?: string
-    message: string
-    createdAt?: Date | string
-    submission: SubmissionCreateNestedOneWithoutMentorMessagesInput
-  }
-
-  export type MentorMessageUncheckedCreateWithoutSenderInput = {
-    id?: string
-    submissionId: string
-    message: string
-    createdAt?: Date | string
-  }
-
-  export type MentorMessageCreateOrConnectWithoutSenderInput = {
-    where: MentorMessageWhereUniqueInput
-    create: XOR<MentorMessageCreateWithoutSenderInput, MentorMessageUncheckedCreateWithoutSenderInput>
-  }
-
-  export type MentorMessageCreateManySenderInputEnvelope = {
-    data: MentorMessageCreateManySenderInput | MentorMessageCreateManySenderInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CertificateCreateWithoutStudentInput = {
-    id?: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
-    course: CourseCreateNestedOneWithoutCertificatesInput
-  }
-
-  export type CertificateUncheckedCreateWithoutStudentInput = {
-    id?: string
-    courseId: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
-  }
-
-  export type CertificateCreateOrConnectWithoutStudentInput = {
+  export type CertificateUpsertWithWhereUniqueWithoutStudentInput = {
     where: CertificateWhereUniqueInput
+    update: XOR<CertificateUpdateWithoutStudentInput, CertificateUncheckedUpdateWithoutStudentInput>
     create: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput>
   }
 
-  export type CertificateCreateManyStudentInputEnvelope = {
-    data: CertificateCreateManyStudentInput | CertificateCreateManyStudentInput[]
-    skipDuplicates?: boolean
+  export type CertificateUpdateWithWhereUniqueWithoutStudentInput = {
+    where: CertificateWhereUniqueInput
+    data: XOR<CertificateUpdateWithoutStudentInput, CertificateUncheckedUpdateWithoutStudentInput>
   }
 
-  export type LiveSessionCreateWithoutInstructorInput = {
-    id?: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    course: CourseCreateNestedOneWithoutLiveSessionsInput
+  export type CertificateUpdateManyWithWhereWithoutStudentInput = {
+    where: CertificateScalarWhereInput
+    data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type LiveSessionUncheckedCreateWithoutInstructorInput = {
-    id?: string
-    courseId: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type LiveSessionCreateOrConnectWithoutInstructorInput = {
-    where: LiveSessionWhereUniqueInput
-    create: XOR<LiveSessionCreateWithoutInstructorInput, LiveSessionUncheckedCreateWithoutInstructorInput>
-  }
-
-  export type LiveSessionCreateManyInstructorInputEnvelope = {
-    data: LiveSessionCreateManyInstructorInput | LiveSessionCreateManyInstructorInput[]
-    skipDuplicates?: boolean
+  export type CertificateScalarWhereInput = {
+    AND?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
+    OR?: CertificateScalarWhereInput[]
+    NOT?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
+    id?: StringFilter<"Certificate"> | string
+    studentId?: StringFilter<"Certificate"> | string
+    courseId?: StringFilter<"Certificate"> | string
+    issueDate?: DateTimeFilter<"Certificate"> | Date | string
+    pdfUrl?: StringFilter<"Certificate"> | string
+    uniqueCode?: StringFilter<"Certificate"> | string
   }
 
   export type CourseUpsertWithWhereUniqueWithoutInstructorInput = {
@@ -27641,223 +27669,6 @@ export namespace Prisma {
     enrolledAt?: DateTimeFilter<"CourseEnrollment"> | Date | string
   }
 
-  export type SubmissionUpsertWithWhereUniqueWithoutStudentInput = {
-    where: SubmissionWhereUniqueInput
-    update: XOR<SubmissionUpdateWithoutStudentInput, SubmissionUncheckedUpdateWithoutStudentInput>
-    create: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput>
-  }
-
-  export type SubmissionUpdateWithWhereUniqueWithoutStudentInput = {
-    where: SubmissionWhereUniqueInput
-    data: XOR<SubmissionUpdateWithoutStudentInput, SubmissionUncheckedUpdateWithoutStudentInput>
-  }
-
-  export type SubmissionUpdateManyWithWhereWithoutStudentInput = {
-    where: SubmissionScalarWhereInput
-    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutStudentInput>
-  }
-
-  export type SubmissionScalarWhereInput = {
-    AND?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-    OR?: SubmissionScalarWhereInput[]
-    NOT?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-    id?: StringFilter<"Submission"> | string
-    studentId?: StringFilter<"Submission"> | string
-    quizId?: StringFilter<"Submission"> | string
-    score?: IntFilter<"Submission"> | number
-    answers?: JsonFilter<"Submission">
-    status?: StringFilter<"Submission"> | string
-    submittedAt?: DateTimeFilter<"Submission"> | Date | string
-  }
-
-  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
-    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
-  }
-
-  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
-  }
-
-  export type NotificationUpdateManyWithWhereWithoutUserInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    id?: StringFilter<"Notification"> | string
-    title?: StringFilter<"Notification"> | string
-    message?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
-    isRead?: BoolFilter<"Notification"> | boolean
-    userId?: StringFilter<"Notification"> | string
-    createdAt?: DateTimeFilter<"Notification"> | Date | string
-  }
-
-  export type WalletUpsertWithoutUserInput = {
-    update: XOR<WalletUpdateWithoutUserInput, WalletUncheckedUpdateWithoutUserInput>
-    create: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
-    where?: WalletWhereInput
-  }
-
-  export type WalletUpdateToOneWithWhereWithoutUserInput = {
-    where?: WalletWhereInput
-    data: XOR<WalletUpdateWithoutUserInput, WalletUncheckedUpdateWithoutUserInput>
-  }
-
-  export type WalletUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WalletUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TransactionUpsertWithWhereUniqueWithoutStudentInput = {
-    where: TransactionWhereUniqueInput
-    update: XOR<TransactionUpdateWithoutStudentInput, TransactionUncheckedUpdateWithoutStudentInput>
-    create: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput>
-  }
-
-  export type TransactionUpdateWithWhereUniqueWithoutStudentInput = {
-    where: TransactionWhereUniqueInput
-    data: XOR<TransactionUpdateWithoutStudentInput, TransactionUncheckedUpdateWithoutStudentInput>
-  }
-
-  export type TransactionUpdateManyWithWhereWithoutStudentInput = {
-    where: TransactionScalarWhereInput
-    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutStudentInput>
-  }
-
-  export type TransactionScalarWhereInput = {
-    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    OR?: TransactionScalarWhereInput[]
-    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    id?: StringFilter<"Transaction"> | string
-    razorpayOrderId?: StringFilter<"Transaction"> | string
-    razorpayPaymentId?: StringNullableFilter<"Transaction"> | string | null
-    userId?: StringFilter<"Transaction"> | string
-    courseId?: StringNullableFilter<"Transaction"> | string | null
-    instructorId?: StringNullableFilter<"Transaction"> | string | null
-    amount?: FloatFilter<"Transaction"> | number
-    adminShare?: FloatFilter<"Transaction"> | number
-    instShare?: FloatFilter<"Transaction"> | number
-    status?: StringFilter<"Transaction"> | string
-    createdAt?: DateTimeFilter<"Transaction"> | Date | string
-    updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-  }
-
-  export type TransactionUpsertWithWhereUniqueWithoutInstructorInput = {
-    where: TransactionWhereUniqueInput
-    update: XOR<TransactionUpdateWithoutInstructorInput, TransactionUncheckedUpdateWithoutInstructorInput>
-    create: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput>
-  }
-
-  export type TransactionUpdateWithWhereUniqueWithoutInstructorInput = {
-    where: TransactionWhereUniqueInput
-    data: XOR<TransactionUpdateWithoutInstructorInput, TransactionUncheckedUpdateWithoutInstructorInput>
-  }
-
-  export type TransactionUpdateManyWithWhereWithoutInstructorInput = {
-    where: TransactionScalarWhereInput
-    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutInstructorInput>
-  }
-
-  export type SupportTicketUpsertWithWhereUniqueWithoutUserInput = {
-    where: SupportTicketWhereUniqueInput
-    update: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
-    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
-  }
-
-  export type SupportTicketUpdateWithWhereUniqueWithoutUserInput = {
-    where: SupportTicketWhereUniqueInput
-    data: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SupportTicketUpdateManyWithWhereWithoutUserInput = {
-    where: SupportTicketScalarWhereInput
-    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SupportTicketScalarWhereInput = {
-    AND?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
-    OR?: SupportTicketScalarWhereInput[]
-    NOT?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
-    id?: StringFilter<"SupportTicket"> | string
-    userId?: StringFilter<"SupportTicket"> | string
-    subject?: StringFilter<"SupportTicket"> | string
-    message?: StringFilter<"SupportTicket"> | string
-    status?: StringFilter<"SupportTicket"> | string
-    createdAt?: DateTimeFilter<"SupportTicket"> | Date | string
-    updatedAt?: DateTimeFilter<"SupportTicket"> | Date | string
-  }
-
-  export type MentorMessageUpsertWithWhereUniqueWithoutSenderInput = {
-    where: MentorMessageWhereUniqueInput
-    update: XOR<MentorMessageUpdateWithoutSenderInput, MentorMessageUncheckedUpdateWithoutSenderInput>
-    create: XOR<MentorMessageCreateWithoutSenderInput, MentorMessageUncheckedCreateWithoutSenderInput>
-  }
-
-  export type MentorMessageUpdateWithWhereUniqueWithoutSenderInput = {
-    where: MentorMessageWhereUniqueInput
-    data: XOR<MentorMessageUpdateWithoutSenderInput, MentorMessageUncheckedUpdateWithoutSenderInput>
-  }
-
-  export type MentorMessageUpdateManyWithWhereWithoutSenderInput = {
-    where: MentorMessageScalarWhereInput
-    data: XOR<MentorMessageUpdateManyMutationInput, MentorMessageUncheckedUpdateManyWithoutSenderInput>
-  }
-
-  export type MentorMessageScalarWhereInput = {
-    AND?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
-    OR?: MentorMessageScalarWhereInput[]
-    NOT?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
-    id?: StringFilter<"MentorMessage"> | string
-    submissionId?: StringFilter<"MentorMessage"> | string
-    senderId?: StringFilter<"MentorMessage"> | string
-    message?: StringFilter<"MentorMessage"> | string
-    createdAt?: DateTimeFilter<"MentorMessage"> | Date | string
-  }
-
-  export type CertificateUpsertWithWhereUniqueWithoutStudentInput = {
-    where: CertificateWhereUniqueInput
-    update: XOR<CertificateUpdateWithoutStudentInput, CertificateUncheckedUpdateWithoutStudentInput>
-    create: XOR<CertificateCreateWithoutStudentInput, CertificateUncheckedCreateWithoutStudentInput>
-  }
-
-  export type CertificateUpdateWithWhereUniqueWithoutStudentInput = {
-    where: CertificateWhereUniqueInput
-    data: XOR<CertificateUpdateWithoutStudentInput, CertificateUncheckedUpdateWithoutStudentInput>
-  }
-
-  export type CertificateUpdateManyWithWhereWithoutStudentInput = {
-    where: CertificateScalarWhereInput
-    data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutStudentInput>
-  }
-
-  export type CertificateScalarWhereInput = {
-    AND?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
-    OR?: CertificateScalarWhereInput[]
-    NOT?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
-    id?: StringFilter<"Certificate"> | string
-    studentId?: StringFilter<"Certificate"> | string
-    courseId?: StringFilter<"Certificate"> | string
-    issueDate?: DateTimeFilter<"Certificate"> | Date | string
-    pdfUrl?: StringFilter<"Certificate"> | string
-    uniqueCode?: StringFilter<"Certificate"> | string
-  }
-
   export type LiveSessionUpsertWithWhereUniqueWithoutInstructorInput = {
     where: LiveSessionWhereUniqueInput
     update: XOR<LiveSessionUpdateWithoutInstructorInput, LiveSessionUncheckedUpdateWithoutInstructorInput>
@@ -27889,6 +27700,221 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"LiveSession"> | Date | string
   }
 
+  export type MentorMessageUpsertWithWhereUniqueWithoutSenderInput = {
+    where: MentorMessageWhereUniqueInput
+    update: XOR<MentorMessageUpdateWithoutSenderInput, MentorMessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<MentorMessageCreateWithoutSenderInput, MentorMessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type MentorMessageUpdateWithWhereUniqueWithoutSenderInput = {
+    where: MentorMessageWhereUniqueInput
+    data: XOR<MentorMessageUpdateWithoutSenderInput, MentorMessageUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type MentorMessageUpdateManyWithWhereWithoutSenderInput = {
+    where: MentorMessageScalarWhereInput
+    data: XOR<MentorMessageUpdateManyMutationInput, MentorMessageUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type MentorMessageScalarWhereInput = {
+    AND?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
+    OR?: MentorMessageScalarWhereInput[]
+    NOT?: MentorMessageScalarWhereInput | MentorMessageScalarWhereInput[]
+    id?: StringFilter<"MentorMessage"> | string
+    submissionId?: StringFilter<"MentorMessage"> | string
+    senderId?: StringFilter<"MentorMessage"> | string
+    message?: StringFilter<"MentorMessage"> | string
+    createdAt?: DateTimeFilter<"MentorMessage"> | Date | string
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    title?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    type?: StringFilter<"Notification"> | string
+    isRead?: BoolFilter<"Notification"> | boolean
+    userId?: StringFilter<"Notification"> | string
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+  }
+
+  export type SubmissionUpsertWithWhereUniqueWithoutStudentInput = {
+    where: SubmissionWhereUniqueInput
+    update: XOR<SubmissionUpdateWithoutStudentInput, SubmissionUncheckedUpdateWithoutStudentInput>
+    create: XOR<SubmissionCreateWithoutStudentInput, SubmissionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type SubmissionUpdateWithWhereUniqueWithoutStudentInput = {
+    where: SubmissionWhereUniqueInput
+    data: XOR<SubmissionUpdateWithoutStudentInput, SubmissionUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type SubmissionUpdateManyWithWhereWithoutStudentInput = {
+    where: SubmissionScalarWhereInput
+    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type SubmissionScalarWhereInput = {
+    AND?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+    OR?: SubmissionScalarWhereInput[]
+    NOT?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
+    id?: StringFilter<"Submission"> | string
+    studentId?: StringFilter<"Submission"> | string
+    quizId?: StringFilter<"Submission"> | string
+    score?: IntFilter<"Submission"> | number
+    answers?: JsonFilter<"Submission">
+    status?: StringFilter<"Submission"> | string
+    submittedAt?: DateTimeFilter<"Submission"> | Date | string
+  }
+
+  export type SupportTicketUpsertWithWhereUniqueWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    update: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
+    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
+  }
+
+  export type SupportTicketUpdateWithWhereUniqueWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    data: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SupportTicketUpdateManyWithWhereWithoutUserInput = {
+    where: SupportTicketScalarWhereInput
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SupportTicketScalarWhereInput = {
+    AND?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+    OR?: SupportTicketScalarWhereInput[]
+    NOT?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+    id?: StringFilter<"SupportTicket"> | string
+    userId?: StringFilter<"SupportTicket"> | string
+    subject?: StringFilter<"SupportTicket"> | string
+    message?: StringFilter<"SupportTicket"> | string
+    status?: StringFilter<"SupportTicket"> | string
+    createdAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportTicket"> | Date | string
+  }
+
+  export type TransactionUpsertWithWhereUniqueWithoutInstructorInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutInstructorInput, TransactionUncheckedUpdateWithoutInstructorInput>
+    create: XOR<TransactionCreateWithoutInstructorInput, TransactionUncheckedCreateWithoutInstructorInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutInstructorInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutInstructorInput, TransactionUncheckedUpdateWithoutInstructorInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutInstructorInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutInstructorInput>
+  }
+
+  export type TransactionScalarWhereInput = {
+    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    OR?: TransactionScalarWhereInput[]
+    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    id?: StringFilter<"Transaction"> | string
+    razorpayOrderId?: StringFilter<"Transaction"> | string
+    razorpayPaymentId?: StringNullableFilter<"Transaction"> | string | null
+    userId?: StringFilter<"Transaction"> | string
+    courseId?: StringNullableFilter<"Transaction"> | string | null
+    instructorId?: StringNullableFilter<"Transaction"> | string | null
+    amount?: FloatFilter<"Transaction"> | number
+    adminShare?: FloatFilter<"Transaction"> | number
+    instShare?: FloatFilter<"Transaction"> | number
+    status?: StringFilter<"Transaction"> | string
+    createdAt?: DateTimeFilter<"Transaction"> | Date | string
+    updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+  }
+
+  export type TransactionUpsertWithWhereUniqueWithoutStudentInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutStudentInput, TransactionUncheckedUpdateWithoutStudentInput>
+    create: XOR<TransactionCreateWithoutStudentInput, TransactionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutStudentInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutStudentInput, TransactionUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutStudentInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type WalletUpsertWithoutUserInput = {
+    update: XOR<WalletUpdateWithoutUserInput, WalletUncheckedUpdateWithoutUserInput>
+    create: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput>
+    where?: WalletWhereInput
+  }
+
+  export type WalletUpdateToOneWithWhereWithoutUserInput = {
+    where?: WalletWhereInput
+    data: XOR<WalletUpdateWithoutUserInput, WalletUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WalletUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CertificateCreateWithoutCourseInput = {
+    id?: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
+    student: UserCreateNestedOneWithoutCertificatesInput
+  }
+
+  export type CertificateUncheckedCreateWithoutCourseInput = {
+    id?: string
+    studentId: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
+  }
+
+  export type CertificateCreateOrConnectWithoutCourseInput = {
+    where: CertificateWhereUniqueInput
+    create: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput>
+  }
+
+  export type CertificateCreateManyCourseInputEnvelope = {
+    data: CertificateCreateManyCourseInput | CertificateCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutCoursesInput = {
     id?: string
     email: string
@@ -27909,16 +27935,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
     certificates?: CertificateCreateNestedManyWithoutStudentInput
+    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCoursesInput = {
@@ -27941,21 +27967,75 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
+    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCoursesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
+  }
+
+  export type CourseEnrollmentCreateWithoutCourseInput = {
+    id?: string
+    enrolledAt?: Date | string
+    user: UserCreateNestedOneWithoutEnrolledInput
+  }
+
+  export type CourseEnrollmentUncheckedCreateWithoutCourseInput = {
+    id?: string
+    userId: string
+    enrolledAt?: Date | string
+  }
+
+  export type CourseEnrollmentCreateOrConnectWithoutCourseInput = {
+    where: CourseEnrollmentWhereUniqueInput
+    create: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput>
+  }
+
+  export type CourseEnrollmentCreateManyCourseInputEnvelope = {
+    data: CourseEnrollmentCreateManyCourseInput | CourseEnrollmentCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LiveSessionCreateWithoutCourseInput = {
+    id?: string
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    instructor: UserCreateNestedOneWithoutLiveSessionsInput
+  }
+
+  export type LiveSessionUncheckedCreateWithoutCourseInput = {
+    id?: string
+    instructorId: string
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LiveSessionCreateOrConnectWithoutCourseInput = {
+    where: LiveSessionWhereUniqueInput
+    create: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput>
+  }
+
+  export type LiveSessionCreateManyCourseInputEnvelope = {
+    data: LiveSessionCreateManyCourseInput | LiveSessionCreateManyCourseInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuizCreateWithoutCourseInput = {
@@ -27990,25 +28070,31 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CourseEnrollmentCreateWithoutCourseInput = {
+  export type ResourceCreateWithoutCourseInput = {
     id?: string
-    enrolledAt?: Date | string
-    user: UserCreateNestedOneWithoutEnrolledInput
+    title: string
+    url: string
+    type?: string
+    size?: string
+    createdAt?: Date | string
   }
 
-  export type CourseEnrollmentUncheckedCreateWithoutCourseInput = {
+  export type ResourceUncheckedCreateWithoutCourseInput = {
     id?: string
-    userId: string
-    enrolledAt?: Date | string
+    title: string
+    url: string
+    type?: string
+    size?: string
+    createdAt?: Date | string
   }
 
-  export type CourseEnrollmentCreateOrConnectWithoutCourseInput = {
-    where: CourseEnrollmentWhereUniqueInput
-    create: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput>
+  export type ResourceCreateOrConnectWithoutCourseInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput>
   }
 
-  export type CourseEnrollmentCreateManyCourseInputEnvelope = {
-    data: CourseEnrollmentCreateManyCourseInput | CourseEnrollmentCreateManyCourseInput[]
+  export type ResourceCreateManyCourseInputEnvelope = {
+    data: ResourceCreateManyCourseInput | ResourceCreateManyCourseInput[]
     skipDuplicates?: boolean
   }
 
@@ -28022,8 +28108,8 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    student: UserCreateNestedOneWithoutStudentTransactionsInput
     instructor?: UserCreateNestedOneWithoutInstructorTransactionsInput
+    student: UserCreateNestedOneWithoutStudentTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutCourseInput = {
@@ -28078,90 +28164,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CertificateCreateWithoutCourseInput = {
-    id?: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
-    student: UserCreateNestedOneWithoutCertificatesInput
-  }
-
-  export type CertificateUncheckedCreateWithoutCourseInput = {
-    id?: string
-    studentId: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
-  }
-
-  export type CertificateCreateOrConnectWithoutCourseInput = {
+  export type CertificateUpsertWithWhereUniqueWithoutCourseInput = {
     where: CertificateWhereUniqueInput
+    update: XOR<CertificateUpdateWithoutCourseInput, CertificateUncheckedUpdateWithoutCourseInput>
     create: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput>
   }
 
-  export type CertificateCreateManyCourseInputEnvelope = {
-    data: CertificateCreateManyCourseInput | CertificateCreateManyCourseInput[]
-    skipDuplicates?: boolean
+  export type CertificateUpdateWithWhereUniqueWithoutCourseInput = {
+    where: CertificateWhereUniqueInput
+    data: XOR<CertificateUpdateWithoutCourseInput, CertificateUncheckedUpdateWithoutCourseInput>
   }
 
-  export type LiveSessionCreateWithoutCourseInput = {
-    id?: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    instructor: UserCreateNestedOneWithoutLiveSessionsInput
-  }
-
-  export type LiveSessionUncheckedCreateWithoutCourseInput = {
-    id?: string
-    instructorId: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type LiveSessionCreateOrConnectWithoutCourseInput = {
-    where: LiveSessionWhereUniqueInput
-    create: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput>
-  }
-
-  export type LiveSessionCreateManyCourseInputEnvelope = {
-    data: LiveSessionCreateManyCourseInput | LiveSessionCreateManyCourseInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ResourceCreateWithoutCourseInput = {
-    id?: string
-    title: string
-    url: string
-    type?: string
-    size?: string
-    createdAt?: Date | string
-  }
-
-  export type ResourceUncheckedCreateWithoutCourseInput = {
-    id?: string
-    title: string
-    url: string
-    type?: string
-    size?: string
-    createdAt?: Date | string
-  }
-
-  export type ResourceCreateOrConnectWithoutCourseInput = {
-    where: ResourceWhereUniqueInput
-    create: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput>
-  }
-
-  export type ResourceCreateManyCourseInputEnvelope = {
-    data: ResourceCreateManyCourseInput | ResourceCreateManyCourseInput[]
-    skipDuplicates?: boolean
+  export type CertificateUpdateManyWithWhereWithoutCourseInput = {
+    where: CertificateScalarWhereInput
+    data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutCourseInput>
   }
 
   export type UserUpsertWithoutCoursesInput = {
@@ -28195,16 +28211,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
     certificates?: CertificateUpdateManyWithoutStudentNestedInput
+    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -28227,16 +28243,48 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
+    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput = {
+    where: CourseEnrollmentWhereUniqueInput
+    update: XOR<CourseEnrollmentUpdateWithoutCourseInput, CourseEnrollmentUncheckedUpdateWithoutCourseInput>
+    create: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput>
+  }
+
+  export type CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput = {
+    where: CourseEnrollmentWhereUniqueInput
+    data: XOR<CourseEnrollmentUpdateWithoutCourseInput, CourseEnrollmentUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type CourseEnrollmentUpdateManyWithWhereWithoutCourseInput = {
+    where: CourseEnrollmentScalarWhereInput
+    data: XOR<CourseEnrollmentUpdateManyMutationInput, CourseEnrollmentUncheckedUpdateManyWithoutCourseInput>
+  }
+
+  export type LiveSessionUpsertWithWhereUniqueWithoutCourseInput = {
+    where: LiveSessionWhereUniqueInput
+    update: XOR<LiveSessionUpdateWithoutCourseInput, LiveSessionUncheckedUpdateWithoutCourseInput>
+    create: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput>
+  }
+
+  export type LiveSessionUpdateWithWhereUniqueWithoutCourseInput = {
+    where: LiveSessionWhereUniqueInput
+    data: XOR<LiveSessionUpdateWithoutCourseInput, LiveSessionUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type LiveSessionUpdateManyWithWhereWithoutCourseInput = {
+    where: LiveSessionScalarWhereInput
+    data: XOR<LiveSessionUpdateManyMutationInput, LiveSessionUncheckedUpdateManyWithoutCourseInput>
   }
 
   export type QuizUpsertWithWhereUniqueWithoutCourseInput = {
@@ -28269,20 +28317,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Quiz"> | Date | string
   }
 
-  export type CourseEnrollmentUpsertWithWhereUniqueWithoutCourseInput = {
-    where: CourseEnrollmentWhereUniqueInput
-    update: XOR<CourseEnrollmentUpdateWithoutCourseInput, CourseEnrollmentUncheckedUpdateWithoutCourseInput>
-    create: XOR<CourseEnrollmentCreateWithoutCourseInput, CourseEnrollmentUncheckedCreateWithoutCourseInput>
+  export type ResourceUpsertWithWhereUniqueWithoutCourseInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutCourseInput, ResourceUncheckedUpdateWithoutCourseInput>
+    create: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput>
   }
 
-  export type CourseEnrollmentUpdateWithWhereUniqueWithoutCourseInput = {
-    where: CourseEnrollmentWhereUniqueInput
-    data: XOR<CourseEnrollmentUpdateWithoutCourseInput, CourseEnrollmentUncheckedUpdateWithoutCourseInput>
+  export type ResourceUpdateWithWhereUniqueWithoutCourseInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutCourseInput, ResourceUncheckedUpdateWithoutCourseInput>
   }
 
-  export type CourseEnrollmentUpdateManyWithWhereWithoutCourseInput = {
-    where: CourseEnrollmentScalarWhereInput
-    data: XOR<CourseEnrollmentUpdateManyMutationInput, CourseEnrollmentUncheckedUpdateManyWithoutCourseInput>
+  export type ResourceUpdateManyWithWhereWithoutCourseInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutCourseInput>
+  }
+
+  export type ResourceScalarWhereInput = {
+    AND?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    OR?: ResourceScalarWhereInput[]
+    NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    id?: StringFilter<"Resource"> | string
+    courseId?: StringFilter<"Resource"> | string
+    title?: StringFilter<"Resource"> | string
+    url?: StringFilter<"Resource"> | string
+    type?: StringFilter<"Resource"> | string
+    size?: StringFilter<"Resource"> | string
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutCourseInput = {
@@ -28330,65 +28391,51 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"VideoModule"> | Date | string
   }
 
-  export type CertificateUpsertWithWhereUniqueWithoutCourseInput = {
-    where: CertificateWhereUniqueInput
-    update: XOR<CertificateUpdateWithoutCourseInput, CertificateUncheckedUpdateWithoutCourseInput>
-    create: XOR<CertificateCreateWithoutCourseInput, CertificateUncheckedCreateWithoutCourseInput>
+  export type CourseCreateWithoutEnrollmentsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    image?: string | null
+    thumbnailUrl?: string | null
+    price?: number
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: string | null
+    isFree?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
+    instructor: UserCreateNestedOneWithoutCoursesInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    resources?: ResourceCreateNestedManyWithoutCourseInput
+    transactions?: TransactionCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
   }
 
-  export type CertificateUpdateWithWhereUniqueWithoutCourseInput = {
-    where: CertificateWhereUniqueInput
-    data: XOR<CertificateUpdateWithoutCourseInput, CertificateUncheckedUpdateWithoutCourseInput>
+  export type CourseUncheckedCreateWithoutEnrollmentsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    image?: string | null
+    thumbnailUrl?: string | null
+    price?: number
+    instructorId: string
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: string | null
+    isFree?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
   }
 
-  export type CertificateUpdateManyWithWhereWithoutCourseInput = {
-    where: CertificateScalarWhereInput
-    data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutCourseInput>
-  }
-
-  export type LiveSessionUpsertWithWhereUniqueWithoutCourseInput = {
-    where: LiveSessionWhereUniqueInput
-    update: XOR<LiveSessionUpdateWithoutCourseInput, LiveSessionUncheckedUpdateWithoutCourseInput>
-    create: XOR<LiveSessionCreateWithoutCourseInput, LiveSessionUncheckedCreateWithoutCourseInput>
-  }
-
-  export type LiveSessionUpdateWithWhereUniqueWithoutCourseInput = {
-    where: LiveSessionWhereUniqueInput
-    data: XOR<LiveSessionUpdateWithoutCourseInput, LiveSessionUncheckedUpdateWithoutCourseInput>
-  }
-
-  export type LiveSessionUpdateManyWithWhereWithoutCourseInput = {
-    where: LiveSessionScalarWhereInput
-    data: XOR<LiveSessionUpdateManyMutationInput, LiveSessionUncheckedUpdateManyWithoutCourseInput>
-  }
-
-  export type ResourceUpsertWithWhereUniqueWithoutCourseInput = {
-    where: ResourceWhereUniqueInput
-    update: XOR<ResourceUpdateWithoutCourseInput, ResourceUncheckedUpdateWithoutCourseInput>
-    create: XOR<ResourceCreateWithoutCourseInput, ResourceUncheckedCreateWithoutCourseInput>
-  }
-
-  export type ResourceUpdateWithWhereUniqueWithoutCourseInput = {
-    where: ResourceWhereUniqueInput
-    data: XOR<ResourceUpdateWithoutCourseInput, ResourceUncheckedUpdateWithoutCourseInput>
-  }
-
-  export type ResourceUpdateManyWithWhereWithoutCourseInput = {
-    where: ResourceScalarWhereInput
-    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutCourseInput>
-  }
-
-  export type ResourceScalarWhereInput = {
-    AND?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
-    OR?: ResourceScalarWhereInput[]
-    NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
-    id?: StringFilter<"Resource"> | string
-    courseId?: StringFilter<"Resource"> | string
-    title?: StringFilter<"Resource"> | string
-    url?: StringFilter<"Resource"> | string
-    type?: StringFilter<"Resource"> | string
-    size?: StringFilter<"Resource"> | string
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
+  export type CourseCreateOrConnectWithoutEnrollmentsInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
   }
 
   export type UserCreateWithoutEnrolledInput = {
@@ -28411,16 +28458,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    courses?: CourseCreateNestedManyWithoutInstructorInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
     certificates?: CertificateCreateNestedManyWithoutStudentInput
+    courses?: CourseCreateNestedManyWithoutInstructorInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnrolledInput = {
@@ -28443,16 +28490,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
+    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEnrolledInput = {
@@ -28460,51 +28507,57 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutEnrolledInput, UserUncheckedCreateWithoutEnrolledInput>
   }
 
-  export type CourseCreateWithoutEnrollmentsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    image?: string | null
-    thumbnailUrl?: string | null
-    price?: number
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: string | null
-    isFree?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
-    transactions?: TransactionCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
-    resources?: ResourceCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseUncheckedCreateWithoutEnrollmentsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    image?: string | null
-    thumbnailUrl?: string | null
-    price?: number
-    instructorId: string
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: string | null
-    isFree?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
-    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseCreateOrConnectWithoutEnrollmentsInput = {
-    where: CourseWhereUniqueInput
+  export type CourseUpsertWithoutEnrollmentsInput = {
+    update: XOR<CourseUpdateWithoutEnrollmentsInput, CourseUncheckedUpdateWithoutEnrollmentsInput>
     create: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
+    where?: CourseWhereInput
+  }
+
+  export type CourseUpdateToOneWithWhereWithoutEnrollmentsInput = {
+    where?: CourseWhereInput
+    data: XOR<CourseUpdateWithoutEnrollmentsInput, CourseUncheckedUpdateWithoutEnrollmentsInput>
+  }
+
+  export type CourseUpdateWithoutEnrollmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: NullableStringFieldUpdateOperationsInput | string | null
+    isFree?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
+    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    instructorId?: StringFieldUpdateOperationsInput | string
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: NullableStringFieldUpdateOperationsInput | string | null
+    isFree?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserUpsertWithoutEnrolledInput = {
@@ -28538,16 +28591,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUpdateManyWithoutInstructorNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
     certificates?: CertificateUpdateManyWithoutStudentNestedInput
+    courses?: CourseUpdateManyWithoutInstructorNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnrolledInput = {
@@ -28570,69 +28623,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type CourseUpsertWithoutEnrollmentsInput = {
-    update: XOR<CourseUpdateWithoutEnrollmentsInput, CourseUncheckedUpdateWithoutEnrollmentsInput>
-    create: XOR<CourseCreateWithoutEnrollmentsInput, CourseUncheckedCreateWithoutEnrollmentsInput>
-    where?: CourseWhereInput
-  }
-
-  export type CourseUpdateToOneWithWhereWithoutEnrollmentsInput = {
-    where?: CourseWhereInput
-    data: XOR<CourseUpdateWithoutEnrollmentsInput, CourseUncheckedUpdateWithoutEnrollmentsInput>
-  }
-
-  export type CourseUpdateWithoutEnrollmentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: NullableStringFieldUpdateOperationsInput | string | null
-    isFree?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUpdateManyWithoutCourseNestedInput
-  }
-
-  export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    instructorId?: StringFieldUpdateOperationsInput | string
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: NullableStringFieldUpdateOperationsInput | string | null
-    isFree?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CourseCreateWithoutQuizzesInput = {
@@ -28647,13 +28647,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
     instructor: UserCreateNestedOneWithoutCoursesInput
     enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
-    transactions?: TransactionCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
     resources?: ResourceCreateNestedManyWithoutCourseInput
+    transactions?: TransactionCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutQuizzesInput = {
@@ -28669,12 +28669,12 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
-    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
     resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutQuizzesInput = {
@@ -28688,8 +28688,8 @@ export namespace Prisma {
     answers: JsonNullValueInput | InputJsonValue
     status?: string
     submittedAt?: Date | string
-    student: UserCreateNestedOneWithoutSubmissionsInput
     mentorMessages?: MentorMessageCreateNestedManyWithoutSubmissionInput
+    student: UserCreateNestedOneWithoutSubmissionsInput
   }
 
   export type SubmissionUncheckedCreateWithoutQuizInput = {
@@ -28735,13 +28735,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
     enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
     resources?: ResourceUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutQuizzesInput = {
@@ -28757,12 +28757,12 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type SubmissionUpsertWithWhereUniqueWithoutQuizInput = {
@@ -28781,73 +28781,28 @@ export namespace Prisma {
     data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutQuizInput>
   }
 
-  export type UserCreateWithoutSubmissionsInput = {
+  export type MentorMessageCreateWithoutSubmissionInput = {
     id?: string
-    email: string
-    name?: string | null
-    phone?: string | null
-    role?: string
-    password?: string
-    otp?: string | null
-    isVerified?: boolean
-    otpExpiry?: Date | string | null
-    resetOtp?: string | null
-    resetOtpExpiry?: Date | string | null
-    status?: string
-    avatar?: string | null
-    lastLogin?: Date | string | null
-    streak?: number
-    learnupId?: string | null
-    provider?: string | null
+    message: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    courses?: CourseCreateNestedManyWithoutInstructorInput
-    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    sender: UserCreateNestedOneWithoutMentorMessagesInput
   }
 
-  export type UserUncheckedCreateWithoutSubmissionsInput = {
+  export type MentorMessageUncheckedCreateWithoutSubmissionInput = {
     id?: string
-    email: string
-    name?: string | null
-    phone?: string | null
-    role?: string
-    password?: string
-    otp?: string | null
-    isVerified?: boolean
-    otpExpiry?: Date | string | null
-    resetOtp?: string | null
-    resetOtpExpiry?: Date | string | null
-    status?: string
-    avatar?: string | null
-    lastLogin?: Date | string | null
-    streak?: number
-    learnupId?: string | null
-    provider?: string | null
+    senderId: string
+    message: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
-    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
   }
 
-  export type UserCreateOrConnectWithoutSubmissionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+  export type MentorMessageCreateOrConnectWithoutSubmissionInput = {
+    where: MentorMessageWhereUniqueInput
+    create: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput>
+  }
+
+  export type MentorMessageCreateManySubmissionInputEnvelope = {
+    data: MentorMessageCreateManySubmissionInput | MentorMessageCreateManySubmissionInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuizCreateWithoutSubmissionsInput = {
@@ -28877,103 +28832,89 @@ export namespace Prisma {
     create: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
   }
 
-  export type MentorMessageCreateWithoutSubmissionInput = {
+  export type UserCreateWithoutSubmissionsInput = {
     id?: string
-    message: string
+    email: string
+    name?: string | null
+    phone?: string | null
+    role?: string
+    password?: string
+    otp?: string | null
+    isVerified?: boolean
+    otpExpiry?: Date | string | null
+    resetOtp?: string | null
+    resetOtpExpiry?: Date | string | null
+    status?: string
+    avatar?: string | null
+    lastLogin?: Date | string | null
+    streak?: number
+    learnupId?: string | null
+    provider?: string | null
     createdAt?: Date | string
-    sender: UserCreateNestedOneWithoutMentorMessagesInput
+    updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
+    courses?: CourseCreateNestedManyWithoutInstructorInput
+    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
-  export type MentorMessageUncheckedCreateWithoutSubmissionInput = {
+  export type UserUncheckedCreateWithoutSubmissionsInput = {
     id?: string
-    senderId: string
-    message: string
+    email: string
+    name?: string | null
+    phone?: string | null
+    role?: string
+    password?: string
+    otp?: string | null
+    isVerified?: boolean
+    otpExpiry?: Date | string | null
+    resetOtp?: string | null
+    resetOtpExpiry?: Date | string | null
+    status?: string
+    avatar?: string | null
+    lastLogin?: Date | string | null
+    streak?: number
+    learnupId?: string | null
+    provider?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
+    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
+    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
-  export type MentorMessageCreateOrConnectWithoutSubmissionInput = {
+  export type UserCreateOrConnectWithoutSubmissionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type MentorMessageUpsertWithWhereUniqueWithoutSubmissionInput = {
     where: MentorMessageWhereUniqueInput
+    update: XOR<MentorMessageUpdateWithoutSubmissionInput, MentorMessageUncheckedUpdateWithoutSubmissionInput>
     create: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput>
   }
 
-  export type MentorMessageCreateManySubmissionInputEnvelope = {
-    data: MentorMessageCreateManySubmissionInput | MentorMessageCreateManySubmissionInput[]
-    skipDuplicates?: boolean
+  export type MentorMessageUpdateWithWhereUniqueWithoutSubmissionInput = {
+    where: MentorMessageWhereUniqueInput
+    data: XOR<MentorMessageUpdateWithoutSubmissionInput, MentorMessageUncheckedUpdateWithoutSubmissionInput>
   }
 
-  export type UserUpsertWithoutSubmissionsInput = {
-    update: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
-    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutSubmissionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
-  }
-
-  export type UserUpdateWithoutSubmissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    otp?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
-    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    streak?: IntFieldUpdateOperationsInput | number
-    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUpdateManyWithoutInstructorNestedInput
-    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutSubmissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    otp?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
-    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    streak?: IntFieldUpdateOperationsInput | number
-    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
-    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+  export type MentorMessageUpdateManyWithWhereWithoutSubmissionInput = {
+    where: MentorMessageScalarWhereInput
+    data: XOR<MentorMessageUpdateManyMutationInput, MentorMessageUncheckedUpdateManyWithoutSubmissionInput>
   }
 
   export type QuizUpsertWithoutSubmissionsInput = {
@@ -29009,45 +28950,79 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MentorMessageUpsertWithWhereUniqueWithoutSubmissionInput = {
-    where: MentorMessageWhereUniqueInput
-    update: XOR<MentorMessageUpdateWithoutSubmissionInput, MentorMessageUncheckedUpdateWithoutSubmissionInput>
-    create: XOR<MentorMessageCreateWithoutSubmissionInput, MentorMessageUncheckedCreateWithoutSubmissionInput>
+  export type UserUpsertWithoutSubmissionsInput = {
+    update: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+    where?: UserWhereInput
   }
 
-  export type MentorMessageUpdateWithWhereUniqueWithoutSubmissionInput = {
-    where: MentorMessageWhereUniqueInput
-    data: XOR<MentorMessageUpdateWithoutSubmissionInput, MentorMessageUncheckedUpdateWithoutSubmissionInput>
+  export type UserUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
   }
 
-  export type MentorMessageUpdateManyWithWhereWithoutSubmissionInput = {
-    where: MentorMessageScalarWhereInput
-    data: XOR<MentorMessageUpdateManyMutationInput, MentorMessageUncheckedUpdateManyWithoutSubmissionInput>
+  export type UserUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
+    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streak?: IntFieldUpdateOperationsInput | number
+    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
+    courses?: CourseUpdateManyWithoutInstructorNestedInput
+    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
-  export type SubmissionCreateWithoutMentorMessagesInput = {
-    id?: string
-    score: number
-    answers: JsonNullValueInput | InputJsonValue
-    status?: string
-    submittedAt?: Date | string
-    student: UserCreateNestedOneWithoutSubmissionsInput
-    quiz: QuizCreateNestedOneWithoutSubmissionsInput
-  }
-
-  export type SubmissionUncheckedCreateWithoutMentorMessagesInput = {
-    id?: string
-    studentId: string
-    quizId: string
-    score: number
-    answers: JsonNullValueInput | InputJsonValue
-    status?: string
-    submittedAt?: Date | string
-  }
-
-  export type SubmissionCreateOrConnectWithoutMentorMessagesInput = {
-    where: SubmissionWhereUniqueInput
-    create: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
+  export type UserUncheckedUpdateWithoutSubmissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
+    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streak?: IntFieldUpdateOperationsInput | number
+    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
+    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMentorMessagesInput = {
@@ -29070,16 +29045,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMentorMessagesInput = {
@@ -29102,16 +29077,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMentorMessagesInput = {
@@ -29119,35 +29094,29 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutMentorMessagesInput, UserUncheckedCreateWithoutMentorMessagesInput>
   }
 
-  export type SubmissionUpsertWithoutMentorMessagesInput = {
-    update: XOR<SubmissionUpdateWithoutMentorMessagesInput, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
+  export type SubmissionCreateWithoutMentorMessagesInput = {
+    id?: string
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    status?: string
+    submittedAt?: Date | string
+    quiz: QuizCreateNestedOneWithoutSubmissionsInput
+    student: UserCreateNestedOneWithoutSubmissionsInput
+  }
+
+  export type SubmissionUncheckedCreateWithoutMentorMessagesInput = {
+    id?: string
+    studentId: string
+    quizId: string
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    status?: string
+    submittedAt?: Date | string
+  }
+
+  export type SubmissionCreateOrConnectWithoutMentorMessagesInput = {
+    where: SubmissionWhereUniqueInput
     create: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
-    where?: SubmissionWhereInput
-  }
-
-  export type SubmissionUpdateToOneWithWhereWithoutMentorMessagesInput = {
-    where?: SubmissionWhereInput
-    data: XOR<SubmissionUpdateWithoutMentorMessagesInput, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
-  }
-
-  export type SubmissionUpdateWithoutMentorMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    answers?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
-    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
-  }
-
-  export type SubmissionUncheckedUpdateWithoutMentorMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    studentId?: StringFieldUpdateOperationsInput | string
-    quizId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    answers?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUpsertWithoutMentorMessagesInput = {
@@ -29181,16 +29150,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMentorMessagesInput = {
@@ -29213,16 +29182,47 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type SubmissionUpsertWithoutMentorMessagesInput = {
+    update: XOR<SubmissionUpdateWithoutMentorMessagesInput, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
+    create: XOR<SubmissionCreateWithoutMentorMessagesInput, SubmissionUncheckedCreateWithoutMentorMessagesInput>
+    where?: SubmissionWhereInput
+  }
+
+  export type SubmissionUpdateToOneWithWhereWithoutMentorMessagesInput = {
+    where?: SubmissionWhereInput
+    data: XOR<SubmissionUpdateWithoutMentorMessagesInput, SubmissionUncheckedUpdateWithoutMentorMessagesInput>
+  }
+
+  export type SubmissionUpdateWithoutMentorMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
+    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutMentorMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    quizId?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -29245,16 +29245,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -29277,16 +29277,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -29325,16 +29325,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -29357,85 +29357,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type UserCreateWithoutStudentTransactionsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    phone?: string | null
-    role?: string
-    password?: string
-    otp?: string | null
-    isVerified?: boolean
-    otpExpiry?: Date | string | null
-    resetOtp?: string | null
-    resetOtpExpiry?: Date | string | null
-    status?: string
-    avatar?: string | null
-    lastLogin?: Date | string | null
-    streak?: number
-    learnupId?: string | null
-    provider?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    courses?: CourseCreateNestedManyWithoutInstructorInput
-    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
-  }
-
-  export type UserUncheckedCreateWithoutStudentTransactionsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    phone?: string | null
-    role?: string
-    password?: string
-    otp?: string | null
-    isVerified?: boolean
-    otpExpiry?: Date | string | null
-    resetOtp?: string | null
-    resetOtpExpiry?: Date | string | null
-    status?: string
-    avatar?: string | null
-    lastLogin?: Date | string | null
-    streak?: number
-    learnupId?: string | null
-    provider?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
-    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
-  }
-
-  export type UserCreateOrConnectWithoutStudentTransactionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CourseCreateWithoutTransactionsInput = {
@@ -29450,13 +29381,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
     certificates?: CertificateCreateNestedManyWithoutCourseInput
+    instructor: UserCreateNestedOneWithoutCoursesInput
+    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
     resources?: ResourceCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutTransactionsInput = {
@@ -29472,12 +29403,12 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
     resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutTransactionsInput = {
@@ -29505,16 +29436,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInstructorTransactionsInput = {
@@ -29537,16 +29468,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInstructorTransactionsInput = {
@@ -29554,79 +29485,73 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutInstructorTransactionsInput, UserUncheckedCreateWithoutInstructorTransactionsInput>
   }
 
-  export type UserUpsertWithoutStudentTransactionsInput = {
-    update: XOR<UserUpdateWithoutStudentTransactionsInput, UserUncheckedUpdateWithoutStudentTransactionsInput>
+  export type UserCreateWithoutStudentTransactionsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    phone?: string | null
+    role?: string
+    password?: string
+    otp?: string | null
+    isVerified?: boolean
+    otpExpiry?: Date | string | null
+    resetOtp?: string | null
+    resetOtpExpiry?: Date | string | null
+    status?: string
+    avatar?: string | null
+    lastLogin?: Date | string | null
+    streak?: number
+    learnupId?: string | null
+    provider?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
+    courses?: CourseCreateNestedManyWithoutInstructorInput
+    enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStudentTransactionsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    phone?: string | null
+    role?: string
+    password?: string
+    otp?: string | null
+    isVerified?: boolean
+    otpExpiry?: Date | string | null
+    resetOtp?: string | null
+    resetOtpExpiry?: Date | string | null
+    status?: string
+    avatar?: string | null
+    lastLogin?: Date | string | null
+    streak?: number
+    learnupId?: string | null
+    provider?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
+    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
+    enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStudentTransactionsInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutStudentTransactionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutStudentTransactionsInput, UserUncheckedUpdateWithoutStudentTransactionsInput>
-  }
-
-  export type UserUpdateWithoutStudentTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    otp?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
-    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    streak?: IntFieldUpdateOperationsInput | number
-    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUpdateManyWithoutInstructorNestedInput
-    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutStudentTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    otp?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
-    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    streak?: IntFieldUpdateOperationsInput | number
-    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
-    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
   }
 
   export type CourseUpsertWithoutTransactionsInput = {
@@ -29652,13 +29577,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUpdateManyWithoutCourseNestedInput
+    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
+    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     resources?: ResourceUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutTransactionsInput = {
@@ -29674,12 +29599,12 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserUpsertWithoutInstructorTransactionsInput = {
@@ -29713,16 +29638,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInstructorTransactionsInput = {
@@ -29745,16 +29670,91 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutStudentTransactionsInput = {
+    update: XOR<UserUpdateWithoutStudentTransactionsInput, UserUncheckedUpdateWithoutStudentTransactionsInput>
+    create: XOR<UserCreateWithoutStudentTransactionsInput, UserUncheckedCreateWithoutStudentTransactionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStudentTransactionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStudentTransactionsInput, UserUncheckedUpdateWithoutStudentTransactionsInput>
+  }
+
+  export type UserUpdateWithoutStudentTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
+    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streak?: IntFieldUpdateOperationsInput | number
+    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
+    courses?: CourseUpdateManyWithoutInstructorNestedInput
+    enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStudentTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    otp?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    otpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetOtp?: NullableStringFieldUpdateOperationsInput | string | null
+    resetOtpExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    streak?: IntFieldUpdateOperationsInput | number
+    learnupId?: NullableStringFieldUpdateOperationsInput | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
+    enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletInput = {
@@ -29777,16 +29777,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutWalletInput = {
@@ -29809,16 +29809,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutWalletInput = {
@@ -29857,16 +29857,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletInput = {
@@ -29889,16 +29889,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type UserCreateWithoutSupportTicketsInput = {
@@ -29921,16 +29921,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSupportTicketsInput = {
@@ -29953,16 +29953,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSupportTicketsInput = {
@@ -30001,16 +30001,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSupportTicketsInput = {
@@ -30033,16 +30033,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CourseCreateWithoutVideoModulesInput = {
@@ -30057,13 +30057,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
-    transactions?: TransactionCreateNestedManyWithoutCourseInput
     certificates?: CertificateCreateNestedManyWithoutCourseInput
+    instructor: UserCreateNestedOneWithoutCoursesInput
+    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
     resources?: ResourceCreateNestedManyWithoutCourseInput
+    transactions?: TransactionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutVideoModulesInput = {
@@ -30079,12 +30079,12 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
-    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
     resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutVideoModulesInput = {
@@ -30115,13 +30115,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUpdateManyWithoutCourseNestedInput
+    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
+    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     resources?: ResourceUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutVideoModulesInput = {
@@ -30137,12 +30137,59 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseCreateWithoutCertificatesInput = {
+    id?: string
+    title: string
+    description?: string | null
+    image?: string | null
+    thumbnailUrl?: string | null
+    price?: number
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: string | null
+    isFree?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    instructor: UserCreateNestedOneWithoutCoursesInput
+    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    resources?: ResourceCreateNestedManyWithoutCourseInput
+    transactions?: TransactionCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseUncheckedCreateWithoutCertificatesInput = {
+    id?: string
+    title: string
+    description?: string | null
+    image?: string | null
+    thumbnailUrl?: string | null
+    price?: number
+    instructorId: string
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: string | null
+    isFree?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
+    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseCreateOrConnectWithoutCertificatesInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutCertificatesInput, CourseUncheckedCreateWithoutCertificatesInput>
   }
 
   export type UserCreateWithoutCertificatesInput = {
@@ -30167,14 +30214,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
     liveSessions?: LiveSessionCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCertificatesInput = {
@@ -30199,14 +30246,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
-    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
     liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutInstructorInput
+    mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCertificatesInput = {
@@ -30214,51 +30261,57 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCertificatesInput, UserUncheckedCreateWithoutCertificatesInput>
   }
 
-  export type CourseCreateWithoutCertificatesInput = {
-    id?: string
-    title: string
-    description?: string | null
-    image?: string | null
-    thumbnailUrl?: string | null
-    price?: number
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: string | null
-    isFree?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
-    transactions?: TransactionCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
-    resources?: ResourceCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseUncheckedCreateWithoutCertificatesInput = {
-    id?: string
-    title: string
-    description?: string | null
-    image?: string | null
-    thumbnailUrl?: string | null
-    price?: number
-    instructorId: string
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: string | null
-    isFree?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
-    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
-    transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
-    videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseCreateOrConnectWithoutCertificatesInput = {
-    where: CourseWhereUniqueInput
+  export type CourseUpsertWithoutCertificatesInput = {
+    update: XOR<CourseUpdateWithoutCertificatesInput, CourseUncheckedUpdateWithoutCertificatesInput>
     create: XOR<CourseCreateWithoutCertificatesInput, CourseUncheckedCreateWithoutCertificatesInput>
+    where?: CourseWhereInput
+  }
+
+  export type CourseUpdateToOneWithWhereWithoutCertificatesInput = {
+    where?: CourseWhereInput
+    data: XOR<CourseUpdateWithoutCertificatesInput, CourseUncheckedUpdateWithoutCertificatesInput>
+  }
+
+  export type CourseUpdateWithoutCertificatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: NullableStringFieldUpdateOperationsInput | string | null
+    isFree?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
+    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutCertificatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    instructorId?: StringFieldUpdateOperationsInput | string
+    modules?: NullableJsonNullValueInput | InputJsonValue
+    template?: NullableStringFieldUpdateOperationsInput | string | null
+    isFree?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
+    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserUpsertWithoutCertificatesInput = {
@@ -30294,14 +30347,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
     liveSessions?: LiveSessionUpdateManyWithoutInstructorNestedInput
+    mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCertificatesInput = {
@@ -30326,67 +30379,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
     liveSessions?: LiveSessionUncheckedUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type CourseUpsertWithoutCertificatesInput = {
-    update: XOR<CourseUpdateWithoutCertificatesInput, CourseUncheckedUpdateWithoutCertificatesInput>
-    create: XOR<CourseCreateWithoutCertificatesInput, CourseUncheckedCreateWithoutCertificatesInput>
-    where?: CourseWhereInput
-  }
-
-  export type CourseUpdateToOneWithWhereWithoutCertificatesInput = {
-    where?: CourseWhereInput
-    data: XOR<CourseUpdateWithoutCertificatesInput, CourseUncheckedUpdateWithoutCertificatesInput>
-  }
-
-  export type CourseUpdateWithoutCertificatesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: NullableStringFieldUpdateOperationsInput | string | null
-    isFree?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUpdateManyWithoutCourseNestedInput
-  }
-
-  export type CourseUncheckedUpdateWithoutCertificatesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    instructorId?: StringFieldUpdateOperationsInput | string
-    modules?: NullableJsonNullValueInput | InputJsonValue
-    template?: NullableStringFieldUpdateOperationsInput | string | null
-    isFree?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
-    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
-    transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
-    videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CourseCreateWithoutLiveSessionsInput = {
@@ -30401,13 +30401,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
     instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
+    resources?: ResourceCreateNestedManyWithoutCourseInput
     transactions?: TransactionCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
-    resources?: ResourceCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutLiveSessionsInput = {
@@ -30423,12 +30423,12 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
-    resources?: ResourceUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutLiveSessionsInput = {
@@ -30456,16 +30456,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutStudentInput
     courses?: CourseCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentCreateNestedManyWithoutUserInput
-    submissions?: SubmissionCreateNestedManyWithoutStudentInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-    wallet?: WalletCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
     mentorMessages?: MentorMessageCreateNestedManyWithoutSenderInput
-    certificates?: CertificateCreateNestedManyWithoutStudentInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    submissions?: SubmissionCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionCreateNestedManyWithoutStudentInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLiveSessionsInput = {
@@ -30488,16 +30488,16 @@ export namespace Prisma {
     provider?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
     courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
     enrolled?: CourseEnrollmentUncheckedCreateNestedManyWithoutUserInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
-    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
-    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
-    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
     mentorMessages?: MentorMessageUncheckedCreateNestedManyWithoutSenderInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutStudentInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutStudentInput
+    supportTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    instructorTransactions?: TransactionUncheckedCreateNestedManyWithoutInstructorInput
+    studentTransactions?: TransactionUncheckedCreateNestedManyWithoutStudentInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLiveSessionsInput = {
@@ -30528,13 +30528,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutLiveSessionsInput = {
@@ -30550,12 +30550,12 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserUpsertWithoutLiveSessionsInput = {
@@ -30589,16 +30589,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutStudentNestedInput
     courses?: CourseUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-    wallet?: WalletUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
     mentorMessages?: MentorMessageUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUpdateManyWithoutStudentNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLiveSessionsInput = {
@@ -30621,16 +30621,16 @@ export namespace Prisma {
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
     courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
     enrolled?: CourseEnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
-    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
-    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
-    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
     mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSenderNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutStudentNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+    supportTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    instructorTransactions?: TransactionUncheckedUpdateManyWithoutInstructorNestedInput
+    studentTransactions?: TransactionUncheckedUpdateManyWithoutStudentNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CourseCreateWithoutResourcesInput = {
@@ -30645,13 +30645,13 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    certificates?: CertificateCreateNestedManyWithoutCourseInput
     instructor: UserCreateNestedOneWithoutCoursesInput
-    quizzes?: QuizCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
+    quizzes?: QuizCreateNestedManyWithoutCourseInput
     transactions?: TransactionCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleCreateNestedManyWithoutCourseInput
-    certificates?: CertificateCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutResourcesInput = {
@@ -30667,12 +30667,12 @@ export namespace Prisma {
     isFree?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
+    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
+    quizzes?: QuizUncheckedCreateNestedManyWithoutCourseInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutCourseInput
     videoModules?: VideoModuleUncheckedCreateNestedManyWithoutCourseInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutCourseInput
-    liveSessions?: LiveSessionUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutResourcesInput = {
@@ -30703,13 +30703,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     instructor?: UserUpdateOneRequiredWithoutCoursesNestedInput
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutResourcesInput = {
@@ -30725,12 +30725,20 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CertificateCreateManyStudentInput = {
+    id?: string
+    courseId: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
   }
 
   export type CourseCreateManyInstructorInput = {
@@ -30753,13 +30761,22 @@ export namespace Prisma {
     enrolledAt?: Date | string
   }
 
-  export type SubmissionCreateManyStudentInput = {
+  export type LiveSessionCreateManyInstructorInput = {
     id?: string
-    quizId: string
-    score: number
-    answers: JsonNullValueInput | InputJsonValue
-    status?: string
-    submittedAt?: Date | string
+    courseId: string
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MentorMessageCreateManySenderInput = {
+    id?: string
+    submissionId: string
+    message: string
+    createdAt?: Date | string
   }
 
   export type NotificationCreateManyUserInput = {
@@ -30771,15 +30788,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type TransactionCreateManyStudentInput = {
+  export type SubmissionCreateManyStudentInput = {
     id?: string
-    razorpayOrderId: string
-    razorpayPaymentId?: string | null
-    courseId?: string | null
-    instructorId?: string | null
-    amount: number
-    adminShare?: number
-    instShare?: number
+    quizId: string
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    status?: string
+    submittedAt?: Date | string
+  }
+
+  export type SupportTicketCreateManyUserInput = {
+    id?: string
+    subject: string
+    message: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30799,39 +30820,42 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SupportTicketCreateManyUserInput = {
+  export type TransactionCreateManyStudentInput = {
     id?: string
-    subject: string
-    message: string
+    razorpayOrderId: string
+    razorpayPaymentId?: string | null
+    courseId?: string | null
+    instructorId?: string | null
+    amount: number
+    adminShare?: number
+    instShare?: number
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MentorMessageCreateManySenderInput = {
-    id?: string
-    submissionId: string
-    message: string
-    createdAt?: Date | string
+  export type CertificateUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
+    course?: CourseUpdateOneRequiredWithoutCertificatesNestedInput
   }
 
-  export type CertificateCreateManyStudentInput = {
-    id?: string
-    courseId: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
+  export type CertificateUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    courseId?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type LiveSessionCreateManyInstructorInput = {
-    id?: string
-    courseId: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CertificateUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    courseId?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
   }
 
   export type CourseUpdateWithoutInstructorInput = {
@@ -30846,13 +30870,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    certificates?: CertificateUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutInstructorInput = {
@@ -30867,13 +30891,13 @@ export namespace Prisma {
     isFree?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
+    quizzes?: QuizUncheckedUpdateManyWithoutCourseNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutCourseNestedInput
     videoModules?: VideoModuleUncheckedUpdateManyWithoutCourseNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutCourseNestedInput
-    liveSessions?: LiveSessionUncheckedUpdateManyWithoutCourseNestedInput
-    resources?: ResourceUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateManyWithoutInstructorInput = {
@@ -30908,33 +30932,58 @@ export namespace Prisma {
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmissionUpdateWithoutStudentInput = {
+  export type LiveSessionUpdateWithoutInstructorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    answers?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
-    mentorMessages?: MentorMessageUpdateManyWithoutSubmissionNestedInput
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    course?: CourseUpdateOneRequiredWithoutLiveSessionsNestedInput
   }
 
-  export type SubmissionUncheckedUpdateWithoutStudentInput = {
+  export type LiveSessionUncheckedUpdateWithoutInstructorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    quizId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    answers?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSubmissionNestedInput
+    courseId?: StringFieldUpdateOperationsInput | string
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmissionUncheckedUpdateManyWithoutStudentInput = {
+  export type LiveSessionUncheckedUpdateManyWithoutInstructorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    quizId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    answers?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courseId?: StringFieldUpdateOperationsInput | string
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MentorMessageUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput
+  }
+
+  export type MentorMessageUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MentorMessageUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submissionId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationUpdateWithoutUserInput = {
@@ -30962,6 +31011,104 @@ export namespace Prisma {
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mentorMessages?: MentorMessageUpdateManyWithoutSubmissionNestedInput
+    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quizId?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mentorMessages?: MentorMessageUncheckedUpdateManyWithoutSubmissionNestedInput
+  }
+
+  export type SubmissionUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quizId?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransactionUpdateWithoutInstructorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    adminShare?: FloatFieldUpdateOperationsInput | number
+    instShare?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    course?: CourseUpdateOneWithoutTransactionsNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutInstructorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    adminShare?: FloatFieldUpdateOperationsInput | number
+    instShare?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutInstructorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: StringFieldUpdateOperationsInput | string
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    courseId?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: FloatFieldUpdateOperationsInput | number
+    adminShare?: FloatFieldUpdateOperationsInput | number
+    instShare?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransactionUpdateWithoutStudentInput = {
@@ -31006,151 +31153,29 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TransactionUpdateWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    razorpayOrderId?: StringFieldUpdateOperationsInput | string
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    adminShare?: FloatFieldUpdateOperationsInput | number
-    instShare?: FloatFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
-    course?: CourseUpdateOneWithoutTransactionsNestedInput
+  export type CertificateCreateManyCourseInput = {
+    id?: string
+    studentId: string
+    issueDate?: Date | string
+    pdfUrl: string
+    uniqueCode: string
   }
 
-  export type TransactionUncheckedUpdateWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    razorpayOrderId?: StringFieldUpdateOperationsInput | string
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    adminShare?: FloatFieldUpdateOperationsInput | number
-    instShare?: FloatFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type CourseEnrollmentCreateManyCourseInput = {
+    id?: string
+    userId: string
+    enrolledAt?: Date | string
   }
 
-  export type TransactionUncheckedUpdateManyWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    razorpayOrderId?: StringFieldUpdateOperationsInput | string
-    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
-    courseId?: NullableStringFieldUpdateOperationsInput | string | null
-    amount?: FloatFieldUpdateOperationsInput | number
-    adminShare?: FloatFieldUpdateOperationsInput | number
-    instShare?: FloatFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SupportTicketUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SupportTicketUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SupportTicketUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MentorMessageUpdateWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    submission?: SubmissionUpdateOneRequiredWithoutMentorMessagesNestedInput
-  }
-
-  export type MentorMessageUncheckedUpdateWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    submissionId?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MentorMessageUncheckedUpdateManyWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    submissionId?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CertificateUpdateWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-    course?: CourseUpdateOneRequiredWithoutCertificatesNestedInput
-  }
-
-  export type CertificateUncheckedUpdateWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    courseId?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CertificateUncheckedUpdateManyWithoutStudentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    courseId?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type LiveSessionUpdateWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    course?: CourseUpdateOneRequiredWithoutLiveSessionsNestedInput
-  }
-
-  export type LiveSessionUncheckedUpdateWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    courseId?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type LiveSessionUncheckedUpdateManyWithoutInstructorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    courseId?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type LiveSessionCreateManyCourseInput = {
+    id?: string
+    instructorId: string
+    roomName: string
+    isLive?: boolean
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type QuizCreateManyCourseInput = {
@@ -31163,10 +31188,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type CourseEnrollmentCreateManyCourseInput = {
+  export type ResourceCreateManyCourseInput = {
     id?: string
-    userId: string
-    enrolledAt?: Date | string
+    title: string
+    url: string
+    type?: string
+    size?: string
+    createdAt?: Date | string
   }
 
   export type TransactionCreateManyCourseInput = {
@@ -31192,32 +31220,79 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type CertificateCreateManyCourseInput = {
-    id?: string
-    studentId: string
-    issueDate?: Date | string
-    pdfUrl: string
-    uniqueCode: string
+  export type CertificateUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
+    student?: UserUpdateOneRequiredWithoutCertificatesNestedInput
   }
 
-  export type LiveSessionCreateManyCourseInput = {
-    id?: string
-    instructorId: string
-    roomName: string
-    isLive?: boolean
-    startedAt?: Date | string
-    endedAt?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CertificateUncheckedUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ResourceCreateManyCourseInput = {
-    id?: string
-    title: string
-    url: string
-    type?: string
-    size?: string
-    createdAt?: Date | string
+  export type CertificateUncheckedUpdateManyWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    pdfUrl?: StringFieldUpdateOperationsInput | string
+    uniqueCode?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CourseEnrollmentUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutEnrolledNestedInput
+  }
+
+  export type CourseEnrollmentUncheckedUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseEnrollmentUncheckedUpdateManyWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LiveSessionUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: UserUpdateOneRequiredWithoutLiveSessionsNestedInput
+  }
+
+  export type LiveSessionUncheckedUpdateWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    instructorId?: StringFieldUpdateOperationsInput | string
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LiveSessionUncheckedUpdateManyWithoutCourseInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    instructorId?: StringFieldUpdateOperationsInput | string
+    roomName?: StringFieldUpdateOperationsInput | string
+    isLive?: BoolFieldUpdateOperationsInput | boolean
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuizUpdateWithoutCourseInput = {
@@ -31252,22 +31327,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CourseEnrollmentUpdateWithoutCourseInput = {
+  export type ResourceUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutEnrolledNestedInput
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    size?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CourseEnrollmentUncheckedUpdateWithoutCourseInput = {
+  export type ResourceUncheckedUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    size?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CourseEnrollmentUncheckedUpdateManyWithoutCourseInput = {
+  export type ResourceUncheckedUpdateManyWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    size?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransactionUpdateWithoutCourseInput = {
@@ -31280,8 +31364,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
     instructor?: UserUpdateOneWithoutInstructorTransactionsNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutCourseInput = {
@@ -31339,90 +31423,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CertificateUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-    student?: UserUpdateOneRequiredWithoutCertificatesNestedInput
-  }
-
-  export type CertificateUncheckedUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    studentId?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CertificateUncheckedUpdateManyWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    studentId?: StringFieldUpdateOperationsInput | string
-    issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    pdfUrl?: StringFieldUpdateOperationsInput | string
-    uniqueCode?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type LiveSessionUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    instructor?: UserUpdateOneRequiredWithoutLiveSessionsNestedInput
-  }
-
-  export type LiveSessionUncheckedUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    instructorId?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type LiveSessionUncheckedUpdateManyWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    instructorId?: StringFieldUpdateOperationsInput | string
-    roomName?: StringFieldUpdateOperationsInput | string
-    isLive?: BoolFieldUpdateOperationsInput | boolean
-    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ResourceUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ResourceUncheckedUpdateWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ResourceUncheckedUpdateManyWithoutCourseInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    size?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type SubmissionCreateManyQuizInput = {
     id?: string
     studentId: string
@@ -31438,8 +31438,8 @@ export namespace Prisma {
     answers?: JsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
     mentorMessages?: MentorMessageUpdateManyWithoutSubmissionNestedInput
+    student?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
   }
 
   export type SubmissionUncheckedUpdateWithoutQuizInput = {

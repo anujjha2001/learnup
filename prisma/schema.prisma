@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "./generated-client"
@@ -13,70 +10,70 @@ datasource db {
 }
 
 model User {
-  id              String             @id @default(uuid())
-  email           String             @unique
-  name            String?
-  phone           String?
-  role            String             @default("STUDENT") // STUDENT or INSTRUCTOR
-  password        String             @default("")
-  otp             String?
-  isVerified      Boolean            @default(false)
-  otpExpiry       DateTime?
-  resetOtp        String?
-  resetOtpExpiry  DateTime?
-  courses         Course[]           @relation("InstructorCourses")
-  enrolled        CourseEnrollment[]
-  submissions           Submission[]
-  notifications         Notification[]
-  wallet                Wallet?
-  status                String             @default("APPROVED") // PENDING, APPROVED, REJECTED
-  avatar                String?
-  studentTransactions   Transaction[]      @relation("StudentTransactions")
-  instructorTransactions Transaction[]     @relation("InstructorTransactions")
-  supportTickets         SupportTicket[]
+  id                     String             @id @default(uuid())
+  email                  String             @unique
+  name                   String?
+  phone                  String?
+  role                   String             @default("STUDENT")
+  password               String             @default("")
+  otp                    String?
+  isVerified             Boolean            @default(false)
+  otpExpiry              DateTime?
+  resetOtp               String?
+  resetOtpExpiry         DateTime?
+  status                 String             @default("APPROVED")
+  avatar                 String?
+  lastLogin              DateTime?
+  streak                 Int                @default(0)
+  learnupId              String?            @unique
+  provider               String?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  certificates           Certificate[]
+  courses                Course[]           @relation("InstructorCourses")
+  enrolled               CourseEnrollment[]
+  liveSessions           LiveSession[]      @relation("InstructorLiveSessions")
   mentorMessages         MentorMessage[]
-  lastLogin             DateTime?
-  streak                Int                @default(0)
-  learnupId             String?            @unique
-  provider              String?
-  certificates          Certificate[]
-  liveSessions          LiveSession[]      @relation("InstructorLiveSessions")
-  createdAt             DateTime           @default(now())
-  updatedAt             DateTime           @updatedAt
+  notifications          Notification[]
+  submissions            Submission[]
+  supportTickets         SupportTicket[]
+  instructorTransactions Transaction[]      @relation("InstructorTransactions")
+  studentTransactions    Transaction[]      @relation("StudentTransactions")
+  wallet                 Wallet?
 }
 
 model Course {
-  id            String             @id @default(uuid())
-  title         String
-  description   String?
-  image         String?
-  thumbnailUrl  String?
-  price         Float              @default(0.0)
-  instructorId  String
-  instructor    User               @relation("InstructorCourses", fields: [instructorId], references: [id])
-  quizzes       Quiz[]
-  enrollments   CourseEnrollment[]
-  transactions  Transaction[]
-  videoModules  VideoModule[]
-  modules       Json?
-  template      String?
-  isFree        Boolean            @default(false)
-  certificates  Certificate[]
-  liveSessions  LiveSession[]
-  resources     Resource[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  id           String             @id @default(uuid())
+  title        String
+  description  String?
+  image        String?
+  thumbnailUrl String?
+  price        Float              @default(0.0)
+  instructorId String
+  modules      Json?
+  template     String?
+  isFree       Boolean            @default(false)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  certificates Certificate[]
+  instructor   User               @relation("InstructorCourses", fields: [instructorId], references: [id])
+  enrollments  CourseEnrollment[]
+  liveSessions LiveSession[]
+  quizzes      Quiz[]
+  resources    Resource[]
+  transactions Transaction[]
+  videoModules VideoModule[]
 
   @@index([instructorId])
 }
 
 model CourseEnrollment {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
+  id         String   @id @default(uuid())
+  userId     String
+  courseId   String
   enrolledAt DateTime @default(now())
+  course     Course   @relation(fields: [courseId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, courseId])
   @@index([courseId])
@@ -88,34 +85,34 @@ model Quiz {
   description String?
   image       String?
   courseId    String
-  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  questions   Json         // Array of question objects
-  submissions Submission[]
+  questions   Json
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  submissions Submission[]
 }
 
 model Submission {
-  id          String   @id @default(uuid())
-  studentId   String
-  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  quizId      String
-  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
-  score       Int
-  answers     Json     // Array of submitted answers
-  status      String   @default("PENDING") // PENDING, REVIEWED
+  id             String          @id @default(uuid())
+  studentId      String
+  quizId         String
+  score          Int
+  answers        Json
+  status         String          @default("PENDING")
+  submittedAt    DateTime        @default(now())
   mentorMessages MentorMessage[]
-  submittedAt DateTime @default(now())
+  quiz           Quiz            @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  student        User            @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model MentorMessage {
   id           String     @id @default(uuid())
   submissionId String
-  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
   senderId     String
-  sender       User       @relation(fields: [senderId], references: [id], onDelete: Cascade)
   message      String
   createdAt    DateTime   @default(now())
+  sender       User       @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
@@ -125,28 +122,28 @@ model Notification {
   type      String   @default("INFO")
   isRead    Boolean  @default(false)
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model Transaction {
-  id                  String   @id @default(uuid())
-  razorpayOrderId     String   @unique
-  razorpayPaymentId   String?  @unique
-  userId              String
-  student             User     @relation("StudentTransactions", fields: [userId], references: [id], onDelete: Cascade)
-  courseId            String?
-  course              Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  instructorId        String?
-  instructor          User?    @relation("InstructorTransactions", fields: [instructorId], references: [id], onDelete: Cascade)
-  amount              Float
-  adminShare          Float    @default(0.0)
-  instShare           Float    @default(0.0)
-  status              String   @default("PENDING") // PENDING, SUCCESS, FAILED, REFUNDED
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                String   @id @default(uuid())
+  razorpayOrderId   String   @unique
+  razorpayPaymentId String?  @unique
+  userId            String
+  courseId          String?
+  instructorId      String?
+  amount            Float
+  adminShare        Float    @default(0.0)
+  instShare         Float    @default(0.0)
+  status            String   @default("PENDING")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  course            Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructor        User?    @relation("InstructorTransactions", fields: [instructorId], references: [id], onDelete: Cascade)
+  student           User     @relation("StudentTransactions", fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([courseId])
@@ -158,7 +155,7 @@ model Payout {
   razorpayPayoutId String?  @unique
   userId           String
   amount           Float
-  status           String   // e.g. "PENDING", "SUCCESS", "FAILED"
+  status           String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
@@ -176,68 +173,68 @@ model AdminSetting {
 model Wallet {
   id        String   @id @default(uuid())
   userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   balance   Float    @default(20000.0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SupportTicket {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   subject   String
   message   String
-  status    String   @default("OPEN") // OPEN, RESOLVED, CLOSED
+  status    String   @default("OPEN")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VideoModule {
   id        String   @id @default(uuid())
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   title     String
   videoUrl  String
   order     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 model Certificate {
-  id          String   @id @default(uuid())
-  studentId   String
-  student     User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  courseId    String
-  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  issueDate   DateTime @default(now())
-  pdfUrl      String
-  uniqueCode  String   @unique
+  id         String   @id @default(uuid())
+  studentId  String
+  courseId   String
+  issueDate  DateTime @default(now())
+  pdfUrl     String
+  uniqueCode String   @unique
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  student    User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model LiveSession {
   id           String    @id @default(uuid())
   courseId     String
-  course       Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   instructorId String
-  instructor   User      @relation("InstructorLiveSessions", fields: [instructorId], references: [id], onDelete: Cascade)
   roomName     String    @unique
   isLive       Boolean   @default(false)
   startedAt    DateTime  @default(now())
   endedAt      DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+  course       Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructor   User      @relation("InstructorLiveSessions", fields: [instructorId], references: [id], onDelete: Cascade)
 }
 
 model Resource {
   id        String   @id @default(uuid())
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   title     String
   url       String
   type      String   @default("PDF")
   size      String   @default("0 KB")
   createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
 }

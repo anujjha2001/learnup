@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useSession } from "next-auth/react";
 import { supabase } from "@/lib/supabase";
 
 interface NotificationItem {
@@ -12,13 +13,15 @@ interface NotificationItem {
 }
 
 export default function NotificationBell() {
+  const { data: session, status } = useSession();
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fetch notifications
+  // Fetch notifications — only when authenticated
   const fetchNotifications = async () => {
+    if (status !== "authenticated") return;
     setLoading(true);
     try {
       const res = await fetch("/api/notifications");
@@ -34,6 +37,7 @@ export default function NotificationBell() {
   };
 
   useEffect(() => {
+    if (status !== "authenticated") return;
     fetchNotifications();
 
     // Poll the database for real-time notification updates
@@ -82,7 +86,7 @@ export default function NotificationBell() {
       channel.unsubscribe();
       clearInterval(pollInterval);
     };
-  }, []);
+  }, [status]);
 
   // Mark single as read
   const markAsRead = async (id: string) => {
