@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('./generated-client');
 const db = new PrismaClient();
 
 const SEED_QUIZZES = [

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { PrismaClient } = require('./prisma/generated-client');
 const db = new PrismaClient();
 
