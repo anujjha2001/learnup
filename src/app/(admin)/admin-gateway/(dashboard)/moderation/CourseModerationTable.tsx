@@ -130,7 +130,7 @@ export default function CourseModerationTable({ initialCourses }: CourseModerati
               <AlertTriangle className="w-6 h-6 animate-pulse" />
               <h3 className="text-lg font-bold text-slate-100">Critical Action</h3>
             </div>
-            
+
             <p className="text-slate-400 text-sm leading-relaxed">
               Are you sure you want to permanently delete <strong className="text-slate-200">{activeCourse.title}</strong>? This action is irreversible and will delete all associated student enrollments and progress.
             </p>
