@@ -99,9 +99,45 @@ function ResetPasswordForm() {
       return;
     }
 
+    // Auto-login user after successful reset
+    try {
+      const loginRes = await authClient.login({
+        email,
+        password: newPassword,
+      });
+
+      if (loginRes.success && loginRes.data?.user && loginRes.data?.token) {
+        const userData = loginRes.data.user;
+        const sessionUser = {
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          role: userData.role.toLowerCase() as "student" | "instructor",
+          isVerified: true,
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=3525cd&color=fff`,
+        };
+
+        localStorage.setItem("learnup_user", JSON.stringify(sessionUser));
+        localStorage.setItem("user_email", sessionUser.email);
+        localStorage.setItem("user_name", sessionUser.name);
+        localStorage.setItem("user_avatar", sessionUser.avatar);
+        localStorage.setItem("user_tier", sessionUser.role === "student" ? "Premium Student" : "Senior Instructor");
+        localStorage.setItem("learnup_token", loginRes.data.token);
+        document.cookie = `learnup_token=${loginRes.data.token}; path=/; max-age=86400; SameSite=Lax`;
+
+        // We don't import useProfileStore to keep it simple, just dispatch the event
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("profile_update_event"));
+        }
+      }
+    } catch (e) {
+      console.error("Auto-login failed:", e);
+    }
+
     setSuccess(true);
     setTimeout(() => {
-      router.push("/auth");
+      router.push("/dashboard");
     }, 2000);
   };
 
@@ -118,7 +154,7 @@ function ResetPasswordForm() {
         </h2>
         <p className="text-slate-400 text-sm mt-2 max-w-[320px] mx-auto leading-relaxed">
           {success
-            ? "Your password has been successfully reset. Redirecting you to sign in..."
+            ? "Your password has been successfully reset. Redirecting you to your dashboard..."
             : `Enter the 6-digit verification code sent to ${email} along with your new password.`
           }
         </p>
