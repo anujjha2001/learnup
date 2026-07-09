@@ -12,21 +12,32 @@ export default async function ManageInstructorsPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  const plainInstructors = instructors.map((inst) => ({
-    id: inst.id,
-    name: inst.name,
-    email: inst.email,
-    phone: inst.phone,
-    role: inst.role,
-    status: inst.status as "PENDING" | "APPROVED" | "REJECTED",
-    avatar: inst.avatar,
-    createdAt: inst.createdAt.toISOString(),
-    isApproved: inst.instructor?.isApproved ?? false,
-    cvUrl: inst.instructor?.cvUrl ?? null,
-    degreeUrl: inst.instructor?.degreeUrl ?? null,
-    collegeName: inst.instructor?.collegeName ?? null,
-    courseName: inst.instructor?.courseName ?? null,
-  }));
+  const plainInstructors = instructors.map((inst) => {
+    let displayStatus: "PENDING" | "APPROVED" | "REJECTED" = "PENDING";
+    if (inst.status === "REJECTED") {
+      displayStatus = "REJECTED";
+    } else if (inst.status === "APPROVED" && inst.instructor?.isApproved) {
+      displayStatus = "APPROVED";
+    } else {
+      displayStatus = "PENDING";
+    }
+
+    return {
+      id: inst.id,
+      name: inst.name,
+      email: inst.email,
+      phone: inst.phone,
+      role: inst.role,
+      status: displayStatus,
+      avatar: inst.avatar,
+      createdAt: inst.createdAt.toISOString(),
+      isApproved: inst.instructor?.isApproved ?? false,
+      cvUrl: inst.instructor?.cvUrl ?? null,
+      degreeUrl: inst.instructor?.degreeUrl ?? null,
+      collegeName: inst.instructor?.collegeName ?? null,
+      courseName: inst.instructor?.courseName ?? null,
+    };
+  });
 
   return (
     <div className="space-y-8">

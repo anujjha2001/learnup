@@ -51,6 +51,16 @@ export const authOptions: NextAuthOptions = {
               isVerified: true,
               password: "",
               avatar: user.image || "",
+              status: selectedRole === "INSTRUCTOR" ? "PENDING" : "APPROVED",
+              instructor: selectedRole === "INSTRUCTOR" ? {
+                create: {
+                  isApproved: false,
+                  cvUrl: "",
+                  degreeUrl: "",
+                  collegeName: "",
+                  courseName: ""
+                }
+              } : undefined
             }
           });
 

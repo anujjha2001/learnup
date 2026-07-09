@@ -1094,7 +1094,7 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
                           <p className="text-[10px] font-mono text-slate-400 mt-2">ID: {course.id}</p>
                         </div>
                         <div className="mt-6 pt-4 border-t border-[#c7c4d8]/10 flex justify-between items-center">
-                          <span className="text-sm font-bold text-[#3525cd]">${course.price}</span>
+                          <span className="text-sm font-bold text-[#3525cd]">₹{course.price}</span>
                           <span className="text-xs font-bold text-[#712ae2] bg-[#eaddff] px-3 py-1.5 rounded-lg">Active Node</span>
                         </div>
                       </div>

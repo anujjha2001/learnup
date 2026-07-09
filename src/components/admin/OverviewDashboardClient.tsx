@@ -385,7 +385,7 @@ export default function OverviewDashboardClient({
                     <tr key={course.id} className="hover:bg-white/5 transition-colors">
                       <td className="py-3.5 px-4 font-semibold text-white">{course.title}</td>
                       <td className="py-3.5 px-4 text-slate-400">{course.instructor?.name || "System"}</td>
-                      <td className="py-3.5 px-4 text-teal-400 font-bold">${course.price || "199"}</td>
+                      <td className="py-3.5 px-4 text-teal-400 font-bold">₹{course.price || "199"}</td>
                       <td className="py-3.5 px-4 text-right">
                         <button
                           disabled={isPending}

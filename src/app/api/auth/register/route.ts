@@ -55,6 +55,7 @@ export async function POST(req: Request) {
         otp: otpCode,
         otpExpiry,
         isVerified: false,
+        status: role === "INSTRUCTOR" ? "PENDING" : "APPROVED",
         learnupId: newLearnupId,
         wallet: {
           create: {
