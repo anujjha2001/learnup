@@ -4,6 +4,11 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import GithubProvider from "next-auth/providers/github";
 import { db } from "@/lib/db";
 
+// Ensure NEXTAUTH_URL has a protocol to prevent ERR_INVALID_URL during build
+if (process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.startsWith("http")) {
+  process.env.NEXTAUTH_URL = "https://" + process.env.NEXTAUTH_URL;
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
