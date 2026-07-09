@@ -81,7 +81,7 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
           const data = await res.json();
           const found = data.users?.find((u: any) => u.id === uid);
           if (found) {
-            setIsApproved(found.instructor?.isApproved ?? false);
+            setIsApproved(found.instructor ? found.instructor.isApproved : true);
             setCheckingApproval(false);
             return;
           }
@@ -686,19 +686,21 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
         <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-orange-900/10 blur-[120px] pointer-events-none" />
         
         <div className="max-w-md w-full p-8 rounded-3xl border border-white/5 bg-[#0b0a1d]/60 backdrop-blur-md shadow-2xl text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-amber-500/15 flex items-center justify-center text-amber-400 mx-auto border border-amber-500/30">
-            <span className="material-symbols-outlined text-[32px] select-none">lock</span>
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#8b5cf6] to-[#f97316] flex items-center justify-center text-white mx-auto border border-white/10 shadow-lg">
+            <span className="material-symbols-outlined text-[28px] select-none text-white">lock</span>
           </div>
-          <div className="space-y-2">
-            <h1 className="text-2xl font-black text-white leading-tight">Approval Pending</h1>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Your instructor account registration is currently pending review. Access to the dashboard will be unlocked once approved by an administrator.
+          <div className="space-y-3">
+            <h1 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-orange-500 leading-tight">
+              Onboarding Review Pending
+            </h1>
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              Your instructor credentials are currently being reviewed by our system administrators. Access to your path builder and student dashboards will unlock automatically once verification is complete.
             </p>
           </div>
           <div className="pt-4 border-t border-white/5">
             <button
               onClick={onLogout}
-              className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-black transition cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-[#f97316] hover:bg-[#ea580c] text-white text-xs font-black uppercase tracking-wider transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/20 cursor-pointer flex items-center justify-center gap-2"
             >
               Sign Out
             </button>
