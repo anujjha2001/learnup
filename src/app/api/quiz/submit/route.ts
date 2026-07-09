@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { supabase } from "@/lib/supabase";
 import { z } from "zod";
+import { getAuthSession } from "@/lib/getAuthSession";
 
 // Strict validation schema for submission parameters
 const SubmissionBodySchema = z.object({
@@ -14,8 +15,7 @@ const SubmissionBodySchema = z.object({
 
 export async function POST(req: Request) {
   try {
-    const { getServerSession } = await import("@/lib/auth");
-    const session = await getServerSession();
+    const session = await getAuthSession();
     
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
