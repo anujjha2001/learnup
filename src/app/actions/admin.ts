@@ -20,7 +20,23 @@ export async function approveInstructor(userId: string) {
 
     const targetUser = await db.user.update({
       where: { id: userId },
-      data: { status: "APPROVED" },
+      data: {
+        status: "APPROVED",
+        instructor: {
+          upsert: {
+            create: {
+              isApproved: true,
+              cvUrl: "",
+              degreeUrl: "",
+              collegeName: "",
+              courseName: ""
+            },
+            update: {
+              isApproved: true
+            }
+          }
+        }
+      },
     });
 
     // Notify Admin
@@ -65,7 +81,23 @@ export async function rejectInstructor(userId: string) {
 
     await db.user.update({
       where: { id: userId },
-      data: { status: "REJECTED" },
+      data: {
+        status: "REJECTED",
+        instructor: {
+          upsert: {
+            create: {
+              isApproved: false,
+              cvUrl: "",
+              degreeUrl: "",
+              collegeName: "",
+              courseName: ""
+            },
+            update: {
+              isApproved: false
+            }
+          }
+        }
+      },
     });
 
     revalidatePath("/admin-gateway");

@@ -12,11 +12,11 @@ export async function GET(req: Request) {
 
     const lowerQuery = query.toLowerCase();
 
-    // Search Users (Instructors by name or learnupId)
+    // Search Users (Instructors and Students by name, learnupId, or ID)
     const users = await db.user.findMany({
       where: {
-        role: "INSTRUCTOR",
         OR: [
+          { id: query },
           { name: { contains: lowerQuery } },
           { learnupId: { contains: lowerQuery } }
         ]
@@ -25,9 +25,15 @@ export async function GET(req: Request) {
         id: true,
         name: true,
         learnupId: true,
-        avatar: true
+        avatar: true,
+        role: true,
+        instructor: {
+          select: {
+            isApproved: true
+          }
+        }
       },
-      take: 5
+      take: 10
     });
 
     // Search Courses
@@ -47,7 +53,7 @@ export async function GET(req: Request) {
       take: 5
     });
 
-    // Search Quizzes as resources
+    // Search Quizzes
     const quizzes = await db.quiz.findMany({
       where: {
         OR: [
@@ -57,12 +63,31 @@ export async function GET(req: Request) {
       },
       select: {
         id: true,
-        title: true
+        title: true,
+        courseId: true
       },
       take: 5
     });
 
-    const resources = quizzes.map(q => ({ ...q, type: "quiz" }));
+    // Search Resources
+    const courseResources = await db.resource.findMany({
+      where: {
+        title: { contains: lowerQuery }
+      },
+      select: {
+        id: true,
+        title: true,
+        url: true,
+        type: true,
+        courseId: true
+      },
+      take: 5
+    });
+
+    const resources = [
+      ...courseResources.map(r => ({ ...r, type: r.type || "PDF" })),
+      ...quizzes.map(q => ({ ...q, type: "quiz", url: `/courses/${q.courseId}` }))
+    ];
 
     return NextResponse.json({
       users,

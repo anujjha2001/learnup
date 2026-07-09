@@ -69,6 +69,32 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
   const [loadingAnalytics, setLoadingAnalytics] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(user || null);
 
+  const [isApproved, setIsApproved] = useState<boolean | null>(null);
+  const [checkingApproval, setCheckingApproval] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function checkApprovalStatus() {
+      const uid = getInstructorId();
+      try {
+        const res = await fetch(`/api/search?q=${uid}`);
+        if (res.ok) {
+          const data = await res.json();
+          const found = data.users?.find((u: any) => u.id === uid);
+          if (found) {
+            setIsApproved(found.instructor?.isApproved ?? false);
+            setCheckingApproval(false);
+            return;
+          }
+        }
+      } catch (e) {
+        console.error("Failed to check instructor approval:", e);
+      }
+      setIsApproved(true);
+      setCheckingApproval(false);
+    }
+    checkApprovalStatus();
+  }, []);
+
   // Course states
   const [courses, setCourses] = useState<any[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
@@ -641,6 +667,46 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
       img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
     },
   ];
+
+  if (checkingApproval) {
+    return (
+      <div className="flex h-screen w-full bg-[#070710] items-center justify-center text-white">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-t-2 border-[#f97316] rounded-full animate-spin mx-auto" />
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Verifying Credentials...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isApproved === false) {
+    return (
+      <div className="flex h-screen w-full bg-[#070710] text-[#f1f5f9] antialiased items-center justify-center font-sans relative px-6">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-900/10 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-orange-900/10 blur-[120px] pointer-events-none" />
+        
+        <div className="max-w-md w-full p-8 rounded-3xl border border-white/5 bg-[#0b0a1d]/60 backdrop-blur-md shadow-2xl text-center space-y-6">
+          <div className="w-16 h-16 rounded-full bg-amber-500/15 flex items-center justify-center text-amber-400 mx-auto border border-amber-500/30">
+            <span className="material-symbols-outlined text-[32px] select-none">lock</span>
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-black text-white leading-tight">Approval Pending</h1>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              Your instructor account registration is currently pending review. Access to the dashboard will be unlocked once approved by an administrator.
+            </p>
+          </div>
+          <div className="pt-4 border-t border-white/5">
+            <button
+              onClick={onLogout}
+              className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-black transition cursor-pointer"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen w-full bg-[#070710] text-[#f1f5f9] antialiased overflow-hidden font-sans relative">

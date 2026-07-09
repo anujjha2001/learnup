@@ -115,6 +115,9 @@ Prisma.NullTypes = {
  */
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -136,6 +139,18 @@ exports.Prisma.UserScalarFieldEnum = {
   streak: 'streak',
   learnupId: 'learnupId',
   provider: 'provider',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InstructorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  isApproved: 'isApproved',
+  cvUrl: 'cvUrl',
+  degreeUrl: 'degreeUrl',
+  collegeName: 'collegeName',
+  courseName: 'courseName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -314,6 +329,11 @@ exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -325,14 +345,10 @@ exports.Prisma.JsonNullValueFilter = {
   AnyNull: Prisma.AnyNull
 };
 
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-};
-
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Instructor: 'Instructor',
   Course: 'Course',
   CourseEnrollment: 'CourseEnrollment',
   Quiz: 'Quiz',

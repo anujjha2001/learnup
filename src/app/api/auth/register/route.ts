@@ -56,7 +56,16 @@ export async function POST(req: Request) {
           create: {
             balance: role === "STUDENT" ? 20000.0 : 0.0
           }
-        }
+        },
+        instructor: role === "INSTRUCTOR" ? {
+          create: {
+            isApproved: false,
+            cvUrl: "",
+            degreeUrl: "",
+            collegeName: "",
+            courseName: ""
+          }
+        } : undefined
       },
     });
 

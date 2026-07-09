@@ -14,6 +14,11 @@ interface Instructor {
   phone: string | null;
   status: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: Date | string;
+  isApproved?: boolean;
+  cvUrl?: string | null;
+  degreeUrl?: string | null;
+  collegeName?: string | null;
+  courseName?: string | null;
 }
 
 interface InstructorTableProps {
@@ -94,6 +99,7 @@ export default function InstructorTable({ initialInstructors }: InstructorTableP
                 <TableRow className="border-b border-white/8 hover:bg-transparent">
                   <TableHead className="lu-table-head py-4 pl-6">Instructor</TableHead>
                   <TableHead className="lu-table-head py-4">Contact Info</TableHead>
+                  <TableHead className="lu-table-head py-4">Verification Info</TableHead>
                   <TableHead className="lu-table-head py-4">Joined Date</TableHead>
                   <TableHead className="lu-table-head py-4">Current Status</TableHead>
                   <TableHead className="lu-table-head py-4 pr-6 text-right">Moderation Actions</TableHead>
@@ -128,6 +134,41 @@ export default function InstructorTable({ initialInstructors }: InstructorTableP
                             <span>{inst.phone}</span>
                           </div>
                         )}
+                      </div>
+                    </TableCell>
+                    
+                    {/* Verification Info */}
+                    <TableCell className="py-4">
+                      <div className="space-y-1 text-xs">
+                        {inst.collegeName ? (
+                          <div className="text-slate-300">
+                            <span className="text-slate-500 font-bold">College:</span> {inst.collegeName}
+                          </div>
+                        ) : (
+                          inst.isApproved && <div className="text-slate-500 italic">Pre-approved System User</div>
+                        )}
+                        {inst.courseName && (
+                          <div className="text-slate-300">
+                            <span className="text-slate-500 font-bold">Course:</span> {inst.courseName}
+                          </div>
+                        )}
+                        <div className="flex gap-2.5 mt-1.5 text-[11px]">
+                          {inst.cvUrl ? (
+                            <a href={inst.cvUrl} target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 underline font-bold">
+                              CV Doc
+                            </a>
+                          ) : (
+                            <span className="text-slate-600 italic">No CV</span>
+                          )}
+                          <span className="text-slate-700">|</span>
+                          {inst.degreeUrl ? (
+                            <a href={inst.degreeUrl} target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 underline font-bold">
+                              Degree Doc
+                            </a>
+                          ) : (
+                            <span className="text-slate-600 italic">No Degree</span>
+                          )}
+                        </div>
                       </div>
                     </TableCell>
 

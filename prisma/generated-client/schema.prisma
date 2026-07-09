@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -39,6 +40,20 @@ model User {
   instructorTransactions Transaction[]      @relation("InstructorTransactions")
   studentTransactions    Transaction[]      @relation("StudentTransactions")
   wallet                 Wallet?
+  instructor             Instructor?
+}
+
+model Instructor {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isApproved  Boolean  @default(false)
+  cvUrl       String?
+  degreeUrl   String?
+  collegeName String?
+  courseName  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Course {

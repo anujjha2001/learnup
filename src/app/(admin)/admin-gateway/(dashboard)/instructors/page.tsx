@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function ManageInstructorsPage() {
   const instructors = await db.user.findMany({
     where: { role: "INSTRUCTOR" },
+    include: { instructor: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -20,6 +21,11 @@ export default async function ManageInstructorsPage() {
     status: inst.status as "PENDING" | "APPROVED" | "REJECTED",
     avatar: inst.avatar,
     createdAt: inst.createdAt.toISOString(),
+    isApproved: inst.instructor?.isApproved ?? false,
+    cvUrl: inst.instructor?.cvUrl ?? null,
+    degreeUrl: inst.instructor?.degreeUrl ?? null,
+    collegeName: inst.instructor?.collegeName ?? null,
+    courseName: inst.instructor?.courseName ?? null,
   }));
 
   return (
