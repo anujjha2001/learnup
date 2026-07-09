@@ -89,8 +89,8 @@ export default function CourseModerationTable({ initialCourses }: CourseModerati
 
                     {/* Price */}
                     <TableCell className="py-4 text-xs text-slate-300">
-                      <div className="flex items-center space-x-1">
-                        <DollarSign className="w-3.5 h-3.5 text-slate-500" />
+                      <div className="flex items-center space-x-1 font-semibold">
+                        <span className="text-slate-500 font-bold mr-0.5">₹</span>
                         <span>{course.price.toFixed(2)}</span>
                       </div>
                     </TableCell>
