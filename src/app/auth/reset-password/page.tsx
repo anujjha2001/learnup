@@ -107,7 +107,7 @@ function ResetPasswordForm() {
         password: newPassword,
       });
 
-      if (loginRes.success && loginRes.data?.user && loginRes.data?.token) {
+      if (loginRes.success && loginRes.data?.user) {
         const userData = loginRes.data.user;
         const sessionUser = {
           id: userData.id,
@@ -124,8 +124,12 @@ function ResetPasswordForm() {
         localStorage.setItem("user_name", sessionUser.name);
         localStorage.setItem("user_avatar", sessionUser.avatar);
         localStorage.setItem("user_tier", sessionUser.role === "student" ? "Premium Student" : "Senior Instructor");
-        localStorage.setItem("learnup_token", loginRes.data.token);
-        document.cookie = `learnup_token=${loginRes.data.token}; path=/; max-age=86400; SameSite=Lax`;
+        
+        const token = loginRes.data.token;
+        if (token) {
+          localStorage.setItem("learnup_token", token);
+          document.cookie = `learnup_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+        }
 
         // We don't import useProfileStore to keep it simple, just dispatch the event
         if (typeof window !== "undefined") {
