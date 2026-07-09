@@ -33,10 +33,9 @@ jobs:
           NEXTAUTH_SECRET: temp_build_secret
           NEXT_PUBLIC_APP_URL: http://localhost:3000
 
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+        run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
+
