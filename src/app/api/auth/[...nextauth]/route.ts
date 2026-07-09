@@ -7,34 +7,40 @@ const handler = NextAuth(authOptions);
 
 async function handleRequest(req: NextRequest, context: { params: Promise<{ nextauth: string[] }> }) {
   const res = await handler(req as any, context as any);
-  
-  // Intercept the OAuth callback redirect and strictly route based on database role
+
+  // 1. Intercept OAuth callback redirect
   if (req.nextUrl.pathname.includes("/callback/") && res.status === 302) {
     const cookies = res.headers.getSetCookie();
     let tokenStr = "";
-    
+
+    // Find session token securely
     for (const c of cookies) {
-      if (c.startsWith("next-auth.session-token=") || c.startsWith("__Secure-next-auth.session-token=")) {
-        tokenStr = c.split(";")[0].substring(c.indexOf("=") + 1);
+      if (c.includes("next-auth.session-token") || c.includes("__Secure-next-auth.session-token")) {
+        tokenStr = c.split(";")[0].split("=")[1];
         break;
       }
     }
-    
+
     if (tokenStr) {
       try {
-        const decoded = await decode({ token: tokenStr, secret: process.env.NEXTAUTH_SECRET as string });
-        
+        const decoded = await decode({
+          token: tokenStr,
+          secret: process.env.NEXTAUTH_SECRET as string
+        });
+
         if (decoded && decoded.role) {
-          const dashboardUrl = decoded.role.toString().toUpperCase() === "INSTRUCTOR" 
-            ? "/auth/dashboard/instructor" 
-            : "/auth/dashboard/student";
-          
-          const newUrl = new URL(dashboardUrl, req.nextUrl.origin);
-          const newRes = NextResponse.redirect(newUrl);
-          
-          // Preserve the session cookies set by NextAuth
+          const role = decoded.role.toString().toUpperCase();
+          const dashboardPath = role === "INSTRUCTOR" ? "/auth/dashboard/instructor" : "/auth/dashboard/student";
+
+          // FIX: Use production URL from env instead of req.nextUrl.origin
+          const baseUrl = process.env.NEXTAUTH_URL || "https://learnup-myfcghv2q-anujjha2001s-projects.vercel.app";
+          const newUrl = new URL(dashboardPath, baseUrl);
+
+          const newRes = NextResponse.redirect(newUrl, 302);
+
+          // Preserve all original NextAuth cookies
           cookies.forEach((c: string) => newRes.headers.append("Set-Cookie", c));
-          
+
           return newRes;
         }
       } catch (e) {
@@ -42,15 +48,9 @@ async function handleRequest(req: NextRequest, context: { params: Promise<{ next
       }
     }
   }
-  
+
   return res;
 }
 
-export async function GET(req: NextRequest, context: { params: Promise<{ nextauth: string[] }> }) {
-  return handleRequest(req, context);
-}
-
-export async function POST(req: NextRequest, context: { params: Promise<{ nextauth: string[] }> }) {
-  return handleRequest(req, context);
-}
-
+export const GET = handleRequest;
+export const POST = handleRequest;
