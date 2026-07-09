@@ -33,7 +33,7 @@ async function handleRequest(req: NextRequest, context: { params: Promise<{ next
           const newRes = NextResponse.redirect(newUrl);
           
           // Preserve the session cookies set by NextAuth
-          cookies.forEach(c => newRes.headers.append("Set-Cookie", c));
+          cookies.forEach((c: string) => newRes.headers.append("Set-Cookie", c));
           
           return newRes;
         }
