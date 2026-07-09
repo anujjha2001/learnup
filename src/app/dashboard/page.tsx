@@ -15,9 +15,8 @@ export default async function DashboardPage() {
   const role = (session.user as any).role?.toUpperCase() || "STUDENT";
 
   if (role === "INSTRUCTOR") {
-    return <InstructorDashboard user={session.user} />;
+    redirect("/auth/dashboard/instructor");
+  } else {
+    redirect("/auth/dashboard/student");
   }
-
-  // Render the original StudentDashboard component natively with real session data.
-  return <StudentDashboard user={session.user} />;
 }
