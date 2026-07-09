@@ -113,6 +113,11 @@ export const authService = {
           localStorage.setItem("user_name", newUser.name);
           localStorage.setItem("user_avatar", newUser.avatar);
           localStorage.setItem("user_tier", role === "student" ? "Premium Student" : "Senior Instructor");
+          const token = `jwt-session-token-placeholder-${newUser.id}-${role.toUpperCase()}-${role === "instructor" ? "PENDING" : "APPROVED"}-${Date.now()}`;
+          localStorage.setItem("learnup_token", token);
+          if (typeof document !== "undefined") {
+            document.cookie = `learnup_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+          }
 
           // Sync zustand store
           const store = useProfileStore.getState();
@@ -157,6 +162,11 @@ export const authService = {
           localStorage.setItem("learnup_user", JSON.stringify(sessionUser));
           localStorage.setItem("user_email", sessionUser.email);
           localStorage.setItem("user_name", sessionUser.name);
+          const token = `jwt-session-token-placeholder-${sessionUser.id}-${role.toUpperCase()}-APPROVED-${Date.now()}`;
+          localStorage.setItem("learnup_token", token);
+          if (typeof document !== "undefined") {
+            document.cookie = `learnup_token=${token}; path=/; max-age=86400; SameSite=Lax`;
+          }
 
           // Sync zustand
           const store = useProfileStore.getState();
@@ -184,6 +194,7 @@ export const authService = {
     localStorage.removeItem("learnup_user");
     localStorage.removeItem("user_email");
     localStorage.removeItem("user_name");
+    document.cookie = "learnup_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }
 };
 
@@ -209,3 +220,4 @@ export async function getServerSession() {
     return null;
   }
 }
+
