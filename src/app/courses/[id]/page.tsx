@@ -114,6 +114,8 @@ export default function CourseDetailPage() {
           const wData = await wRes.json();
           setWalletBalance(wData.balance || 0);
         }
+        router.refresh();
+        router.push("/auth/dashboard/student");
       } else {
         const err = await res.json();
         toast.error(err.error || "Enrollment failed.");

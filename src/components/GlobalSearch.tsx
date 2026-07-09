@@ -69,15 +69,15 @@ export default function GlobalSearch() {
 
           {results.users.length > 0 && (
             <div className="py-2">
-              <div className="px-4 py-1 text-xs font-bold text-purple-400 uppercase tracking-wider bg-white/5">Instructors</div>
+              <div className="px-4 py-1 text-xs font-bold text-purple-400 uppercase tracking-wider bg-white/5">People / Profiles</div>
               {results.users.map((user) => (
-                <Link key={user.id} href={`/instructors/${user.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition cursor-pointer">
-                  <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold overflow-hidden">
-                    {user.avatar ? <img src={user.avatar} className="w-full h-full object-cover" /> : <User className="w-4 h-4" />}
+                <Link key={user.id} href={user.role === "STUDENT" ? `/students/${user.id}` : `/instructors/${user.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition cursor-pointer">
+                  <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold overflow-hidden text-xs">
+                    {user.avatar ? <img src={user.avatar} className="w-full h-full object-cover" /> : (user.role === "STUDENT" ? "S" : "I")}
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-white">{user.name}</p>
-                    <p className="text-xs text-slate-400">{user.learnupId}</p>
+                    <p className="text-xs text-slate-400">{user.role} • {user.learnupId}</p>
                   </div>
                   <ChevronRight className="w-4 h-4 text-slate-500" />
                 </Link>
@@ -107,7 +107,7 @@ export default function GlobalSearch() {
             <div className="py-2 border-t border-white/10">
               <div className="px-4 py-1 text-xs font-bold text-emerald-400 uppercase tracking-wider bg-white/5">Resources & Quizzes</div>
               {results.resources.map((res) => (
-                <Link key={res.id} href={`#`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition cursor-pointer">
+                <Link key={res.id} href={res.url || `/courses/${res.courseId}`} target={res.url ? "_blank" : undefined} className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition cursor-pointer">
                   <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex shrink-0 items-center justify-center">
                     <FileText className="w-4 h-4 text-emerald-400" />
                   </div>
