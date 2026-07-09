@@ -17,8 +17,8 @@ export async function GET(req: Request) {
       where: {
         OR: [
           { id: query },
-          { name: { contains: lowerQuery } },
-          { learnupId: { contains: lowerQuery } }
+          { name: { contains: query, mode: "insensitive" } },
+          { learnupId: { contains: query, mode: "insensitive" } }
         ]
       },
       select: {
@@ -40,8 +40,8 @@ export async function GET(req: Request) {
     const courses = await db.course.findMany({
       where: {
         OR: [
-          { title: { contains: lowerQuery } },
-          { description: { contains: lowerQuery } }
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } }
         ]
       },
       select: {
@@ -57,8 +57,8 @@ export async function GET(req: Request) {
     const quizzes = await db.quiz.findMany({
       where: {
         OR: [
-          { title: { contains: lowerQuery } },
-          { description: { contains: lowerQuery } }
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } }
         ]
       },
       select: {
@@ -72,7 +72,7 @@ export async function GET(req: Request) {
     // Search Resources
     const courseResources = await db.resource.findMany({
       where: {
-        title: { contains: lowerQuery }
+        title: { contains: query, mode: "insensitive" }
       },
       select: {
         id: true,
