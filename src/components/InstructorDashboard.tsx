@@ -44,6 +44,7 @@ interface InstructorDashboardProps {
 
 export default function InstructorDashboard({ onLogout, user }: InstructorDashboardProps) {
   const [activeTab, setActiveTab] = useState<InstructorTabType>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   // Wallet / Payout states
   const [walletBalance, setWalletBalance] = useState<number>(0);
@@ -788,8 +789,20 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
         }
       `}} />
 
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="lg:hidden fixed inset-0 z-45 bg-black/60 backdrop-blur-sm"
+        />
+      )}
+
       {/* 1. SIDEBAR ARCHITECTURE */}
-      <aside className="w-64 flex flex-col h-full bg-[#070710] border-r border-white/5 sticky left-0 top-0 z-50 p-4 gap-2 shrink-0">
+      <aside
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 flex flex-col bg-[#070710] border-r border-white/5 p-4 gap-2 shrink-0 transition-transform duration-300 lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         
         {/* BRAND IDENTITY */}
         <div className="flex items-center gap-3 px-2 py-4 mb-4">
@@ -834,6 +847,7 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
                 onClick={() => {
                   setActiveTab(tab.id as InstructorTabType);
                   setIsEditing(false);
+                  setSidebarOpen(false);
                 }}
                 className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group cursor-pointer relative ${
                   isActive
@@ -852,7 +866,13 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
         </nav>
         
         <div className="mt-auto flex flex-col gap-1 pt-4 border-t border-white/5">
-          <button className="text-slate-400 flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 rounded-xl transition-all text-left w-full cursor-pointer">
+          <button
+            onClick={() => {
+              setSidebarOpen(false);
+              setActiveTab("support" as any);
+            }}
+            className="text-slate-400 flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 rounded-xl transition-all text-left w-full cursor-pointer"
+          >
             <span className="material-symbols-outlined text-sm select-none">contact_support</span>
             <span className="text-xs font-bold">Help Center</span>
           </button>
@@ -870,8 +890,14 @@ export default function InstructorDashboard({ onLogout, user }: InstructorDashbo
       <main className="flex-1 overflow-y-auto scroll-smooth flex flex-col h-screen relative">
         
         {/* 2. TOP NAVBAR */}
-        <header className="sticky top-0 z-40 bg-[#070710]/40 backdrop-blur-md border-b border-white/5 h-16 flex justify-between items-center px-8 shrink-0">
-          <div className="flex items-center gap-6">
+        <header className="sticky top-0 z-40 bg-[#070710]/40 backdrop-blur-md border-b border-white/5 h-16 flex justify-between items-center px-4 md:px-8 shrink-0">
+          <div className="flex items-center gap-3 md:gap-6">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 text-slate-400 hover:text-white transition focus:outline-none bg-white/5 rounded-xl border border-white/10 flex items-center justify-center cursor-pointer shrink-0"
+            >
+              <span className="material-symbols-outlined text-lg select-none">menu</span>
+            </button>
             <GlobalSearch />
           </div>
           

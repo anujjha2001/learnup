@@ -56,11 +56,11 @@ export default async function AdminGatewayLayout({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full font-sans overflow-hidden bg-[#070710]">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full font-sans lg:overflow-hidden bg-[#070710]">
       <Sidebar user={adminUser} />
 
       {/* Main Content Area */}
-      <main className="flex-1 h-screen overflow-hidden relative flex flex-col bg-[#070710]">
+      <main className="flex-1 lg:h-screen lg:overflow-hidden relative flex flex-col bg-[#070710]">
         {/* Ambient glow orbs */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <div className="absolute top-[-20%] right-[-15%] w-[55%] h-[55%] rounded-full bg-[#8b5cf6]/10 blur-[130px]" />

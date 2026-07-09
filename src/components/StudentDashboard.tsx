@@ -44,6 +44,7 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   // Data States
   const [courses, setCourses] = useState<any[]>([]);
@@ -565,8 +566,20 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
       <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-900/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-900/10 blur-[120px] pointer-events-none" />
 
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="lg:hidden fixed inset-0 z-45 bg-black/60 backdrop-blur-sm"
+        />
+      )}
+
       {/* 1. SIDEBAR */}
-      <aside className="w-64 flex flex-col h-full bg-[#070710] border-r border-white/5 sticky left-0 top-0 z-50 p-4 gap-2 shrink-0">
+      <aside
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-64 flex flex-col bg-[#070710] border-r border-white/5 p-4 gap-2 shrink-0 transition-transform duration-300 lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         
         {/* BRAND IDENTITY */}
         <div className="flex items-center gap-3 px-3 py-5 border-b border-white/5 mb-4">
@@ -612,7 +625,10 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  setSidebarOpen(false);
+                }}
                 className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs font-bold tracking-wide transition relative cursor-pointer ${
                   isActive
                     ? "bg-[#140e2d]/80 text-[#f97316]"
@@ -648,8 +664,14 @@ export default function StudentDashboard({ onLogout, user }: StudentDashboardPro
       <main className="flex-1 flex flex-col overflow-y-auto h-screen relative">
         
         {/* HEADER */}
-        <header className="h-16 border-b border-white/5 flex justify-between items-center px-8 bg-[#080710]/40 backdrop-blur-md sticky top-0 z-40">
-          <div className="flex items-center gap-6">
+        <header className="h-16 border-b border-white/5 flex justify-between items-center px-4 md:px-8 bg-[#080710]/40 backdrop-blur-md sticky top-0 z-40">
+          <div className="flex items-center gap-3 md:gap-6">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 text-slate-400 hover:text-white transition focus:outline-none bg-white/5 rounded-xl border border-white/10 flex items-center justify-center cursor-pointer shrink-0"
+            >
+              <span className="material-symbols-outlined text-lg select-none">menu</span>
+            </button>
             <GlobalSearch />
           </div>
 
