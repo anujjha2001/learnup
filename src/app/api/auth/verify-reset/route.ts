@@ -45,6 +45,7 @@ export async function POST(req: Request) {
         password: newPassword,
         resetOtp: null,
         resetOtpExpiry: null,
+        isVerified: true,
       },
     });
 

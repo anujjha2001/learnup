@@ -100,6 +100,7 @@ function ResetPasswordForm() {
     }
 
     // Auto-login user after successful reset
+    let redirectUrl = "/auth";
     try {
       const loginRes = await authClient.login({
         email,
@@ -130,6 +131,8 @@ function ResetPasswordForm() {
         if (typeof window !== "undefined") {
           window.dispatchEvent(new Event("profile_update_event"));
         }
+        
+        redirectUrl = "/dashboard";
       }
     } catch (e) {
       console.error("Auto-login failed:", e);
@@ -137,7 +140,7 @@ function ResetPasswordForm() {
 
     setSuccess(true);
     setTimeout(() => {
-      router.push("/dashboard");
+      router.push(redirectUrl);
     }, 2000);
   };
 
@@ -154,7 +157,7 @@ function ResetPasswordForm() {
         </h2>
         <p className="text-slate-400 text-sm mt-2 max-w-[320px] mx-auto leading-relaxed">
           {success
-            ? "Your password has been successfully reset. Redirecting you to your dashboard..."
+            ? "Your password has been successfully reset. Redirecting..."
             : `Enter the 6-digit verification code sent to ${email} along with your new password.`
           }
         </p>
