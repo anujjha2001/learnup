@@ -62,6 +62,10 @@ export const authClient = {
       name: string;
       phone: string;
       role?: "STUDENT" | "INSTRUCTOR";
+      collegeName?: string;
+      courseName?: string;
+      cvUrl?: string;
+      degreeUrl?: string;
     },
     onLoading?: (loading: boolean) => void
   ): Promise<AuthResponse<{ message: string; userId: string; email: string }>> {

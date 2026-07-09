@@ -9,6 +9,10 @@ const RegisterSchema = z.object({
   name: z.string().min(1, "Name is required"),
   phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone format (E.164 expected)"),
   role: z.enum(["STUDENT", "INSTRUCTOR"]).default("STUDENT"),
+  collegeName: z.string().optional(),
+  courseName: z.string().optional(),
+  cvUrl: z.string().optional(),
+  degreeUrl: z.string().optional(),
 });
 
 export async function POST(req: Request) {
@@ -21,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: errorMsg }, { status: 400 });
     }
 
-    const { email, password, name, phone, role } = result.data;
+    const { email, password, name, phone, role, collegeName, courseName, cvUrl, degreeUrl } = result.data;
 
     // Check if user already exists
     const existingUser = await db.user.findUnique({
@@ -60,10 +64,10 @@ export async function POST(req: Request) {
         instructor: role === "INSTRUCTOR" ? {
           create: {
             isApproved: false,
-            cvUrl: "",
-            degreeUrl: "",
-            collegeName: "",
-            courseName: ""
+            cvUrl: cvUrl || "",
+            degreeUrl: degreeUrl || "",
+            collegeName: collegeName || "",
+            courseName: courseName || ""
           }
         } : undefined
       },

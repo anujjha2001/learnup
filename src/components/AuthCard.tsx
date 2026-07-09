@@ -23,7 +23,16 @@ export default function AuthCard({
   const [role, setRole] = useState<"student" | "instructor">("student");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [authForm, setAuthForm] = useState({ email: "", password: "", name: "", phone: "" });
+  const [authForm, setAuthForm] = useState({ 
+    email: "", 
+    password: "", 
+    name: "", 
+    phone: "",
+    collegeName: "",
+    courseName: "",
+    cvUrl: "",
+    degreeUrl: ""
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
 
@@ -55,6 +64,10 @@ export default function AuthCard({
           phone: authForm.phone,
           password: authForm.password,
           role: role === "student" ? "STUDENT" : "INSTRUCTOR",
+          collegeName: role === "instructor" ? authForm.collegeName : undefined,
+          courseName: role === "instructor" ? authForm.courseName : undefined,
+          cvUrl: role === "instructor" ? authForm.cvUrl : undefined,
+          degreeUrl: role === "instructor" ? authForm.degreeUrl : undefined,
         });
 
         if (!res.success) {
@@ -368,6 +381,50 @@ export default function AuthCard({
                     </div>
                     {errors.phone && <p className="text-red-600 text-xs font-semibold mt-1">{errors.phone}</p>}
                   </div>
+                )}
+
+                {authMode === "register" && role === "instructor" && (
+                  <>
+                    <div className="space-y-2 transition-transform duration-200 focus-within:scale-[1.01] animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="font-bold text-[#0b1c30] text-sm" htmlFor="collegeName">College / University Name</label>
+                      <div className="relative group">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#464555] group-focus-within:text-[#3525cd]">
+                          <span className="material-symbols-outlined text-md select-none">domain</span>
+                        </div>
+                        <input className="w-full bg-[#eff4ff] border border-[#c7c4d8]/20 focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-[#0b1c30]" id="collegeName" placeholder="e.g. Stanford University" required type="text" value={authForm.collegeName} onChange={(e) => handleInputChange("collegeName", e.target.value)} />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 transition-transform duration-200 focus-within:scale-[1.01] animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="font-bold text-[#0b1c30] text-sm" htmlFor="courseName">Proposed Course Name</label>
+                      <div className="relative group">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#464555] group-focus-within:text-[#3525cd]">
+                          <span className="material-symbols-outlined text-md select-none">menu_book</span>
+                        </div>
+                        <input className="w-full bg-[#eff4ff] border border-[#c7c4d8]/20 focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-[#0b1c30]" id="courseName" placeholder="e.g. Advanced Cloud Orchestration" required type="text" value={authForm.courseName} onChange={(e) => handleInputChange("courseName", e.target.value)} />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 transition-transform duration-200 focus-within:scale-[1.01] animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="font-bold text-[#0b1c30] text-sm" htmlFor="cvUrl">CV / Resume Document URL</label>
+                      <div className="relative group">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#464555] group-focus-within:text-[#3525cd]">
+                          <span className="material-symbols-outlined text-md select-none">description</span>
+                        </div>
+                        <input className="w-full bg-[#eff4ff] border border-[#c7c4d8]/20 focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-[#0b1c30]" id="cvUrl" placeholder="https://example.com/my-cv.pdf" required type="url" value={authForm.cvUrl} onChange={(e) => handleInputChange("cvUrl", e.target.value)} />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 transition-transform duration-200 focus-within:scale-[1.01] animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="font-bold text-[#0b1c30] text-sm" htmlFor="degreeUrl">Highest Degree Certificate URL</label>
+                      <div className="relative group">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#464555] group-focus-within:text-[#3525cd]">
+                          <span className="material-symbols-outlined text-md select-none">history_edu</span>
+                        </div>
+                        <input className="w-full bg-[#eff4ff] border border-[#c7c4d8]/20 focus:border-[#3525cd] focus:ring-2 focus:ring-[#3525cd]/20 rounded-xl py-4 pl-12 transition-all outline-none text-sm text-[#0b1c30]" id="degreeUrl" placeholder="https://example.com/my-degree.pdf" required type="url" value={authForm.degreeUrl} onChange={(e) => handleInputChange("degreeUrl", e.target.value)} />
+                      </div>
+                    </div>
+                  </>
                 )}
 
                 <div className="space-y-2 transition-transform duration-200 focus-within:scale-[1.01]">
