@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { PasswordSchema } from "@/lib/auth";
+import { signIn } from "next-auth/react";
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -135,6 +136,13 @@ function ResetPasswordForm() {
         if (typeof window !== "undefined") {
           window.dispatchEvent(new Event("profile_update_event"));
         }
+
+        // Silent NextAuth login
+        await signIn("credentials", {
+          email,
+          password: newPassword,
+          redirect: false,
+        });
         
         redirectUrl = "/dashboard";
       }

@@ -149,6 +149,13 @@ export default function AuthCard({
           window.dispatchEvent(new Event("profile_update_event"));
         }
 
+        // Silent NextAuth login to create next-auth cookies and session state
+        await signIn("credentials", {
+          email: authForm.email,
+          password: authForm.password,
+          redirect: false,
+        });
+
         onAuthSubmit(sessionUser.role);
       }
     } catch (err: any) {
