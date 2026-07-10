@@ -46,7 +46,7 @@ export const useProfileStore =
 
                 tier:
                     localStorage.getItem("user_tier") ||
-                    "Premium Pro",
+                    "Premium",
             });
         },
     }));
